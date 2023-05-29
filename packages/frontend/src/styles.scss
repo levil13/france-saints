@@ -1,1 +1,74 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~normalize.css';
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import './assets/styles/colors.scss';
+@import './assets/styles/icons-sizes.scss';
+
+body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+  @apply text-[16px] font-normal;
+}
+
+textarea:focus,
+input:focus,
+button:focus {
+  outline: none;
+}
+
+.content {
+  height: calc(100vh - 80px);
+  @apply grow shrink relative;
+  background-color: $text-primary;
+}
+
+.color-gray {
+  color: $text-primary;
+}
+
+.divide-line-top {
+  border-top: 1px solid $border;
+}
+
+.icon-arrow {
+  &.top-arrow {
+    transform: rotate(-90deg);
+  }
+}
+
+.icon-search {
+  background-image: url('assets/icons/icon-search.svg');
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
+  background-position: 15px center;
+
+  &.icon-gray-style {
+    background-image: url('assets/icons/icon-search-focus.svg');
+  }
+}
+
+.icon-style-circle {
+  @apply select-none;
+
+  .icon-style-circle__button {
+    @apply p-[5px] rounded-full;
+    padding: 5px;
+
+    &:hover {
+      background-color: $border;
+    }
+  }
+}
+
+//header media
+@media screen and (max-width: 1024px) {
+}
+
+@media screen and (max-width: 750px) {
+}
+
+@media screen and (max-width: 550px) {
+}
