@@ -1,0 +1,158 @@
+:host {
+  display: block;
+}
+
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/icons-sizes.scss';
+
+.header__nav {
+  @apply px-[32px] h-[80px] flex justify-between items-center;
+
+  .header__logo {
+    @apply flex gap-[15px] select-none;
+
+    &-heading {
+      font-family: zarubkaType, sans-serif;
+      color: $text-color;
+      @apply text-[21px];
+
+      span {
+        @apply flex flex-row leading-tight;
+      }
+    }
+  }
+
+  .header__search {
+    @apply relative rounded-full;
+    box-shadow: 0 0 15px -5px $shadow;
+
+    &-input {
+      @apply relative w-[500px] rounded-full z-[11];
+
+      input {
+        @apply w-full rounded-full px-[45px] py-[8px];
+
+        &:focus {
+          background-image: url('/assets/icons/icon-search-focus.svg');
+        }
+
+        ::-webkit-input-placeholder {
+          /* Edge */
+          color: $text-primary;
+        }
+
+        :-ms-input-placeholder {
+          /* Internet Explorer 10-11 */
+          color: $text-primary;
+        }
+
+        ::placeholder {
+          color: $text-primary;
+        }
+      }
+
+      .icon-style-circle {
+        @apply absolute mr-[15px] top-1/2 right-0;
+        transform: translateY(-50%);
+      }
+    }
+
+    &-result {
+      @apply hidden absolute left-0 w-full bg-white z-10;
+      box-shadow: 0 0 15px -5px $shadow;
+
+      &_category {
+        @apply pt-[15px];
+
+        &-heading {
+          @apply text-[13px] ml-[15px];
+          color: $text-primary;
+        }
+
+        &-item {
+          @apply w-full;
+
+          a {
+            @apply block px-[45px] py-[8px];
+
+            &:hover {
+              background-color: $border;
+            }
+          }
+        }
+
+        &:last-child .header__search-result_category-item:last-child a {
+          @apply rounded-bl-[15px] rounded-br-[15px];
+        }
+      }
+    }
+
+    //actions
+    &.is-focused {
+      @apply rounded-[15px];
+
+      .header__search-input {
+        input {
+          @apply rounded-none rounded-br-none rounded-tl-[15px] rounded-tr-[15px];
+        }
+      }
+
+      .header__search-result {
+        @apply rounded-tl-none rounded-tr-none rounded-bl-[15px] rounded-br-[15px];
+        display: block;
+      }
+    }
+  }
+
+  .header__menu {
+    @apply flex items-center gap-[32px];
+    color: $text-primary;
+
+    &-item {
+      &.changer-lang {
+        @apply relative;
+
+        button {
+          @apply flex items-center gap-[10px];
+
+          &:hover {
+            color: $text-color;
+          }
+        }
+
+        .header__menu-lang {
+          @apply hidden absolute z-10 left-1/2 bg-white rounded-[15px] mt-[15px] px-[15px];
+          transform: translateX(-50%);
+          box-shadow: 0 0 15px -5px $shadow;
+
+          &_item {
+            @apply w-full;
+            border-top: 1px solid $border;
+
+            &:first-child {
+              border: 0;
+            }
+
+            a {
+              @apply block py-[15px];
+            }
+          }
+        }
+
+        &.is-active {
+          button .icon-arrow {
+            transform: rotate(90deg);
+          }
+
+          .header__menu-lang {
+            @apply block;
+          }
+        }
+      }
+
+      a:hover {
+        color: $text-color;
+      }
+    }
+  }
+}

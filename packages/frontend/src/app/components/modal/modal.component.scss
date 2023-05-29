@@ -1,0 +1,117 @@
+:host {
+  display: block;
+}
+
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/icons-sizes.scss';
+
+.modal {
+  @apply absolute right-[32px] top-1/2 w-[450px] bg-white p-[32px] rounded-[15px];
+  transform: translateY(-50%);
+  box-shadow: 0 0 15px -5px $shadow;
+  max-height: calc(100vh - 110px);
+  overflow-y: overlay;
+
+  &::-webkit-scrollbar {
+    @apply w-[7px];
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-transparent my-[4px];
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full;
+    background-color: $shadow;
+
+    &:hover {
+      background-color: #d0d0d0;
+    }
+  }
+
+  .modal__read-more {
+    @apply block px-[32px] py-[10px] mt-[10px] text-white rounded-full select-none;
+    background-color: $text-color;
+
+    &:hover {
+      background-color: $text-primary;
+    }
+  }
+
+  .icon-style-circle {
+    @apply absolute right-[25px] top-[25px];
+    .icon-style-circle__button {
+      @apply p-[10px];
+    }
+  }
+
+  .modal__properties {
+    @apply flex items-center gap-[15px];
+
+    &-element {
+      @apply flex items-center;
+      max-width: 50%;
+
+      span {
+        @apply text-[13px] whitespace-nowrap overflow-hidden overflow-ellipsis;
+        color: $text-primary;
+      }
+    }
+  }
+
+  .modal__heading {
+    @apply mt-[5px] text-[21px] font-bold;
+    color: $text-color;
+  }
+
+  .modal__zoom {
+    @apply pl-[20px] mt-[5px];
+    background-image: url('/assets/icons/icon-zoom.svg');
+    background-repeat: no-repeat;
+    background-size: 15px 15px;
+    background-position: 0 center;
+    color: $text-primary;
+
+    &:hover {
+      color: $text-color;
+      background-image: url('/assets/icons/icon-zoom-hover.svg');
+    }
+  }
+
+  .modal__slider {
+    @apply h-auto w-full mt-[15px];
+
+    img {
+      @apply block w-full rounded-[10px];
+    }
+  }
+
+  .modal__information {
+    &-item {
+      @apply py-[15px];
+      border-top: 1px solid $border;
+
+      &:first-child {
+        border: none;
+      }
+
+      &_title {
+        @apply text-[13px] uppercase;
+        color: $text-primary;
+      }
+
+      &_text {
+        @apply pt-[5px] leading-[21px] font-bold;
+      }
+    }
+  }
+
+  .modal__description {
+    @apply leading-[21px] pt-[15px];
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 7; /* number of lines to show */
+    line-clamp: 7;
+    -webkit-box-orient: vertical;
+  }
+}

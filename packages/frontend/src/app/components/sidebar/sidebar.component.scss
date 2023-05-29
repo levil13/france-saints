@@ -1,0 +1,76 @@
+:host {
+  display: block;
+}
+
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/icons-sizes.scss';
+
+.sidebar {
+  @apply relative w-[350px] px-[32px] py-[15px];
+  height: calc(100vh - 80px);
+  //Прочитать на счет оверлея и можно ли его использовать
+  overflow-y: overlay;
+
+  &::-webkit-scrollbar {
+    @apply w-[7px];
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-transparent my-[4px];
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply rounded-full;
+    background-color: $shadow;
+
+    &:hover {
+      background-color: #d0d0d0;
+    }
+  }
+
+  .sidebar__count {
+    .icon-style-circle {
+      @apply absolute right-[15px] top-[7.5px];
+    }
+  }
+
+  .sidebar__list {
+    @apply mt-[15px];
+
+    &-item {
+      @apply w-full;
+
+      &_link {
+        @apply block py-[15px];
+
+        &-properties {
+          @apply flex items-center gap-[15px];
+
+          &_element {
+            @apply flex items-center;
+            max-width: 50%;
+
+            span {
+              @apply text-[13px] whitespace-nowrap overflow-hidden overflow-ellipsis;
+              color: $text-primary;
+            }
+          }
+        }
+
+        &-heading {
+          @apply mt-[10px];
+        }
+
+        &:hover {
+          .sidebar__list-item_link-heading {
+            color: $text-color;
+          }
+        }
+      }
+
+      &:last-child {
+        @apply mb-[50px];
+      }
+    }
+  }
+}

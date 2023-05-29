@@ -1,0 +1,108 @@
+<nav class="header__nav">
+  <a href="#" class="header__logo">
+    <img
+      class="header__logo-image icon-50px"
+      src="assets/icons/palomnik-france-sud-icon.png" />
+    <h1 class="header__logo-heading">
+      <span>Православные Святыни</span><span>Юга Франции</span>
+    </h1>
+  </a>
+
+  <!--	стиль для активации	is-focused-->
+  <div class="header__search is-focused">
+    <div class="header__search-input">
+      <input
+        class="icon-search"
+        type="text"
+        placeholder="Имя, город, почтовый индекс..." />
+      <span class="icon-style-circle">
+        <button class="icon-style-circle__button">
+          <img
+            class="icon-11px"
+            src="assets/icons/icon-close.svg"
+            alt="icon-close" />
+        </button>
+      </span>
+    </div>
+    <div class="header__search-result divide-line-top">
+      <ul class="header__search-result_category">
+        <h3 class="header__search-result_category-heading">Поиск в городах</h3>
+        <li class="header__search-result_category-item">
+          <a class="icon-search icon-gray-style" href="#">Tours - 37</a>
+        </li>
+        <li class="header__search-result_category-item">
+          <a class="icon-search icon-gray-style" href="#">Toulouse - 31</a>
+        </li>
+        <li class="header__search-result_category-item">
+          <a class="icon-search icon-gray-style" href="#">Toulon - 83</a>
+        </li>
+      </ul>
+
+      <ul class="header__search-result_category">
+        <h3 class="header__search-result_category-heading">
+          Поиск в категориях
+        </h3>
+        <li class="header__search-result_category-item">
+          <a class="icon-search icon-gray-style" href="#"
+            >tou <span class="color-gray">в категории Святыни</span></a
+          >
+        </li>
+        <li class="header__search-result_category-item">
+          <a class="icon-search icon-gray-style" href="#"
+            >tou
+            <span class="color-gray"
+              >в категории Православные храмы и монастыри</span
+            ></a
+          >
+        </li>
+        <li class="header__search-result_category-item">
+          <a class="icon-search icon-gray-style" href="#"
+            >tou <span class="color-gray">в категории Русские кладбища</span></a
+          >
+        </li>
+        <li class="header__search-result_category-item">
+          <a class="icon-search icon-gray-style" href="#"
+            >tou <span class="color-gray">в категории Паломничества</span></a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <ul class="header__menu">
+    <li class="header__menu-item">
+      <a href="#about-us">О нас</a>
+    </li>
+    <li class="header__menu-item">
+      <a href="#blog">Блог</a>
+    </li>
+    <li class="header__menu-item">
+      <a href="#contacts">Контакты</a>
+    </li>
+
+    <!--	стиль для активации	is-active-->
+    <li class="header__menu-item changer-lang">
+      <button>
+        <span>Рус</span>
+        <img
+          class="icon-arrow top-arrow icon-25px"
+          src="assets/icons/icon-arrow.svg"
+          alt="icon-arrow" />
+      </button>
+      <ul class="header__menu-lang">
+        <li class="header__menu-lang_item">
+          <a href="#">Русский</a>
+        </li>
+        <li class="header__menu-lang_item">
+          <a href="#">Français</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <!--			<ul class="header__menu-mobile">-->
+  <!--				<li>-->
+  <!--					<img src="assets/menu.png" alt="menu">-->
+  <!--				</li>-->
+  <!--			</ul>-->
+</nav>
