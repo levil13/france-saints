@@ -1,10 +1,12 @@
 <header>
-  <app-header></app-header>
+  <app-header (click)="sidebarVisible = !sidebarVisible"></app-header>
 </header>
 
-<main class="flex flex-nowrap">
-  <app-sidebar></app-sidebar>
-  <div class="content">
-    <app-modal></app-modal>
-  </div>
+<aside>
+  <app-sidebar @slideInOutLeft *ngIf="sidebarVisible"></app-sidebar>
+  <!-- <app-modal></app-modal> -->
+</aside>
+
+<main>
+  <app-map></app-map>
 </main>

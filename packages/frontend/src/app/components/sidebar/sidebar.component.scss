@@ -1,15 +1,17 @@
-:host {
-  display: block;
-}
-
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/icons-sizes.scss';
+
+:host {
+  position: absolute;
+  z-index: 401;
+}
 
 .sidebar {
   @apply relative w-[350px] px-[32px] py-[15px];
   height: calc(100vh - 80px);
   //Прочитать на счет оверлея и можно ли его использовать
   overflow-y: overlay;
+  background: #ffffff;
 
   &::-webkit-scrollbar {
     @apply w-[7px];

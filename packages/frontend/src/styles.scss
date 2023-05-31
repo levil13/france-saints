@@ -4,6 +4,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import "leaflet/dist/leaflet.css";
+@import "leaflet.markercluster/dist/MarkerCluster.css";
+@import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+
 @import 'assets/styles/colors.scss';
 @import 'assets/styles/icons-sizes.scss';
 
@@ -17,12 +21,6 @@ textarea:focus,
 input:focus,
 button:focus {
   outline: none;
-}
-
-.content {
-  height: calc(100vh - 80px);
-  @apply grow shrink relative;
-  background-color: $text-primary;
 }
 
 .color-gray {

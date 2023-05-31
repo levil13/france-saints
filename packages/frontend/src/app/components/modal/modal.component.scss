@@ -1,11 +1,7 @@
-:host {
-  display: block;
-}
-
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/icons-sizes.scss';
 
-.modal {
+:host {
   @apply absolute right-[32px] top-1/2 w-[450px] bg-white p-[32px] rounded-[15px];
   transform: translateY(-50%);
   box-shadow: 0 0 15px -5px $shadow;
