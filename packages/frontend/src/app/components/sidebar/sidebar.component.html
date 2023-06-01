@@ -1,72 +1,29 @@
-<div class="sidebar divide-line-top">
-  <div class="sidebar__count">
-    4 элемента
-    <span class="icon-style-circle">
-      <button class="icon-style-circle__button">
-        <img class="icon-arrow icon-30px" src="assets/icons/icon-arrow.svg" alt="icon-arrow" />
+<div class='sidebar divide-line-top'>
+  <div class='sidebar__count'>
+    {{filteredPlaces.length}} элемента
+    <span class='icon-style-circle'>
+      <button class='icon-style-circle__button'>
+        <img class='icon-arrow icon-30px' src='../../../assets/icons/icon-arrow.svg' alt='icon-arrow' />
       </button>
     </span>
   </div>
-  <ul class="sidebar__list">
-    <li class="sidebar__list-item divide-line-top">
-      <a class="sidebar__list-item_link" href="#">
-        <div class="sidebar__list-item_link-properties">
-          <div class="sidebar__list-item_link-properties_element">
-            <img class="icon-15px mr-[5px]" src="assets/icons/icon-shrine.png" alt="icon-arrow" />
-            <span>Святыни</span>
+  <ul class='sidebar__list'>
+    <li *ngFor='let place of filteredPlaces' class='sidebar__list-item divide-line-top'>
+      <button class='sidebar__list-item_link'>
+        <div class='sidebar__list-item_link-properties'>
+          <div class='sidebar__list-item_link-properties_element'>
+            <img class='icon-15px mr-[5px]' src='../../../assets/icons/icon-shrine.png' alt='icon-arrow' />
+            <span>{{place.category.name}}</span>
           </div>
-          <div class="sidebar__list-item_link-properties_element">
-            <img class="icon-15px mr-[5px]" src="assets/icons/icon-location.png" alt="icon-arrow" />
-            <span>Nice - 06</span>
-          </div>
-        </div>
-        <h3 class="sidebar__list-item_link-heading">Терновый венец Спасителя</h3>
-      </a>
-    </li>
-    <li class="sidebar__list-item divide-line-top">
-      <a class="sidebar__list-item_link" href="#">
-        <div class="sidebar__list-item_link-properties">
-          <div class="sidebar__list-item_link-properties_element">
-            <img class="icon-15px mr-[5px]" src="assets/icons/icon-cemetery.png" alt="icon-arrow" />
-            <span>Русские кладбища</span>
-          </div>
-          <div class="sidebar__list-item_link-properties_element">
-            <img class="icon-15px mr-[5px]" src="assets/icons/icon-location.png" alt="icon-arrow" />
-            <span>Tours - 37</span>
+          <div class='sidebar__list-item_link-properties_element'>
+            <img class='icon-15px mr-[5px]' src='../../../assets/icons/icon-location.png' alt='icon-arrow' />
+            <span>{{place.city.name}}</span>
           </div>
         </div>
-        <h3 class="sidebar__list-item_link-heading">Чудесное возвращение Иверской иконы Божией матери</h3>
-      </a>
-    </li>
-    <li class="sidebar__list-item divide-line-top">
-      <a class="sidebar__list-item_link" href="#">
-        <div class="sidebar__list-item_link-properties">
-          <div class="sidebar__list-item_link-properties_element">
-            <img class="icon-15px mr-[5px]" src="assets/icons/icon-monastery.png" alt="icon-arrow" />
-            <span>Правосл. храмы и монастыри</span>
-          </div>
-          <div class="sidebar__list-item_link-properties_element">
-            <img class="icon-15px mr-[5px]" src="assets/icons/icon-location.png" alt="icon-arrow" />
-            <span>Toulouse - 31</span>
-          </div>
-        </div>
-        <h3 class="sidebar__list-item_link-heading">Как святая Елена исцелила монаха</h3>
-      </a>
-    </li>
-    <li class="sidebar__list-item divide-line-top">
-      <a class="sidebar__list-item_link" href="#">
-        <div class="sidebar__list-item_link-properties">
-          <div class="sidebar__list-item_link-properties_element">
-            <img class="icon-15px mr-[5px]" src="assets/icons/icon-pilgrimages.png" alt="icon-arrow" />
-            <span>Паломничества</span>
-          </div>
-          <div class="sidebar__list-item_link-properties_element">
-            <img class="icon-15px mr-[5px]" src="assets/icons/icon-location.png" alt="icon-arrow" />
-            <span>Toulon - 83</span>
-          </div>
-        </div>
-        <h3 class="sidebar__list-item_link-heading">Под Покровом Божией Матери</h3>
-      </a>
+        <h3 class='sidebar__list-item_link-heading'>
+          {{place.name}}
+        </h3>
+      </button>
     </li>
   </ul>
 </div>

@@ -8,11 +8,11 @@ export interface Place extends StrapiBaseEntityLocalized {
   name: string;
   coordinates: Coordinates;
   description?: string;
-  category?: Category;
-  city?: City;
+  category: Category;
+  city: City;
 }
 
 export interface PlaceResponse extends Omit<Place, 'category' | 'city'> {
-  category?: StrapiResponseSingle<Category>;
-  city?: StrapiResponseSingle<City>;
+  category: StrapiResponseSingle<Category>;
+  city: StrapiResponseSingle<City>;
 }

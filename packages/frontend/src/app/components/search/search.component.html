@@ -1,0 +1,38 @@
+<!--	стиль для активации	is-focused-->
+<div class='search' [class._focused]='dropdownVisible'>
+  <div class='search__input'>
+    <input
+      (focus)='dropdownVisible = !!searchValue'
+      [(ngModel)]='searchValue'
+      (ngModelChange)='searchValueChange($event)'
+      class='icon-search'
+      type='text'
+      placeholder='Имя, город, почтовый индекс...' />
+    <span *ngIf='!!searchValue' class='icon-style-circle'>
+      <button (click)='searchClear()' class='icon-style-circle__button'>
+        <img class='icon-11px' src='../../../assets/icons/icon-close.svg' alt='icon-close' />
+      </button>
+    </span>
+  </div>
+
+  <div class='search__result divide-line-top'>
+    <ul *ngIf='filteredCitiesNames.length' class='search__result_category'>
+      <h3 class='search__result_category-heading'>Поиск в городах</h3>
+      <li *ngFor='let cityName of filteredCitiesNames' class='search__result_category-item'>
+        <button (click)='searchEntitySelect(cityName, "city")' class='icon-search icon-gray-style'>
+          {{ cityName }}
+        </button>
+      </li>
+    </ul>
+
+
+    <ul *ngIf='categoriesNames.length' class='search__result_category'>
+      <h3 class='search__result_category-heading'>Поиск в категориях</h3>
+      <li *ngFor='let categoryName of categoriesNames' class='search__result_category-item'>
+        <button (click)='searchEntitySelect(categoryName, "category")' class='icon-search icon-gray-style'>
+          {{ searchValue }} <span class='color-gray'>в категории {{ categoryName }}</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,6 +1,9 @@
-import { trigger, transition, style, animate } from '@angular/animations';
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { forkJoin } from 'rxjs';
+import { CategoriesService } from './services/rest/categories/categories.service';
 import { PlacesService } from './services/rest/places/places.service';
+import { SearchService } from './services/search/search.service';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +17,16 @@ import { PlacesService } from './services/rest/places/places.service';
 })
 export class AppComponent implements OnInit {
   sidebarVisible = false;
-  
-  constructor(private placesService: PlacesService) {}
+
+  constructor(
+    private placesService: PlacesService,
+    private categoriesService: CategoriesService,
+    private searchService: SearchService,
+  ) {}
 
   ngOnInit(): void {
-    this.placesService.loadPlaces().subscribe();
+    forkJoin([this.placesService.loadPlaces(), this.categoriesService.loadCategories()]).subscribe();
+
+    this.searchService.getSearchEntity().subscribe(searchEntity => this.sidebarVisible = !!searchEntity);
   }
 }

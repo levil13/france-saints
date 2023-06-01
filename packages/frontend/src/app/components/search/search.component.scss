@@ -1,0 +1,85 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/icons-sizes.scss';
+
+.search {
+  @apply relative rounded-full;
+  box-shadow: 0 0 15px -5px $shadow;
+  z-index: 401;
+
+  .search__input {
+    @apply relative w-[500px] rounded-full z-[11];
+
+    input {
+      @apply w-full rounded-full px-[45px] py-[8px];
+
+      &:focus {
+        background-image: url('../../../assets/icons/icon-search-focus.svg');
+      }
+
+      ::-webkit-input-placeholder {
+        /* Edge */
+        color: $text-primary;
+      }
+
+      :-ms-input-placeholder {
+        /* Internet Explorer 10-11 */
+        color: $text-primary;
+      }
+
+      ::placeholder {
+        color: $text-primary;
+      }
+    }
+
+    .icon-style-circle {
+      @apply absolute mr-[15px] top-1/2 right-0;
+      transform: translateY(-50%);
+    }
+  }
+
+  .search__result {
+    @apply hidden absolute left-0 w-full bg-white z-10;
+    box-shadow: 0 0 15px -5px $shadow;
+
+    &_category {
+      @apply pt-[15px];
+
+      &-heading {
+        @apply text-[13px] ml-[15px];
+        color: $text-primary;
+      }
+
+      &-item {
+        @apply w-full;
+
+        button {
+          @apply w-full text-left px-[45px] py-[8px];
+
+          &:hover {
+            background-color: $border;
+          }
+        }
+      }
+
+      &:last-child .search__result_category-item:last-child button {
+        @apply rounded-bl-[15px] rounded-br-[15px];
+      }
+    }
+  }
+
+  //actions
+  &._focused {
+    @apply rounded-[15px];
+
+    .search__input {
+      input {
+        @apply rounded-none rounded-br-none rounded-tl-[15px] rounded-tr-[15px];
+      }
+    }
+
+    .search__result {
+      @apply rounded-tl-none rounded-tr-none rounded-bl-[15px] rounded-br-[15px];
+      display: block;
+    }
+  }
+}

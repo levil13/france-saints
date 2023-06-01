@@ -20,12 +20,7 @@ export class PlacesService {
   }
 
   loadPlaces() {
-    const query = stringify(
-      {
-        populate: ['coordinates', 'category', 'city'],
-      },
-      { encodeValuesOnly: true }
-    );
+    const query = stringify({ populate: ['coordinates', 'category', 'city'] }, { encodeValuesOnly: true });
 
     return this.http
       .get<StrapiResponseMulti<PlaceResponse>>(`${this.apiUrl}/places?${query}`)
@@ -37,8 +32,8 @@ export class PlacesService {
     const places: Place[] = response.data.map(placeResponse => {
       const placeId = placeResponse.id;
       const placeAttrs = placeResponse.attributes;
-      const placeCategory = placeAttrs.category?.data.attributes;
-      const placeCity = placeAttrs.city?.data.attributes;
+      const placeCategory = placeAttrs.category.data.attributes;
+      const placeCity = placeAttrs.city.data.attributes;
 
       return { ...placeAttrs, id: placeId, category: placeCategory, city: placeCity };
     });

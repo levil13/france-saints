@@ -10,6 +10,7 @@ import { MapComponent } from './components/map/map.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SearchComponent } from './components/search/search.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, SidebarComponent, ModalComponent, MapComponent, SearchComponent],
@@ -18,8 +19,10 @@ import { SearchComponent } from './components/search/search.component';
     BrowserAnimationsModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}
