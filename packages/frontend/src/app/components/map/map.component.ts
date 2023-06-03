@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Place } from '../../models/rest/places/places.model';
 
 import * as L from 'leaflet';
@@ -6,6 +6,7 @@ import 'leaflet.markercluster';
 import { MapService } from '../../services/map/map.service';
 import { PlacesService } from '../../services/rest/places/places.service';
 import { filter } from 'rxjs';
+import { PlaceService } from '../../services/place/place.service';
 
 @Component({
   selector: 'app-map',
@@ -14,9 +15,6 @@ import { filter } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent implements OnInit {
-  @Output()
-  markerClick = new EventEmitter<Place>();
-
   @ViewChild('map', { read: ElementRef, static: true })
   private mapEl!: ElementRef;
 
@@ -24,7 +22,9 @@ export class MapComponent implements OnInit {
 
   private markersLayer!: L.MarkerClusterGroup;
 
-  constructor(private mapService: MapService, private placesService: PlacesService) {}
+  constructor(private mapService: MapService,
+              private placesService: PlacesService,
+              private placeService: PlaceService) {}
 
   ngOnInit() {
     this.placesService
@@ -34,18 +34,18 @@ export class MapComponent implements OnInit {
         this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         });
-        
+
         this.markersLayer = L.markerClusterGroup({ zoomToBoundsOnClick: false, showCoverageOnHover: false });
         this.processPlaces(places);
 
         this.markersLayer.on('clusterclick', cluster =>
-          this.mapService.flyToBounds(cluster.propagatedFrom.getBounds())
+          this.mapService.flyToBounds(cluster.propagatedFrom.getBounds()),
         );
 
         this.mapService.initMap(
           this.mapEl.nativeElement,
           [this.tileLayer, this.markersLayer],
-          this.markersLayer.getBounds().getCenter()
+          this.markersLayer.getBounds().getCenter(),
         );
       });
   }
@@ -54,9 +54,13 @@ export class MapComponent implements OnInit {
     this.markersLayer.clearLayers();
 
     places.forEach(item => {
-      L.marker([item.coordinates.latitude, item.coordinates.longitude], { title: item.name })
-        .on('click', () => this.markerClick.emit(item))
+      L.marker([item.coordinates.latitude, item.coordinates.longitude])
+        .on('click', () => this.selectPlace(item))
         .addTo(this.markersLayer);
     });
+  }
+
+  private selectPlace(place: Place) {
+    this.placeService.setSelectedPlace(place);
   }
 }

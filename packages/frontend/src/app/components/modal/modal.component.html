@@ -1,27 +1,27 @@
-<div class='modal'>
+<div *ngIf='(selectedPlace$ | async) as selectedPlace' class='modal'>
   <div class='modal__properties'>
     <div class='modal__properties-element'>
       <img
         class='icon-15px mr-[5px]'
         src='../../../assets/icons/icon-shrine.png'
         alt='icon-arrow' />
-      <span>Святыни</span>
+      <span>{{selectedPlace.category.name}}</span>
     </div>
     <div class='modal__properties-element'>
       <img
         class='icon-15px mr-[5px]'
         src='../../../assets/icons/icon-location.png'
         alt='icon-arrow' />
-      <span>Nice - 06</span>
+      <span>{{selectedPlace.city.name}}</span>
     </div>
   </div>
   <span class='icon-style-circle'>
-    <button class='icon-style-circle__button'>
-      <img class='icon-15px' src='../../../assets/icons/icon-close.svg' alt='icon-close' />
+    <button (click)='close()' class='icon-style-circle__button'>
+      <img class='icon-15px icon-style-circle__img' src='../../../assets/icons/icon-close.svg' alt='icon-close' />
     </button>
   </span>
-  <h3 class='modal__heading'>Терновый венец Спасителя</h3>
-  <button class='modal__zoom'>Приблизить</button>
+  <h3 class='modal__heading'>{{selectedPlace.name}}</h3>
+  <button (click)='zoom(selectedPlace.coordinates)' class='modal__zoom'>Приблизить</button>
   <div class='modal__slider'>
     <img src='../../../assets/icons/image.png' alt='image' />
   </div>

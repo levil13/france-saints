@@ -1,3 +1,3 @@
 module.exports = {
-  content: ['./**/src/**/*.{html,ts}'],
+  content: ['packages/frontend/src/**/*.{html,ts}'],
 };

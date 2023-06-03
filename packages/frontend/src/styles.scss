@@ -15,6 +15,7 @@ body {
   margin: 0;
   font-family: Roboto, sans-serif;
   @apply text-[16px] font-normal;
+  overflow: hidden;
 }
 
 textarea:focus,

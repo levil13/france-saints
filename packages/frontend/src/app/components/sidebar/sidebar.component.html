@@ -9,7 +9,7 @@
   </div>
   <ul class='sidebar__list'>
     <li *ngFor='let place of filteredPlaces' class='sidebar__list-item divide-line-top'>
-      <button class='sidebar__list-item_link'>
+      <button (click)='selectPlace(place)' class='sidebar__list-item_link'>
         <div class='sidebar__list-item_link-properties'>
           <div class='sidebar__list-item_link-properties_element'>
             <img class='icon-15px mr-[5px]' src='../../../assets/icons/icon-shrine.png' alt='icon-arrow' />

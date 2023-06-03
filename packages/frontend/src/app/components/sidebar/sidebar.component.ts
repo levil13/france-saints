@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SearchService } from '../../services/search/search.service';
 import { CategoriesService } from '../../services/rest/categories/categories.service';
 import { PlacesService } from '../../services/rest/places/places.service';
 import { Place } from '../../models/rest/places/places.model';
+import { PlaceService } from '../../services/place/place.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -18,10 +19,13 @@ export class SidebarComponent implements OnInit {
 
   constructor(private searchService: SearchService,
               private categoriesService: CategoriesService,
-              private placesService: PlacesService) {}
+              private placesService: PlacesService,
+              private placeService: PlaceService,
+              private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this.placesService.getPlaces().subscribe(places => this.places = places);
+    this.placesService.getPlaces()
+      .subscribe(places => this.places = places);
 
     this.searchService.getSearchEntity()
       .subscribe(searchEntity => {
@@ -30,11 +34,17 @@ export class SidebarComponent implements OnInit {
         if (searchEntity.type) {
           this.filteredPlaces = this.places.filter(place => {
             const typeFilter = place[searchEntity.type].name === searchEntity.typeTerm;
+            const nameFilter = place.name.toLowerCase().includes(searchEntity.term.toLowerCase());
 
-            return typeFilter && place.name.toLowerCase().includes(searchEntity.term.toLowerCase());
+            return typeFilter && nameFilter;
           });
+
+          this.cdr.markForCheck();
         }
       });
   }
 
+  selectPlace(place: Place) {
+    this.placeService.setSelectedPlace(place);
+  }
 }

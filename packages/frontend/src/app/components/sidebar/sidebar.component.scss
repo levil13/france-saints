@@ -40,10 +40,8 @@
     @apply mt-[15px];
 
     &-item {
-      @apply w-full;
-
       &_link {
-        @apply block py-[15px];
+        @apply block py-[15px] w-full;
 
         &-properties {
           @apply flex items-center gap-[15px];

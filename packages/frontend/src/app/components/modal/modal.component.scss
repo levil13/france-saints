@@ -7,6 +7,7 @@
   box-shadow: 0 0 15px -5px $shadow;
   max-height: calc(100vh - 110px);
   overflow-y: overlay;
+  z-index: 401;
 
   &::-webkit-scrollbar {
     @apply w-[7px];

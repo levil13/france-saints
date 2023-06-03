@@ -3,10 +3,13 @@
 </header>
 
 <aside>
-  <app-sidebar @slideInOutLeft *ngIf="sidebarVisible"></app-sidebar>
-  <!-- <app-modal></app-modal> -->
+  <app-sidebar @slideInOutLeft *ngIf='sidebarVisible'></app-sidebar>
 </aside>
 
 <main>
   <app-map></app-map>
 </main>
+
+<aside>
+  <app-modal @slideInOutRight *ngIf='placeInfoModalVisible'></app-modal>
+</aside>
