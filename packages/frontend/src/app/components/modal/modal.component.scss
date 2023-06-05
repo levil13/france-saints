@@ -2,12 +2,15 @@
 @import '../../../assets/styles/icons-sizes.scss';
 
 :host {
-  @apply absolute right-[32px] top-1/2 w-[450px] bg-white p-[32px] rounded-[15px];
-  transform: translateY(-50%);
-  box-shadow: 0 0 15px -5px $shadow;
-  max-height: calc(100vh - 110px);
+  @apply absolute bottom-0 right-0 z-[401];
+}
+
+.modal {
+  @apply relative w-[450px] p-[32px];
+  height: calc(100vh - 80px);
+  background-color: #fff;
+  //Прочитать на счет оверлея и можно ли его использовать
   overflow-y: overlay;
-  z-index: 401;
 
   &::-webkit-scrollbar {
     @apply w-[7px];
@@ -27,7 +30,7 @@
   }
 
   .modal__read-more {
-    @apply block px-[32px] py-[10px] mt-[10px] text-white rounded-full select-none;
+    @apply inline-block px-[32px] py-[10px] mt-[10px] text-white rounded-full select-none;
     background-color: $text-color;
 
     &:hover {
@@ -35,9 +38,9 @@
     }
   }
 
-  .icon-style-circle {
+  .icon-hover-style-circle {
     @apply absolute right-[25px] top-[25px];
-    .icon-style-circle__button {
+    .icon-hover-style-circle__button {
       @apply p-[10px];
     }
   }
@@ -76,10 +79,61 @@
   }
 
   .modal__slider {
-    @apply h-auto w-full mt-[15px];
+    @apply relative mt-[15px] rounded-[10px];
 
-    img {
-      @apply block w-full rounded-[10px];
+    &-images {
+      //@apply hidden;
+      @apply text-center;
+
+      &_item {
+        img {
+          @apply inline-block w-auto h-[214px];
+        }
+      }
+    }
+
+    &-navigation {
+      @apply absolute top-1/2;
+      transform: translateY(-50%);
+
+      &._right {
+        @apply right-0 mr-[5px];
+      }
+
+      &._left {
+        @apply left-0 right-auto ml-[5px];
+      }
+
+      .icon-hover-style-circle__button {
+        @apply p-0;
+      }
+
+    }
+
+    &-dots {
+      @apply absolute bottom-[5px] left-1/2;
+      transform: translateX(-50%);
+
+      &_item {
+        display: inline-block;
+        cursor: pointer;
+        height: 12px;
+        width: 12px;
+        margin: 0 5px;
+        background-color: $shadow;
+        border: 2px solid $border;
+        border-radius: 50%;
+
+        &:hover {
+          background-color: $border;
+        }
+
+        &._active, {
+          cursor: default;
+          background-color: $text-color;
+          border-color: $shadow;
+        }
+      }
     }
   }
 

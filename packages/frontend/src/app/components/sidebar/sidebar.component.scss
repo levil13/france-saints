@@ -2,16 +2,15 @@
 @import '../../../assets/styles/icons-sizes.scss';
 
 :host {
-  position: absolute;
-  z-index: 401;
+  @apply absolute bottom-0 left-0 z-[401];
 }
 
 .sidebar {
   @apply relative w-[350px] px-[32px] py-[15px];
   height: calc(100vh - 80px);
+  background-color: #fff;
   //Прочитать на счет оверлея и можно ли его использовать
   overflow-y: overlay;
-  background: #ffffff;
 
   &::-webkit-scrollbar {
     @apply w-[7px];
@@ -31,7 +30,7 @@
   }
 
   .sidebar__count {
-    .icon-style-circle {
+    .icon-hover-style-circle {
       @apply absolute right-[15px] top-[7.5px];
     }
   }

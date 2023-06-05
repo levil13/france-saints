@@ -1,30 +1,62 @@
-<div *ngIf='(selectedPlace$ | async) as selectedPlace' class='modal'>
+<div *ngIf='(selectedPlace$ | async) as selectedPlace' class='modal divide-line-top'>
   <div class='modal__properties'>
     <div class='modal__properties-element'>
-      <img
-        class='icon-15px mr-[5px]'
-        src='../../../assets/icons/icon-shrine.png'
-        alt='icon-arrow' />
+      <div class="icon-15px mr-[5px]">
+        <div class="icon-with-bg-circle">
+          <img class="icon-with-bg-circle__image" src='../../../assets/icons/icon-shrine.svg' alt='icon-shrine'/>
+        </div>
+      </div>
       <span>{{selectedPlace.category.name}}</span>
     </div>
     <div class='modal__properties-element'>
       <img
         class='icon-15px mr-[5px]'
-        src='../../../assets/icons/icon-location.png'
-        alt='icon-arrow' />
+        src='../../../assets/icons/icon-location.svg'
+        alt='icon-location'/>
       <span>{{selectedPlace.city.name}}</span>
     </div>
   </div>
-  <span class='icon-style-circle'>
-    <button (click)='close()' class='icon-style-circle__button'>
-      <img class='icon-15px icon-style-circle__img' src='../../../assets/icons/icon-close.svg' alt='icon-close' />
+  <span class='icon-hover-style-circle'>
+    <button (click)='close()' class='icon-hover-style-circle__button'>
+      <img class='icon-15px icon-style-circle__img' src='../../../assets/icons/icon-close.svg' alt='icon-close'/>
     </button>
   </span>
   <h3 class='modal__heading'>{{selectedPlace.name}}</h3>
   <button (click)='zoom(selectedPlace.coordinates)' class='modal__zoom'>Приблизить</button>
+
+  <!--  слайдер для простмотра картинок-->
   <div class='modal__slider'>
-    <img src='../../../assets/icons/image.png' alt='image' />
+    <div class="modal__slider-images">
+      <div class="modal__slider-images_item">
+        <img src='../../../assets/icons/image.png' alt='image'/>
+      </div>
+      <div class="modal__slider-images_item">
+        <img src='../../../assets/icons/image2.png' alt='image2'/>
+      </div>
+      <div class="modal__slider-images_item">
+        <img src='../../../assets/icons/image3.png' alt='image3'/>
+      </div>
+    </div>
+    <span class='modal__slider-navigation _left icon-hover-style-circle'>
+      <button class='icon-hover-style-circle__button'>
+        <img class="icon-arrow icon-30px" src='../../../assets/icons/icon-arrow.svg' alt='icon-arrow-left'/>
+      </button>
+    </span>
+    <span class='modal__slider-navigation _right icon-hover-style-circle'>
+      <button class='icon-hover-style-circle__button'>
+        <img class="icon-arrow right-arrow icon-30px" src='../../../assets/icons/icon-arrow.svg'
+             alt='icon-arrow-right'/>
+      </button>
+    </span>
+
+    <!--    _active на dots_item для активного состояния-->
+    <div class="modal__slider-dots">
+      <span class="modal__slider-dots_item _active"></span>
+      <span class="modal__slider-dots_item"></span>
+      <span class="modal__slider-dots_item"></span>
+    </div>
   </div>
+
   <div class='modal__information'>
     <div class='modal__information-item'>
       <h6 class='modal__information-item_title'>Место хранения</h6>
@@ -51,5 +83,5 @@
       эмиграdsadsadsadsadsa sxsadsadasdsa
     </p>
   </div>
-  <button class='modal__read-more'>Читать дальше</button>
+  <a href="#" class='modal__read-more'>Читать дальше</a>
 </div>

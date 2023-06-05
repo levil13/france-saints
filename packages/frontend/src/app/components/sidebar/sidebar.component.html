@@ -1,8 +1,8 @@
 <div class='sidebar divide-line-top'>
   <div class='sidebar__count'>
     {{filteredPlaces.length}} элемента
-    <span class='icon-style-circle'>
-      <button class='icon-style-circle__button'>
+    <span class='icon-hover-style-circle'>
+      <button class='icon-hover-style-circle__button'>
         <img class='icon-arrow icon-30px' src='../../../assets/icons/icon-arrow.svg' alt='icon-arrow' />
       </button>
     </span>
@@ -12,11 +12,15 @@
       <button (click)='selectPlace(place)' class='sidebar__list-item_link'>
         <div class='sidebar__list-item_link-properties'>
           <div class='sidebar__list-item_link-properties_element'>
-            <img class='icon-15px mr-[5px]' src='../../../assets/icons/icon-shrine.png' alt='icon-arrow' />
+            <div class="icon-15px mr-[5px]">
+              <div class="icon-with-bg-circle">
+                <img class="icon-with-bg-circle__image" src='../../../assets/icons/icon-shrine.svg' alt='icon-shrine' />
+              </div>
+            </div>
             <span>{{place.category.name}}</span>
           </div>
           <div class='sidebar__list-item_link-properties_element'>
-            <img class='icon-15px mr-[5px]' src='../../../assets/icons/icon-location.png' alt='icon-arrow' />
+            <img class='icon-15px mr-[5px]' src='../../../assets/icons/icon-location.svg' alt='icon-location' />
             <span>{{place.city.name}}</span>
           </div>
         </div>

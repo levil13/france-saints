@@ -1,12 +1,12 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Place } from '../../models/rest/places/places.model';
+import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Place} from '../../models/rest/places/places.model';
 
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
-import { MapService } from '../../services/map/map.service';
-import { PlacesService } from '../../services/rest/places/places.service';
-import { filter } from 'rxjs';
-import { PlaceService } from '../../services/place/place.service';
+import {MapService} from '../../services/map/map.service';
+import {PlacesService} from '../../services/rest/places/places.service';
+import {filter} from 'rxjs';
+import {PlaceService} from '../../services/place/place.service';
 
 @Component({
   selector: 'app-map',
@@ -15,7 +15,7 @@ import { PlaceService } from '../../services/place/place.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MapComponent implements OnInit {
-  @ViewChild('map', { read: ElementRef, static: true })
+  @ViewChild('map', {read: ElementRef, static: true})
   private mapEl!: ElementRef;
 
   private tileLayer!: L.TileLayer;
@@ -24,7 +24,8 @@ export class MapComponent implements OnInit {
 
   constructor(private mapService: MapService,
               private placesService: PlacesService,
-              private placeService: PlaceService) {}
+              private placeService: PlaceService) {
+  }
 
   ngOnInit() {
     this.placesService
@@ -35,7 +36,7 @@ export class MapComponent implements OnInit {
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         });
 
-        this.markersLayer = L.markerClusterGroup({ zoomToBoundsOnClick: false, showCoverageOnHover: false });
+        this.markersLayer = L.markerClusterGroup({zoomToBoundsOnClick: false, showCoverageOnHover: false});
         this.processPlaces(places);
 
         this.markersLayer.on('clusterclick', cluster =>
@@ -53,8 +54,16 @@ export class MapComponent implements OnInit {
   private processPlaces(places: Place[]) {
     this.markersLayer.clearLayers();
 
+    //"_selected" class for activate select style
+    const iconMarker = L.divIcon({
+      className: 'icon-marker-map',
+      html: "<div class='icon-marker-map__pin'><img class='icon-marker-map__pin-image' src='../../../assets/icons/icon-pilgrimages.svg' alt='icon-shrine'></div>",
+      iconSize: [40, 40],
+      iconAnchor: [20, 56],
+    });
+
     places.forEach(item => {
-      L.marker([item.coordinates.latitude, item.coordinates.longitude])
+      L.marker([item.coordinates.latitude, item.coordinates.longitude], {icon: iconMarker})
         .on('click', () => this.selectPlace(item))
         .addTo(this.markersLayer);
     });

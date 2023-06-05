@@ -8,7 +8,7 @@ export class MapService {
   private map!: L.Map;
 
   initMap(element: HTMLElement, layers: L.Layer[], center: L.LatLngExpression) {
-    const map = new L.Map(element, { zoom: 7, minZoom: 7, center, zoomControl: false });
+    const map = new L.Map(element, { zoom: 6, minZoom: 6, center, zoomControl: false });
 
     layers.forEach(layer => map.addLayer(layer));
 

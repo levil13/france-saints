@@ -36,6 +36,10 @@ button:focus {
   &.top-arrow {
     transform: rotate(-90deg);
   }
+
+  &.right-arrow {
+    transform: rotate(-180deg);
+  }
 }
 
 .icon-search {
@@ -49,15 +53,62 @@ button:focus {
   }
 }
 
-.icon-style-circle {
+.icon-hover-style-circle {
   @apply select-none;
 
-  .icon-style-circle__button {
+  .icon-hover-style-circle__button {
     @apply p-[5px] rounded-full;
     padding: 5px;
 
     &:hover {
       background-color: $border;
+    }
+  }
+}
+
+.icon-with-bg-circle {
+  @apply w-full h-full relative rounded-full;
+  background-color: $text-color;
+
+  &__image {
+    @apply absolute z-[1] top-0 left-0 w-full h-full p-[3px];
+  }
+}
+
+.icon-marker-map {
+  @apply rounded-full;
+
+  &__pin {
+    @apply w-full h-full relative rounded-full;
+    background-color: #fff;
+
+    &:after {
+      content: '';
+      @apply absolute top-[80%] left-1/2;
+      transform: translateX(-50%);
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-top: 25px solid #fff;
+    }
+
+    &-image {
+      @apply absolute z-[1] top-0 left-0 w-full h-full;
+      padding: 10px !important;
+      filter: brightness(0);
+    }
+  }
+
+  &._selected {
+    .icon-marker-map__pin {
+      background-color: $text-color;
+
+      &:after {
+        border-top-color: $text-color;
+      }
+
+      &-image {
+        filter: none;
+      }
     }
   }
 }

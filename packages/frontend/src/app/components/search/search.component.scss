@@ -4,7 +4,7 @@
 .search {
   @apply relative rounded-full;
   box-shadow: 0 0 15px -5px $shadow;
-  z-index: 401;
+  z-index: 402;
 
   .search__input {
     @apply relative w-[500px] rounded-full z-[11];
@@ -31,7 +31,7 @@
       }
     }
 
-    .icon-style-circle {
+    .icon-hover-style-circle {
       @apply absolute mr-[15px] top-1/2 right-0;
       transform: translateY(-50%);
     }
