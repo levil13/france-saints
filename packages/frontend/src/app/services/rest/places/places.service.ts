@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { stringify } from 'qs';
-import { BehaviorSubject, map, tap } from 'rxjs';
-import { Place, PlaceResponse } from '../../../models/rest/places/places.model';
-import { StrapiResponseMulti } from '../../../models/rest/strapi-response.model';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {stringify} from 'qs';
+import {BehaviorSubject, map, tap} from 'rxjs';
+import {Place, PlaceResponse} from '../../../models/rest/places/places.model';
+import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +20,7 @@ export class PlacesService {
   }
 
   loadPlaces() {
-    const query = stringify({ populate: ['coordinates', 'category', 'city'] }, { encodeValuesOnly: true });
+    const query = stringify({populate: ['coordinates', 'category', 'category.icon', 'city']}, {encodeValuesOnly: true});
 
     return this.http
       .get<StrapiResponseMulti<PlaceResponse>>(`${this.apiUrl}/places?${query}`)
@@ -33,9 +33,10 @@ export class PlacesService {
       const placeId = placeResponse.id;
       const placeAttrs = placeResponse.attributes;
       const placeCategory = placeAttrs.category.data.attributes;
+      const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data.attributes;
       const placeCity = placeAttrs.city.data.attributes;
 
-      return { ...placeAttrs, id: placeId, category: placeCategory, city: placeCity };
+      return {...placeAttrs, id: placeId, category: {...placeCategory, icon: placeCategoryIcon}, city: placeCity};
     });
 
     return places;

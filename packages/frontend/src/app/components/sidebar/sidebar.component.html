@@ -1,8 +1,13 @@
 <div class='sidebar divide-line-top'>
   <div class='sidebar__count'>
-    {{filteredPlaces.length}} элемента
+    <ng-container *ngIf='filteredPlaces.length; else emptyTemplate'>
+      Результат поиска
+    </ng-container>
+    <ng-template #emptyTemplate>
+      Нет результатов
+    </ng-template>
     <span class='icon-hover-style-circle'>
-      <button class='icon-hover-style-circle__button'>
+      <button (click)='closeClick.emit()' class='icon-hover-style-circle__button'>
         <img class='icon-arrow icon-30px' src='../../../assets/icons/icon-arrow.svg' alt='icon-arrow' />
       </button>
     </span>
@@ -12,9 +17,12 @@
       <button (click)='selectPlace(place)' class='sidebar__list-item_link'>
         <div class='sidebar__list-item_link-properties'>
           <div class='sidebar__list-item_link-properties_element'>
-            <div class="icon-15px mr-[5px]">
-              <div class="icon-with-bg-circle">
-                <img class="icon-with-bg-circle__image" src='../../../assets/icons/icon-shrine.svg' alt='icon-shrine' />
+            <div class='icon-15px mr-[5px]'>
+              <div class='icon-with-bg-circle'>
+                <!-- TODO move to env -->
+                <img class='icon-with-bg-circle__image'
+                     [src]='"http://localhost:1337" + place.category.icon?.url'
+                     [alt]='place.category.icon?.alternativeText' />
               </div>
             </div>
             <span>{{place.category.name}}</span>

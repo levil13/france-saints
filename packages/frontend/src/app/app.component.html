@@ -3,7 +3,9 @@
 </header>
 
 <aside>
-  <app-sidebar @slideInOutLeft *ngIf='sidebarVisible'></app-sidebar>
+  <app-sidebar @slideInOutLeft *ngIf='sidebarVisible'
+               (closeClick)='sidebarVisible = false'>
+  </app-sidebar>
 </aside>
 
 <main>

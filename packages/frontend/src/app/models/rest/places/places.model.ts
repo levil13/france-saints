@@ -1,8 +1,8 @@
-import { Category } from '../categories/categories.model';
-import { City } from '../cities/cities.model';
-import { StrapiBaseEntityLocalized } from '../strapi-base.model';
-import { Coordinates } from '../strapi-components.model';
-import { StrapiResponseSingle } from '../strapi-response.model';
+import {Category, CategoryResponse} from '../categories/categories.model';
+import {City} from '../cities/cities.model';
+import {StrapiBaseEntityLocalized} from '../strapi-base.model';
+import {Coordinates} from '../strapi-components.model';
+import {StrapiResponseSingle} from '../strapi-response.model';
 
 export interface Place extends StrapiBaseEntityLocalized {
   name: string;
@@ -13,6 +13,6 @@ export interface Place extends StrapiBaseEntityLocalized {
 }
 
 export interface PlaceResponse extends Omit<Place, 'category' | 'city'> {
-  category: StrapiResponseSingle<Category>;
+  category: StrapiResponseSingle<CategoryResponse>;
   city: StrapiResponseSingle<City>;
 }

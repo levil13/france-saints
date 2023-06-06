@@ -22,10 +22,13 @@ export class MapComponent implements OnInit {
 
   private markersLayer!: L.MarkerClusterGroup;
 
-  constructor(private mapService: MapService,
-              private placesService: PlacesService,
-              private placeService: PlaceService) {
-  }
+  private markers: L.Marker[] = [];
+
+  constructor(
+    private mapService: MapService,
+    private placesService: PlacesService,
+    private placeService: PlaceService
+  ) {}
 
   ngOnInit() {
     this.placesService
@@ -37,39 +40,74 @@ export class MapComponent implements OnInit {
         });
 
         this.markersLayer = L.markerClusterGroup({zoomToBoundsOnClick: false, showCoverageOnHover: false});
-        this.processPlaces(places);
+        this.markers = this.createMarkers(places);
+        this.refreshMarkers();
 
         this.markersLayer.on('clusterclick', cluster =>
-          this.mapService.flyToBounds(cluster.propagatedFrom.getBounds()),
+          this.mapService.flyToBounds(cluster.propagatedFrom.getBounds())
         );
 
         this.mapService.initMap(
           this.mapEl.nativeElement,
           [this.tileLayer, this.markersLayer],
-          this.markersLayer.getBounds().getCenter(),
+          this.markersLayer.getBounds().getCenter()
         );
       });
+
+    this.placeService.getSelectedPlace().subscribe(place => {
+      if (!this.markersLayer) return;
+
+      this.selectMarker(place);
+      this.refreshMarkers();
+    });
   }
 
-  private processPlaces(places: Place[]) {
+  private refreshMarkers() {
     this.markersLayer.clearLayers();
+    this.markersLayer.addLayers(this.markers);
+  }
 
-    //"_selected" class for activate select style
-    const iconMarker = L.divIcon({
+  private createMarkers(places: Place[]) {
+    return places.map(place => {
+      return L.marker([place.coordinates.latitude, place.coordinates.longitude], {
+        icon: this.createMarkerIcon(place),
+        title: place.name,
+      }).on('click', () => this.selectPlace(place));
+    });
+  }
+
+  private createMarkerIcon(place: Place) {
+    //TODO move to env
+    const srcUrl = `http://localhost:1337${place.category.icon?.url}`;
+    return L.divIcon({
       className: 'icon-marker-map',
-      html: "<div class='icon-marker-map__pin'><img class='icon-marker-map__pin-image' src='../../../assets/icons/icon-pilgrimages.svg' alt='icon-shrine'></div>",
+      html:
+        '<div class="icon-marker-map__pin">' +
+        `   <img class="icon-marker-map__pin-image" src=${srcUrl} alt=${place.category.icon?.alternativeText}>` +
+        '</div>',
       iconSize: [40, 40],
       iconAnchor: [20, 56],
-    });
-
-    places.forEach(item => {
-      L.marker([item.coordinates.latitude, item.coordinates.longitude], {icon: iconMarker})
-        .on('click', () => this.selectPlace(item))
-        .addTo(this.markersLayer);
     });
   }
 
   private selectPlace(place: Place) {
     this.placeService.setSelectedPlace(place);
+  }
+
+  private selectMarker(place: Place | null) {
+    this.markers.forEach(marker => {
+      const markerIcon = marker.options.icon;
+      if (!markerIcon) return;
+
+      if (marker.options.title === place?.name) {
+        if (!markerIcon.options.className?.includes('_selected')) {
+          markerIcon.options.className = markerIcon.options.className?.concat(' _selected');
+        }
+      } else {
+        if (markerIcon.options.className?.includes('_selected')) {
+          markerIcon.options.className = markerIcon.options.className?.replace(' _selected', '');
+        }
+      }
+    });
   }
 }
