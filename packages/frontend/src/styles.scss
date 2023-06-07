@@ -113,6 +113,18 @@ button:focus {
   }
 }
 
+.sidebar {
+  @apply absolute bottom-0 z-[401];
+
+  &._left {
+    @apply left-0;
+  }
+
+  &._right {
+    @apply right-0;
+  }
+}
+
 //header media
 @media screen and (max-width: 1024px) {
 }

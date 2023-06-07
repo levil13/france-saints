@@ -1,0 +1,61 @@
+@import '../../../assets/styles/colors.scss';
+@import '../../../assets/styles/icons-sizes.scss';
+
+.carousel {
+  @apply relative mt-[15px] rounded-[10px];
+
+  &__images {
+    //@apply hidden;
+    @apply text-center;
+
+    &-item {
+      img {
+        @apply inline-block w-auto h-[214px];
+      }
+    }
+  }
+
+  &__navigation {
+    @apply absolute top-1/2;
+    transform: translateY(-50%);
+
+    &._right {
+      @apply right-0 mr-[5px];
+    }
+
+    &._left {
+      @apply left-0 right-auto ml-[5px];
+    }
+
+    .icon-hover-style-circle__button {
+      @apply p-0;
+    }
+
+  }
+
+  &__dots {
+    @apply absolute bottom-[5px] left-1/2;
+    transform: translateX(-50%);
+
+    &-item {
+      display: inline-block;
+      cursor: pointer;
+      height: 12px;
+      width: 12px;
+      margin: 0 5px;
+      background-color: $shadow;
+      border: 2px solid $border;
+      border-radius: 50%;
+
+      &:hover {
+        background-color: $border;
+      }
+
+      &._active, {
+        cursor: default;
+        background-color: $text-color;
+        border-color: $shadow;
+      }
+    }
+  }
+}

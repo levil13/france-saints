@@ -6,12 +6,12 @@ import {Place} from '../../models/rest/places/places.model';
 import {PlaceService} from '../../services/place/place.service';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  selector: 'app-search-results',
+  templateUrl: './search-results.component.html',
+  styleUrls: ['./search-results.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidebarComponent implements OnInit {
+export class SearchResultsComponent implements OnInit {
   places: Place[] = [];
 
   private _filteredPlaces: Place[] = [];

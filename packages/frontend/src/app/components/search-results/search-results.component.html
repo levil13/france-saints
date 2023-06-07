@@ -1,5 +1,5 @@
-<div class='sidebar divide-line-top'>
-  <div class='sidebar__count'>
+<div class='search-results divide-line-top'>
+  <div class='search-results__count'>
     <ng-container *ngIf='filteredPlaces.length; else emptyTemplate'>
       Результат поиска
     </ng-container>
@@ -12,11 +12,11 @@
       </button>
     </span>
   </div>
-  <ul class='sidebar__list'>
-    <li *ngFor='let place of filteredPlaces' class='sidebar__list-item divide-line-top'>
-      <button (click)='selectPlace(place)' class='sidebar__list-item_link'>
-        <div class='sidebar__list-item_link-properties'>
-          <div class='sidebar__list-item_link-properties_element'>
+  <ul class='search-results__list'>
+    <li *ngFor='let place of filteredPlaces' class='search-results__list-item divide-line-top'>
+      <button (click)='selectPlace(place)' class='search-results__list-item_link'>
+        <div class='search-results__list-item_link-properties'>
+          <div class='search-results__list-item_link-properties_element'>
             <div class='icon-15px mr-[5px]'>
               <div class='icon-with-bg-circle'>
                 <!-- TODO move to env -->
@@ -27,12 +27,12 @@
             </div>
             <span>{{place.category.name}}</span>
           </div>
-          <div class='sidebar__list-item_link-properties_element'>
+          <div class='search-results__list-item_link-properties_element'>
             <img class='icon-15px mr-[5px]' src='../../../assets/icons/icon-location.svg' alt='icon-location' />
             <span>{{place.city.name}}</span>
           </div>
         </div>
-        <h3 class='sidebar__list-item_link-heading'>
+        <h3 class='search-results__list-item_link-heading'>
           {{place.name}}
         </h3>
       </button>

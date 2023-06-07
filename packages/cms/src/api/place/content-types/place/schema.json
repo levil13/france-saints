@@ -60,6 +60,19 @@
       "relation": "manyToOne",
       "target": "api::city.city",
       "inversedBy": "places"
+    },
+    "images": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
     }
   }
 }

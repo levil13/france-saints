@@ -4,12 +4,12 @@ import { MapService } from '../../services/map/map.service';
 import { Coordinates } from '../../models/rest/strapi-components.model';
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
+  selector: 'app-place-info',
+  templateUrl: './place-info.component.html',
+  styleUrls: ['./place-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalComponent {
+export class PlaceInfoComponent {
   constructor(private placeService: PlaceService,
               private mapService: MapService) {}
 

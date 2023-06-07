@@ -20,7 +20,10 @@ export class PlacesService {
   }
 
   loadPlaces() {
-    const query = stringify({populate: ['coordinates', 'category', 'category.icon', 'city']}, {encodeValuesOnly: true});
+    const query = stringify(
+      {populate: ['coordinates', 'images', 'category', 'category.icon', 'city']},
+      {encodeValuesOnly: true}
+    );
 
     return this.http
       .get<StrapiResponseMulti<PlaceResponse>>(`${this.apiUrl}/places?${query}`)
@@ -35,8 +38,18 @@ export class PlacesService {
       const placeCategory = placeAttrs.category.data.attributes;
       const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data.attributes;
       const placeCity = placeAttrs.city.data.attributes;
+      const placeImages = placeAttrs.images?.data?.map(imageResponse => ({
+        ...imageResponse.attributes,
+        id: imageResponse.id,
+      }));
 
-      return {...placeAttrs, id: placeId, category: {...placeCategory, icon: placeCategoryIcon}, city: placeCity};
+      return {
+        ...placeAttrs,
+        id: placeId,
+        category: {...placeCategory, icon: placeCategoryIcon},
+        city: placeCity,
+        images: placeImages,
+      };
     });
 
     return places;

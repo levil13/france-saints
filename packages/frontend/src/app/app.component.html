@@ -2,16 +2,16 @@
   <app-header></app-header>
 </header>
 
-<aside>
-  <app-sidebar @slideInOutLeft *ngIf='sidebarVisible'
-               (closeClick)='sidebarVisible = false'>
-  </app-sidebar>
+<aside @slideInOutLeft *ngIf='sidebarVisible' class='sidebar _left'>
+  <app-search-results
+    (closeClick)='sidebarVisible = false'>
+  </app-search-results>
 </aside>
 
 <main>
   <app-map></app-map>
 </main>
 
-<aside>
-  <app-modal @slideInOutRight *ngIf='placeInfoModalVisible'></app-modal>
+<aside @slideInOutRight *ngIf='placeInfoModalVisible' class='sidebar _right'>
+  <app-place-info></app-place-info>
 </aside>

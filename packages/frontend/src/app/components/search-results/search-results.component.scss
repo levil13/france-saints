@@ -1,15 +1,11 @@
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/icons-sizes.scss';
 
-:host {
-  @apply absolute bottom-0 left-0 z-[401];
-}
-
-.sidebar {
+.search-results {
   @apply relative w-[350px] px-[32px] py-[15px];
   height: calc(100vh - 80px);
   background-color: #fff;
-  //Прочитать на счет оверлея и можно ли его использовать
+  // TODO Прочитать на счет оверлея и можно ли его использовать
   overflow-y: overlay;
 
   &::-webkit-scrollbar {
@@ -29,13 +25,13 @@
     }
   }
 
-  .sidebar__count {
+  .search-results__count {
     .icon-hover-style-circle {
       @apply absolute right-[15px] top-[7.5px];
     }
   }
 
-  .sidebar__list {
+  .search-results__list {
     @apply mt-[15px];
 
     &-item {
@@ -61,7 +57,7 @@
         }
 
         &:hover {
-          .sidebar__list-item_link-heading {
+          .search-results__list-item_link-heading {
             color: $text-color;
           }
         }

@@ -1,15 +1,11 @@
 @import '../../../assets/styles/colors.scss';
 @import '../../../assets/styles/icons-sizes.scss';
 
-:host {
-  @apply absolute bottom-0 right-0 z-[401];
-}
-
-.modal {
+.place-info {
   @apply relative w-[450px] p-[32px];
   height: calc(100vh - 80px);
   background-color: #fff;
-  //Прочитать на счет оверлея и можно ли его использовать
+  // TODO Прочитать на счет оверлея и можно ли его использовать
   overflow-y: overlay;
 
   &::-webkit-scrollbar {
@@ -29,7 +25,7 @@
     }
   }
 
-  .modal__read-more {
+  .place-info__read-more {
     @apply inline-block px-[32px] py-[10px] mt-[10px] text-white rounded-full select-none;
     background-color: $text-color;
 
@@ -45,7 +41,7 @@
     }
   }
 
-  .modal__properties {
+  .place-info__properties {
     @apply flex items-center gap-[15px];
 
     &-element {
@@ -59,12 +55,12 @@
     }
   }
 
-  .modal__heading {
+  .place-info__heading {
     @apply mt-[5px] text-[21px] font-bold;
     color: $text-color;
   }
 
-  .modal__zoom {
+  .place-info__zoom {
     @apply pl-[20px] mt-[5px];
     background-image: url('../../../assets/icons/icon-zoom.svg');
     background-repeat: no-repeat;
@@ -78,66 +74,7 @@
     }
   }
 
-  .modal__slider {
-    @apply relative mt-[15px] rounded-[10px];
-
-    &-images {
-      //@apply hidden;
-      @apply text-center;
-
-      &_item {
-        img {
-          @apply inline-block w-auto h-[214px];
-        }
-      }
-    }
-
-    &-navigation {
-      @apply absolute top-1/2;
-      transform: translateY(-50%);
-
-      &._right {
-        @apply right-0 mr-[5px];
-      }
-
-      &._left {
-        @apply left-0 right-auto ml-[5px];
-      }
-
-      .icon-hover-style-circle__button {
-        @apply p-0;
-      }
-
-    }
-
-    &-dots {
-      @apply absolute bottom-[5px] left-1/2;
-      transform: translateX(-50%);
-
-      &_item {
-        display: inline-block;
-        cursor: pointer;
-        height: 12px;
-        width: 12px;
-        margin: 0 5px;
-        background-color: $shadow;
-        border: 2px solid $border;
-        border-radius: 50%;
-
-        &:hover {
-          background-color: $border;
-        }
-
-        &._active, {
-          cursor: default;
-          background-color: $text-color;
-          border-color: $shadow;
-        }
-      }
-    }
-  }
-
-  .modal__information {
+  .place-info__information {
     &-item {
       @apply py-[15px];
       border-top: 1px solid $border;
@@ -157,7 +94,7 @@
     }
   }
 
-  .modal__description {
+  .place-info__description {
     @apply leading-[21px] pt-[15px];
     overflow: hidden;
     display: -webkit-box;

@@ -5,7 +5,7 @@ export interface Coordinates extends StrapiBaseEntity {
   longitude: number;
 }
 
-export interface Icon extends StrapiBaseEntity {
+export interface Image extends StrapiBaseEntity {
   name: string;
   url: string;
   alternativeText: string;
