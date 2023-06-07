@@ -36,7 +36,7 @@ export class PlacesService {
       const placeId = placeResponse.id;
       const placeAttrs = placeResponse.attributes;
       const placeCategory = placeAttrs.category.data.attributes;
-      const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data.attributes;
+      const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data?.attributes;
       const placeCity = placeAttrs.city.data.attributes;
       const placeImages = placeAttrs.images?.data?.map(imageResponse => ({
         ...imageResponse.attributes,

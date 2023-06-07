@@ -18,6 +18,23 @@ body {
   overflow: hidden;
 }
 
+::-webkit-scrollbar {
+  @apply w-[7px];
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent my-[4px];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-full;
+  background-color: $shadow;
+
+  &:hover {
+    background-color: #d0d0d0;
+  }
+}
+
 textarea:focus,
 input:focus,
 button:focus {
@@ -71,7 +88,7 @@ button:focus {
   background-color: $text-color;
 
   &__image {
-    @apply absolute z-[1] top-0 left-0 w-full h-full p-[3px];
+    @apply absolute z-[1] top-0 left-0 w-full h-full p-[4px];
   }
 }
 

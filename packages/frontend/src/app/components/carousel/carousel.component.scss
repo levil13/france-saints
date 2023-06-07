@@ -2,10 +2,10 @@
 @import '../../../assets/styles/icons-sizes.scss';
 
 .carousel {
-  @apply relative mt-[15px] rounded-[10px];
+  @apply relative overflow-hidden mt-[15px] rounded-[10px];
+  background-color: $shadow;
 
   &__images {
-    //@apply hidden;
     @apply text-center;
 
     &-item {
@@ -42,19 +42,18 @@
       cursor: pointer;
       height: 12px;
       width: 12px;
-      margin: 0 5px;
-      background-color: $shadow;
+      margin: 0 3px;
+      background-color: #fff;
       border: 2px solid $border;
       border-radius: 50%;
 
       &:hover {
-        background-color: $border;
+        background-color: $shadow;
       }
 
       &._active, {
         cursor: default;
         background-color: $text-color;
-        border-color: $shadow;
       }
     }
   }

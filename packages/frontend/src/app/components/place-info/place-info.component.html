@@ -1,7 +1,7 @@
 <div *ngIf='(selectedPlace$ | async) as selectedPlace' class='place-info divide-line-top'>
   <div class='place-info__properties'>
     <div class='place-info__properties-element'>
-      <div class='icon-15px mr-[5px]'>
+      <div class='icon-20px'>
         <div class='icon-with-bg-circle'>
           <!-- TODO move to env -->
           <img class='icon-with-bg-circle__image'
@@ -13,7 +13,7 @@
     </div>
     <div class='place-info__properties-element'>
       <img
-        class='icon-15px mr-[5px]'
+        class='icon-20px'
         src='../../../assets/icons/icon-location.svg'
         alt='icon-location' />
       <span>{{selectedPlace.city.name}}</span>

@@ -1,11 +1,13 @@
 <div class='carousel'>
   <div class='carousel__images'>
-    <div *ngFor='let image of images; let index = index' class='carousel__images-item'>
-      <!-- TODO Replace to ENv-->
-      <img @fade *ngIf='index === selectedIndex'
-           [src]='"http://localhost:1337" + image.url'
-           [alt]='image.alternativeText' />
-    </div>
+    <ng-container *ngFor='let image of images; let index = index'>
+      <div *ngIf='index === selectedIndex' class='carousel__images-item'>
+        <!-- TODO Replace to ENv-->
+        <img
+          [src]='"http://localhost:1337" + image.url'
+          [alt]='image.alternativeText' />
+      </div>
+    </ng-container>
   </div>
 
   <ng-container *ngIf='images.length > 1'>

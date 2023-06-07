@@ -5,25 +5,7 @@
   @apply relative w-[450px] p-[32px];
   height: calc(100vh - 80px);
   background-color: #fff;
-  // TODO Прочитать на счет оверлея и можно ли его использовать
-  overflow-y: overlay;
-
-  &::-webkit-scrollbar {
-    @apply w-[7px];
-  }
-
-  &::-webkit-scrollbar-track {
-    @apply bg-transparent my-[4px];
-  }
-
-  &::-webkit-scrollbar-thumb {
-    @apply rounded-full;
-    background-color: $shadow;
-
-    &:hover {
-      background-color: #d0d0d0;
-    }
-  }
+  overflow-y: scroll;
 
   .place-info__read-more {
     @apply inline-block px-[32px] py-[10px] mt-[10px] text-white rounded-full select-none;
@@ -45,8 +27,12 @@
     @apply flex items-center gap-[15px];
 
     &-element {
-      @apply flex items-center;
+      @apply flex items-center gap-[5px];
       max-width: 50%;
+
+      div {
+        @apply shrink-0;
+      }
 
       span {
         @apply text-[13px] whitespace-nowrap overflow-hidden overflow-ellipsis;
