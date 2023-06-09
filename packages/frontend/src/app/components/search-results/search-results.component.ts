@@ -4,6 +4,8 @@ import {CategoriesService} from '../../services/rest/categories/categories.servi
 import {PlacesService} from '../../services/rest/places/places.service';
 import {Place} from '../../models/rest/places/places.model';
 import {PlaceService} from '../../services/place/place.service';
+import {MapService} from '../../services/map/map.service';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-search-results',
@@ -33,6 +35,7 @@ export class SearchResultsComponent implements OnInit {
     private categoriesService: CategoriesService,
     private placesService: PlacesService,
     private placeService: PlaceService,
+    private mapService: MapService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -44,13 +47,26 @@ export class SearchResultsComponent implements OnInit {
         return;
       }
 
-      if (searchEntity.type) {
-        this.filteredPlaces = this.places.filter(place => {
-          const typeFilter = place[searchEntity.type].name === searchEntity.typeTerm;
-          const nameFilter = place.name.toLowerCase().includes(searchEntity.term.toLowerCase());
+      switch (searchEntity.type) {
+        case 'city': {
+          this.filteredPlaces = this.places.filter(place => place[searchEntity.type].name === searchEntity.typeTerm);
+          const filteredPlacesCoords: [number, number][] = this.filteredPlaces.map(place => [
+            place.coordinates.latitude,
+            place.coordinates.longitude,
+          ]);
+          this.mapService.flyToBounds(new L.LatLngBounds(filteredPlacesCoords));
+          break;
+        }
+        case 'category':
+          this.filteredPlaces = this.places.filter(place => {
+            const typeFilter = place[searchEntity.type].name === searchEntity.typeTerm;
+            const nameFilter = place.name.toLowerCase().includes(searchEntity.term.toLowerCase());
 
-          return typeFilter && nameFilter;
-        });
+            return typeFilter && nameFilter;
+          });
+          break;
+        default:
+          break;
       }
     });
   }

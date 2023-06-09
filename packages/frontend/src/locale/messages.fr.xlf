@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="ru" target-language="fr" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="title" datatype="html">
+        <source>Православные Святыни Юга Франции</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/app.component.ts</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="read_more" datatype="html">
+        <source>Читать дальше</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/place-info/place-info.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="search_results" datatype="html">
+        <source>Результаты поиска</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/search-results/search-results.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="no_results" datatype="html">
+        <source>Нет результатов</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/search-results/search-results.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cities_search" datatype="html">
+        <source>Поиск в городах</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="categories_search" datatype="html">
+        <source>Поиск в категориях</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="in_category" datatype="html">
+        <source>в категории <x id="INTERPOLATION" equiv-text="{{ categoryName }}"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="search_placeholder" datatype="html">
+        <source>Имя, город, почтовый индекс...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.ts</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

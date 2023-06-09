@@ -5,11 +5,24 @@
   "prefix": "france-saints",
   "sourceRoot": "packages/frontend/src",
   "tags": [],
+  "i18n": {
+    "sourceLocale": "ru",
+    "locales": {
+      "fr": {
+        "translation": "packages/frontend/src/locale/messages.fr.xlf"
+      },
+      "en": {
+        "translation": "packages/frontend/src/locale/messages.en.xlf"
+      }
+    }
+  },
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "localize": true,
+        "i18nMissingTranslation": "error",
         "outputPath": "dist/packages/frontend",
         "index": "packages/frontend/src/index.html",
         "main": "packages/frontend/src/main.ts",
@@ -23,6 +36,15 @@
         "scripts": []
       },
       "configurations": {
+        "ru": {
+          "localize": ["ru"]
+        },
+        "fr": {
+          "localize": ["fr"]
+        },
+        "en": {
+          "localize": ["en"]
+        },
         "production": {
           "budgets": [
             {
@@ -52,11 +74,17 @@
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
+        "fr": {
+          "browserTarget": "frontend:build:development,fr"
+        },
+        "en": {
+          "browserTarget": "frontend:build:development,en"
+        },
         "production": {
           "browserTarget": "frontend:build:production"
         },
         "development": {
-          "browserTarget": "frontend:build:development"
+          "browserTarget": "frontend:build:development,ru"
         }
       },
       "defaultConfiguration": "development"
@@ -64,7 +92,9 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "frontend:build"
+        "browserTarget": "frontend:build",
+        "format": "xlf",
+        "outputPath": "packages/frontend/src/locale"
       }
     },
     "lint": {

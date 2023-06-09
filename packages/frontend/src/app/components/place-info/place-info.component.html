@@ -25,11 +25,9 @@
     </button>
   </span>
   <h3 class='place-info__heading'>{{selectedPlace.name}}</h3>
-  <button (click)='zoom(selectedPlace.coordinates)' class='place-info__zoom'>Приблизить</button>
 
   <app-carousel *ngIf='selectedPlace.images'
                 [images]='selectedPlace.images'>
-
   </app-carousel>
 
   <div class='place-info__information'>
@@ -58,5 +56,5 @@
       эмиграdsadsadsadsadsa sxsadsadasdsa
     </p>
   </div>
-  <a href='#' class='place-info__read-more'>Читать дальше</a>
+  <a i18n='@@read_more' class='place-info__read-more'>Читать дальше</a>
 </div>

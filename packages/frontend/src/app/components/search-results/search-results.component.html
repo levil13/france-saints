@@ -1,11 +1,7 @@
 <div class='search-results divide-line-top'>
   <div class='search-results__count'>
-    <ng-container *ngIf='filteredPlaces.length; else emptyTemplate'>
-      Результат поиска
-    </ng-container>
-    <ng-template #emptyTemplate>
-      Нет результатов
-    </ng-template>
+    <ng-container i18n='@@search_results' *ngIf='filteredPlaces.length'>Результаты поиска</ng-container>
+    <ng-container i18n='@@no_results' *ngIf='!filteredPlaces.length'>Нет результатов</ng-container>
     <span class='icon-hover-style-circle'>
       <button (click)='closeClick.emit()' class='icon-hover-style-circle__button'>
         <img class='icon-arrow icon-30px' src='../../../assets/icons/icon-arrow.svg' alt='icon-arrow' />

@@ -1,10 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { Place } from '../../models/rest/places/places.model';
-import { MapService } from '../map/map.service';
-import { PlacesService } from '../rest/places/places.service';
-import * as L from 'leaflet';
-import { LatLngBoundsLiteral } from 'leaflet';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {Place} from '../../models/rest/places/places.model';
+import {MapService} from '../map/map.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,21 +9,12 @@ import { LatLngBoundsLiteral } from 'leaflet';
 export class PlaceService {
   private selectedPlace$ = new BehaviorSubject<Place | null>(null);
 
-  constructor(private mapService: MapService,
-              private placesService: PlacesService) {}
+  constructor(private mapService: MapService) {}
 
   setSelectedPlace(entity: Place | null) {
-    if (entity && entity !== this.selectedPlace$.getValue()) {
-      this.placesService.getPlaces()
-        .subscribe(places => {
-          const cityPlacesCoords: LatLngBoundsLiteral = places
-            .filter(place => place.city.name === entity.city.name)
-            .map(place => [place.coordinates.latitude, place.coordinates.longitude]);
-
-          this.mapService.flyToBounds(new L.LatLngBounds(cityPlacesCoords));
-        });
+    if (entity && this.mapService.getZoom() !== 18) {
+      this.mapService.flyTo({lat: entity.coordinates.latitude, lng: entity.coordinates.longitude}, 18);
     }
-
     this.selectedPlace$.next(entity);
   }
 

@@ -5,6 +5,7 @@ import {CategoriesService} from './services/rest/categories/categories.service';
 import {PlacesService} from './services/rest/places/places.service';
 import {SearchService} from './services/search/search.service';
 import {PlaceService} from './services/place/place.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -49,8 +50,11 @@ export class AppComponent implements OnInit {
     private categoriesService: CategoriesService,
     private searchService: SearchService,
     private placeService: PlaceService,
-    private cdr: ChangeDetectorRef
-  ) {}
+    private cdr: ChangeDetectorRef,
+    private titleService: Title
+  ) {
+    this.titleService.setTitle($localize`:@@title:Православные Святыни Юга Франции`);
+  }
 
   ngOnInit(): void {
     forkJoin([this.placesService.loadPlaces(), this.categoriesService.loadCategories()]).subscribe();

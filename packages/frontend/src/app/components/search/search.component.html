@@ -7,7 +7,7 @@
       (ngModelChange)='searchValueChange($event)'
       class='icon-search'
       type='text'
-      placeholder='Имя, город, почтовый индекс...' />
+      [placeholder]='placeholder' />
     <span *ngIf='!!searchValue' class='icon-hover-style-circle'>
       <button (click)='searchClear()' class='icon-hover-style-circle__button'>
         <img class='icon-11px' src='../../../assets/icons/icon-close.svg' alt='icon-close' />
@@ -17,7 +17,7 @@
 
   <div class='search__result divide-line-top'>
     <ul *ngIf='filteredCitiesNames.length' class='search__result_category'>
-      <h3 class='search__result_category-heading'>Поиск в городах</h3>
+      <h3 i18n='@@cities_search' class='search__result_category-heading'>Поиск в городах</h3>
       <li *ngFor='let cityName of filteredCitiesNames' class='search__result_category-item'>
         <button (click)='searchEntitySelect(cityName, "city")' class='icon-search icon-gray-style'>
           {{ cityName }}
@@ -27,10 +27,10 @@
 
 
     <ul *ngIf='categoriesNames.length' class='search__result_category'>
-      <h3 class='search__result_category-heading'>Поиск в категориях</h3>
+      <h3 i18n='@@categories_search' class='search__result_category-heading'>Поиск в категориях</h3>
       <li *ngFor='let categoryName of categoriesNames' class='search__result_category-item'>
         <button (click)='searchEntitySelect(categoryName, "category")' class='icon-search icon-gray-style'>
-          {{ searchValue }} <span class='color-gray'>в категории {{ categoryName }}</span>
+          {{ searchValue }} <span class='color-gray' i18n='@@in_category'>в категории {{ categoryName }}</span>
         </button>
       </li>
     </ul>

@@ -1,7 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PlaceService } from '../../services/place/place.service';
-import { MapService } from '../../services/map/map.service';
-import { Coordinates } from '../../models/rest/strapi-components.model';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {PlaceService} from '../../services/place/place.service';
 
 @Component({
   selector: 'app-place-info',
@@ -10,16 +8,11 @@ import { Coordinates } from '../../models/rest/strapi-components.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlaceInfoComponent {
-  constructor(private placeService: PlaceService,
-              private mapService: MapService) {}
+  constructor(private placeService: PlaceService) {}
 
   selectedPlace$ = this.placeService.getSelectedPlace();
 
   close() {
     this.placeService.setSelectedPlace(null);
-  }
-
-  zoom(coordinates: Coordinates) {
-    this.mapService.flyTo([coordinates.latitude, coordinates.longitude], 18);
   }
 }

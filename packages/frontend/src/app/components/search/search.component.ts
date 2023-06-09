@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit } from '@angular/core';
-import { debounceTime, map, Subject, tap } from 'rxjs';
-import { CategoriesService } from '../../services/rest/categories/categories.service';
-import { PlacesService } from '../../services/rest/places/places.service';
-import { SEARCH_TYPE, SearchService } from '../../services/search/search.service';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {debounceTime, map, Subject, tap} from 'rxjs';
+import {CategoriesService} from '../../services/rest/categories/categories.service';
+import {PlacesService} from '../../services/rest/places/places.service';
+import {SEARCH_TYPE, SearchService} from '../../services/search/search.service';
+import {PlaceService} from '../../services/place/place.service';
 
 @Component({
   selector: 'app-search',
@@ -11,6 +12,8 @@ import { SEARCH_TYPE, SearchService } from '../../services/search/search.service
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
+  placeholder = $localize`:@@search_placeholder:Имя, город, почтовый индекс...`;
+
   private _dropdownVisible = false;
 
   public get dropdownVisible() {
@@ -40,31 +43,35 @@ export class SearchComponent implements OnInit {
     private placesService: PlacesService,
     private categoriesService: CategoriesService,
     private searchService: SearchService,
-    private elementRef: ElementRef,
+    private placeService: PlaceService,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
-    this.categoriesService.getCategories()
-      .subscribe(categories => this.categoriesNames = categories.map(category => category.name));
+    this.categoriesService
+      .getCategories()
+      .subscribe(categories => (this.categoriesNames = categories.map(category => category.name)));
 
-    this.placesService.getPlaces()
+    this.placesService
+      .getPlaces()
       .subscribe(places => this.citiesNames = Array.from(new Set(places.reduce((arr: string[], place) => arr.concat(place.city.name), []))));
 
     this.initSearchValueChangeHandler();
   }
 
   private initSearchValueChangeHandler() {
-    this.searchValueChange$.pipe(
-      debounceTime(300),
-      map(value => value.trim()),
-      tap(value => {
-        this.dropdownVisible = !!value.length;
+    this.searchValueChange$
+      .pipe(
+        debounceTime(300),
+        map(value => value.trim()),
+        tap(value => {
+          this.dropdownVisible = !!value.length;
 
-        if (!value) {
-          this.searchService.setSearchEntity(null);
-        }
-      }),
-    )
+          if (!value) {
+            this.searchService.setSearchEntity(null);
+          }
+        })
+      )
       .subscribe(searchValue => this.filteredCitiesNames = this.citiesNames.filter(cityName => cityName.toLowerCase().includes(searchValue.toLowerCase())));
   }
 
@@ -79,8 +86,12 @@ export class SearchComponent implements OnInit {
   }
 
   searchEntitySelect(typeTerm: string, type: SEARCH_TYPE) {
+    if (type === 'city') {
+      this.searchValue = typeTerm;
+    }
     this.dropdownVisible = false;
-    this.searchService.setSearchEntity({ term: this.searchValue, typeTerm, type });
+    this.searchService.setSearchEntity({term: this.searchValue, typeTerm, type});
+    this.placeService.setSelectedPlace(null);
   }
 
   searchClear() {
