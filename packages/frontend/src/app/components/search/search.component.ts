@@ -54,7 +54,12 @@ export class SearchComponent implements OnInit {
 
     this.placesService
       .getPlaces()
-      .subscribe(places => this.citiesNames = Array.from(new Set(places.reduce((arr: string[], place) => arr.concat(place.city.name), []))));
+      .subscribe(
+        places =>
+          (this.citiesNames = Array.from(
+            new Set(places.reduce((arr: string[], place) => arr.concat(place.city.name), []))
+          ))
+      );
 
     this.initSearchValueChangeHandler();
   }
@@ -72,7 +77,20 @@ export class SearchComponent implements OnInit {
           }
         })
       )
-      .subscribe(searchValue => this.filteredCitiesNames = this.citiesNames.filter(cityName => cityName.toLowerCase().includes(searchValue.toLowerCase())));
+      .subscribe(searchValue => this.filterCities(searchValue));
+  }
+
+  private filterCities(searchValue: string) {
+    const searchValueRegExp = new RegExp(
+      searchValue
+        .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+        .split(' ')
+        .join('\\s*'),
+      'gi'
+    );
+    this.filteredCitiesNames = this.citiesNames
+      .filter(cityName => cityName.match(searchValueRegExp))
+      .map(filteredCityName => filteredCityName.replace(searchValueRegExp, '<b>$&</b>'));
   }
 
   private checkAndHandleOutsideClick(event: Event) {
@@ -88,6 +106,7 @@ export class SearchComponent implements OnInit {
   searchEntitySelect(typeTerm: string, type: SEARCH_TYPE) {
     if (type === 'city') {
       this.searchValue = typeTerm;
+      this.filterCities(typeTerm);
     }
     this.dropdownVisible = false;
     this.searchService.setSearchEntity({term: this.searchValue, typeTerm, type});

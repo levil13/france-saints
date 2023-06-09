@@ -41,7 +41,7 @@
     @apply hidden absolute left-0 w-full bg-white z-10;
     box-shadow: 0 0 15px -5px $shadow;
 
-    &_category {
+    &-list {
       @apply pt-[15px];
 
       &-heading {
