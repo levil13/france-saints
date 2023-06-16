@@ -107,10 +107,10 @@ export class SearchComponent implements OnInit {
     if (type === 'city') {
       this.searchValue = typeTerm;
       this.filterCities(typeTerm);
+      this.placeService.setSelectedPlace(null);
     }
     this.dropdownVisible = false;
     this.searchService.setSearchEntity({term: this.searchValue, typeTerm, type});
-    this.placeService.setSelectedPlace(null);
   }
 
   searchClear() {

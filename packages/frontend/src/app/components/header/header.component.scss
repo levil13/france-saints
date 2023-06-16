@@ -23,47 +23,6 @@
     color: $text-primary;
 
     &-item {
-      &.changer-lang {
-        @apply relative;
-
-        button {
-          @apply flex items-center gap-[10px];
-
-          &:hover {
-            color: $text-color;
-          }
-        }
-
-        .header__menu-lang {
-          @apply hidden absolute z-10 left-1/2 bg-white rounded-[15px] mt-[15px] px-[15px];
-          transform: translateX(-50%);
-          box-shadow: 0 0 15px -5px $shadow;
-
-          &_item {
-            @apply w-full;
-            border-top: 1px solid $border;
-
-            &:first-child {
-              border: 0;
-            }
-
-            a {
-              @apply block py-[15px];
-            }
-          }
-        }
-
-        &.is-active {
-          button .icon-arrow {
-            transform: rotate(90deg);
-          }
-
-          .header__menu-lang {
-            @apply block;
-          }
-        }
-      }
-
       a:hover {
         color: $text-color;
       }

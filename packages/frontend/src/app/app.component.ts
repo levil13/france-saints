@@ -6,6 +6,7 @@ import {PlacesService} from './services/rest/places/places.service';
 import {SearchService} from './services/search/search.service';
 import {PlaceService} from './services/place/place.service';
 import {Title} from '@angular/platform-browser';
+import {LanguagesService} from './services/rest/languages/languages.service';
 
 @Component({
   selector: 'app-root',
@@ -50,6 +51,7 @@ export class AppComponent implements OnInit {
     private categoriesService: CategoriesService,
     private searchService: SearchService,
     private placeService: PlaceService,
+    private languageService: LanguagesService,
     private cdr: ChangeDetectorRef,
     private titleService: Title
   ) {
@@ -57,7 +59,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    forkJoin([this.placesService.loadPlaces(), this.categoriesService.loadCategories()]).subscribe();
+    forkJoin([
+      this.placesService.loadPlaces(),
+      this.categoriesService.loadCategories(),
+      this.languageService.loadLanguages(),
+    ]).subscribe();
 
     this.searchService.getSearchEntity().subscribe(searchEntity => {
       if (searchEntity === null) return;

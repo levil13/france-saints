@@ -12,6 +12,7 @@ import {SearchResultsComponent} from './components/search-results/search-results
 import {SearchComponent} from './components/search/search.component';
 import {FormsModule} from '@angular/forms';
 import {CarouselComponent} from './components/carousel/carousel.component';
+import {LanguageSelectorComponent} from './components/language-selector/language-selector.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {CarouselComponent} from './components/carousel/carousel.component';
     MapComponent,
     SearchComponent,
     CarouselComponent,
+    LanguageSelectorComponent,
   ],
   imports: [
     BrowserModule,

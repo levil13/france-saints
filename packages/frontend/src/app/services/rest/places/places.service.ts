@@ -4,6 +4,7 @@ import {stringify} from 'qs';
 import {BehaviorSubject, map, tap} from 'rxjs';
 import {Place, PlaceResponse} from '../../../models/rest/places/places.model';
 import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
+import {LanguagesService} from '../languages/languages.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class PlacesService {
 
   private places$ = new BehaviorSubject<Place[]>([]);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private languagesService: LanguagesService) {}
 
   getPlaces() {
     return this.places$.asObservable();
@@ -26,7 +27,9 @@ export class PlacesService {
     );
 
     return this.http
-      .get<StrapiResponseMulti<PlaceResponse>>(`${this.apiUrl}/places?${query}`)
+      .get<StrapiResponseMulti<PlaceResponse>>(
+        `${this.apiUrl}/places?locale=${this.languagesService.currentLanguageCode}&${query}`
+      )
       .pipe(map(response => this.processResponse(response)))
       .pipe(tap(places => this.places$.next(places)));
   }

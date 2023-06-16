@@ -1,0 +1,17 @@
+<ng-container *ngIf='nonSelectedLanguages.length'>
+  <li class='language-selector'>
+    <button (click)='dropdownVisible = !dropdownVisible'>
+      <span>{{selectedLanguage?.name}}</span>
+      <img class='icon-arrow icon-25px'
+           [class.top-arrow]='!dropdownVisible'
+           [class.bottom-arrow]='dropdownVisible'
+           src='../../../assets/icons/icon-arrow.svg'
+           alt='icon-arrow' />
+    </button>
+    <ul @fade *ngIf='dropdownVisible' class='language-selector__dropdown'>
+      <li *ngFor='let language of nonSelectedLanguages' class='language-selector__dropdown-item'>
+        <a [href]='"/" + language.code + "/"'>{{language.name}}</a>
+      </li>
+    </ul>
+  </li>
+</ng-container>

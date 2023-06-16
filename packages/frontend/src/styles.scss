@@ -50,8 +50,14 @@ button:focus {
 }
 
 .icon-arrow {
+  transition: transform 200ms;
+
   &.top-arrow {
     transform: rotate(-90deg);
+  }
+
+  &.bottom-arrow {
+    transform: rotate(90deg);
   }
 
   &.right-arrow {

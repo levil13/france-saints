@@ -12,7 +12,7 @@ export class PlaceService {
   constructor(private mapService: MapService) {}
 
   setSelectedPlace(entity: Place | null) {
-    if (entity && this.mapService.getZoom() !== 18) {
+    if (entity && this.selectedPlace$.value !== entity) {
       this.mapService.flyTo({lat: entity.coordinates.latitude, lng: entity.coordinates.longitude}, 18);
     }
     this.selectedPlace$.next(entity);

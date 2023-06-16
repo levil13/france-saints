@@ -1,18 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Image} from '../../models/rest/strapi-components.model';
-import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('fade', [
-      transition(':enter', [style({opacity: 0}), animate(250, style({opacity: 1}))]),
-      transition(':leave', [animate(250, style({opacity: 0}))]),
-    ]),
-  ],
 })
 export class CarouselComponent {
   private _selectedIndex = 0;
