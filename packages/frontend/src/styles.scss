@@ -4,12 +4,11 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-@import "leaflet/dist/leaflet.css";
-@import "leaflet.markercluster/dist/MarkerCluster.css";
-@import "leaflet.markercluster/dist/MarkerCluster.Default.css";
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
-@import 'assets/styles/colors.scss';
-@import 'assets/styles/icons-sizes.scss';
+@import 'assets/styles/colors';
 
 body {
   margin: 0;
@@ -28,7 +27,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   @apply rounded-full;
-  background-color: $shadow;
+  background-color: var(--shadow-color);
 
   &:hover {
     background-color: #d0d0d0;
@@ -42,11 +41,11 @@ button:focus {
 }
 
 .color-gray {
-  color: $text-primary;
+  color: var(--text-primary-color);
 }
 
 .divide-line-top {
-  border-top: 1px solid $border;
+  border-top: 1px solid var(--border-color);
 }
 
 .icon-arrow {
@@ -71,7 +70,7 @@ button:focus {
   background-size: 18px 18px;
   background-position: 15px center;
 
-  &.icon-gray-style {
+  &._gray {
     background-image: url('assets/icons/icon-search-focus.svg');
   }
 }
@@ -84,14 +83,14 @@ button:focus {
     padding: 5px;
 
     &:hover {
-      background-color: $border;
+      background-color: var(--border-color);
     }
   }
 }
 
 .icon-with-bg-circle {
   @apply w-full h-full relative rounded-full;
-  background-color: $text-color;
+  background-color: var(--text-color);
 
   &__image {
     @apply absolute z-[1] top-0 left-0 w-full h-full p-[4px];
@@ -123,10 +122,10 @@ button:focus {
 
   &._selected {
     .icon-marker-map__pin {
-      background-color: $text-color;
+      background-color: var(--text-color);
 
       &:after {
-        border-top-color: $text-color;
+        border-top-color: var(--text-color);
       }
 
       &-image {
@@ -136,15 +135,13 @@ button:focus {
   }
 }
 
-.sidebar {
-  @apply absolute bottom-0 z-[401];
+$sizes: 11px, 15px, 20px, 25px, 30px, 50px;
 
-  &._left {
-    @apply left-0;
-  }
-
-  &._right {
-    @apply right-0;
+@each $size in $sizes {
+  .icon-#{$size} {
+    font-size: $size;
+    height: $size;
+    width: $size;
   }
 }
 

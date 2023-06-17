@@ -1,6 +1,3 @@
-@import '../../../assets/styles/colors.scss';
-@import '../../../assets/styles/icons-sizes.scss';
-
 .search-results {
   @apply relative w-[350px] px-[32px] py-[15px];
   height: calc(100vh - 80px);
@@ -33,7 +30,7 @@
 
             span {
               @apply text-[13px] whitespace-nowrap overflow-hidden overflow-ellipsis;
-              color: $text-primary;
+              color: var(--text-primary-color);
             }
           }
         }
@@ -44,7 +41,7 @@
 
         &:hover {
           .search-results__list-item_link-heading {
-            color: $text-color;
+            color: var(--text-color);
           }
         }
       }

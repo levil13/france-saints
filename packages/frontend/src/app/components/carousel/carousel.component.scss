@@ -1,9 +1,6 @@
-@import '../../../assets/styles/colors.scss';
-@import '../../../assets/styles/icons-sizes.scss';
-
 .carousel {
   @apply relative overflow-hidden mt-[15px] rounded-[10px];
-  background-color: $shadow;
+  background-color: var(--shadow-color);
 
   &__images {
     @apply text-center;
@@ -44,16 +41,16 @@
       width: 12px;
       margin: 0 3px;
       background-color: #fff;
-      border: 2px solid $border;
+      border: 2px solid var(--border-color);
       border-radius: 50%;
 
       &:hover {
-        background-color: $shadow;
+        background-color: var(--shadow-color);
       }
 
       &._active, {
         cursor: default;
-        background-color: $text-color;
+        background-color: var(--text-color);
       }
     }
   }

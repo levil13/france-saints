@@ -1,9 +1,6 @@
-@import '../../../assets/styles/colors.scss';
-@import '../../../assets/styles/icons-sizes.scss';
-
 .search {
   @apply relative rounded-full;
-  box-shadow: 0 0 15px -5px $shadow;
+  box-shadow: 0 0 15px -5px var(--shadow-color);
   z-index: 402;
 
   .search__input {
@@ -12,22 +9,18 @@
     input {
       @apply w-full rounded-full px-[45px] py-[8px];
 
-      &:focus {
-        background-image: url('../../../assets/icons/icon-search-focus.svg');
-      }
-
       ::-webkit-input-placeholder {
         /* Edge */
-        color: $text-primary;
+        color: var(--text-primary-color);
       }
 
       :-ms-input-placeholder {
         /* Internet Explorer 10-11 */
-        color: $text-primary;
+        color: var(--text-primary-color);
       }
 
       ::placeholder {
-        color: $text-primary;
+        color: var(--text-primary-color);
       }
     }
 
@@ -39,14 +32,14 @@
 
   .search__result {
     @apply hidden absolute left-0 w-full bg-white z-10;
-    box-shadow: 0 0 15px -5px $shadow;
+    box-shadow: 0 0 15px -5px var(--shadow-color);
 
     &-list {
       @apply pt-[15px];
 
       &-heading {
         @apply text-[13px] ml-[15px];
-        color: $text-primary;
+        color: var(--text-primary-color);
       }
 
       &-item {
@@ -56,7 +49,7 @@
           @apply w-full text-left px-[45px] py-[8px];
 
           &:hover {
-            background-color: $border;
+            background-color: var(--border-color);
           }
         }
       }

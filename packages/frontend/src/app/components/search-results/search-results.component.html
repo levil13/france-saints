@@ -4,7 +4,7 @@
     <ng-container i18n='@@no_results' *ngIf='!filteredPlaces.length'>Нет результатов</ng-container>
     <span class='icon-hover-style-circle'>
       <button (click)='closeClick.emit()' class='icon-hover-style-circle__button'>
-        <img class='icon-arrow icon-30px' src='../../../assets/icons/icon-arrow.svg' alt='icon-arrow' />
+        <img class='icon-arrow icon-30px' src='assets/icons/icon-arrow.svg' alt='icon-arrow' />
       </button>
     </span>
   </div>
@@ -24,7 +24,7 @@
             <span>{{place.category.name}}</span>
           </div>
           <div class='search-results__list-item_link-properties_element'>
-            <img class='icon-20px' src='../../../assets/icons/icon-location.svg' alt='icon-location' />
+            <img class='icon-20px' src='assets/icons/icon-location.svg' alt='icon-location' />
             <span>{{place.city.name}}</span>
           </div>
         </div>

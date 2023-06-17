@@ -28,6 +28,11 @@
         "main": "packages/frontend/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "packages/frontend/tsconfig.app.json",
+        "allowedCommonJsDependencies": [
+          "qs",
+          "leaflet",
+          "leaflet.markercluster"
+        ],
         "assets": [
           "packages/frontend/src/favicon.ico",
           "packages/frontend/src/assets"

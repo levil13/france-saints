@@ -1,0 +1,11 @@
+.sidebar {
+  @apply absolute bottom-0 z-[401];
+
+  &._left {
+    @apply left-0;
+  }
+
+  &._right {
+    @apply right-0;
+  }
+}

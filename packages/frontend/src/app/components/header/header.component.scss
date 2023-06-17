@@ -1,6 +1,3 @@
-@import '../../../assets/styles/colors.scss';
-@import '../../../assets/styles/icons-sizes.scss';
-
 .header__nav {
   @apply px-[32px] h-[80px] flex justify-between items-center;
 
@@ -9,7 +6,7 @@
 
     &-heading {
       font-family: zarubkaType, sans-serif;
-      color: $text-color;
+      color: var(--text-color);
       @apply text-[21px];
 
       span {
@@ -20,11 +17,11 @@
 
   .header__menu {
     @apply flex items-center gap-[32px];
-    color: $text-primary;
+    color: var(--text-primary-color);
 
     &-item {
       a:hover {
-        color: $text-color;
+        color: var(--text-color);
       }
     }
   }

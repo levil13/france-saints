@@ -11,7 +11,8 @@ export class LanguagesService {
 
   private languages$ = new BehaviorSubject<Language[]>([]);
 
-  currentLanguageCode = window.location.pathname.replace(/\//g, '');
+  //TODO move to env
+  currentLanguageCode = window.location.pathname.replace(/\//g, '') || 'en';
 
   constructor(private http: HttpClient) {}
 

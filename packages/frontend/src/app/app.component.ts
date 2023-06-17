@@ -11,6 +11,7 @@ import {LanguagesService} from './services/rest/languages/languages.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('slideInOutLeft', [
