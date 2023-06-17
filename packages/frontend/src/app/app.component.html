@@ -2,9 +2,9 @@
   <app-header></app-header>
 </header>
 
-<aside @slideInOutLeft *ngIf='sidebarVisible' class='sidebar _left'>
+<aside @slideInOutLeft *ngIf='searchResultsVisible' class='sidebar _left'>
   <app-search-results
-    (closeClick)='sidebarVisible = false'>
+    (closeClick)='searchResultsVisible = false'>
   </app-search-results>
 </aside>
 

@@ -8,7 +8,8 @@ export class MapService {
   private map!: L.Map;
 
   initMap(element: HTMLElement, layers: L.Layer[], center: L.LatLngExpression) {
-    const map = new L.Map(element, {zoom: 6, minZoom: 6, center, zoomControl: false});
+    const map = new L.Map(element, {zoom: 6, minZoom: 6, center, zoomControl: false})
+      .addControl(L.control.zoom({position: 'bottomleft'}));
 
     layers.forEach(layer => map.addLayer(layer));
 
@@ -21,9 +22,5 @@ export class MapService {
 
   flyTo(coords: L.LatLngExpression, zoom?: number) {
     this.map.flyTo(coords, zoom, {animate: true, duration: 0.5});
-  }
-
-  getZoom() {
-    return this.map.getZoom();
   }
 }

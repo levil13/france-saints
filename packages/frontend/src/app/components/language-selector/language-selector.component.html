@@ -1,7 +1,7 @@
 <ng-container *ngIf='nonSelectedLanguages.length'>
   <li class='language-selector'>
     <button (click)='dropdownVisible = !dropdownVisible'>
-      <span>{{selectedLanguage?.name}}</span>
+      <span>{{selectedLanguage?.name?.substring(0, 3)}}</span>
       <img class='icon-arrow icon-25px'
            [class.top-arrow]='!dropdownVisible'
            [class.bottom-arrow]='dropdownVisible'

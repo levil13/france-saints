@@ -1,5 +1,5 @@
 import {animate, style, transition, trigger} from '@angular/animations';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Renderer2} from '@angular/core';
 import {forkJoin} from 'rxjs';
 import {CategoriesService} from './services/rest/categories/categories.service';
 import {PlacesService} from './services/rest/places/places.service';
@@ -25,14 +25,15 @@ import {LanguagesService} from './services/rest/languages/languages.service';
   ],
 })
 export class AppComponent implements OnInit {
-  private _sidebarVisible = false;
+  private _searchResultsVisible = false;
 
-  get sidebarVisible(): boolean {
-    return this._sidebarVisible;
+  get searchResultsVisible(): boolean {
+    return this._searchResultsVisible;
   }
 
-  set sidebarVisible(value: boolean) {
-    this._sidebarVisible = value;
+  set searchResultsVisible(value: boolean) {
+    this._searchResultsVisible = value;
+    this.adjustZoomControlPosition(value);
     this.cdr.markForCheck();
   }
 
@@ -54,7 +55,8 @@ export class AppComponent implements OnInit {
     private placeService: PlaceService,
     private languageService: LanguagesService,
     private cdr: ChangeDetectorRef,
-    private titleService: Title
+    private titleService: Title,
+    private renderer: Renderer2
   ) {
     this.titleService.setTitle($localize`:@@title:Православные Святыни Юга Франции`);
   }
@@ -68,9 +70,16 @@ export class AppComponent implements OnInit {
 
     this.searchService.getSearchEntity().subscribe(searchEntity => {
       if (searchEntity === null) return;
-      this.sidebarVisible = !!searchEntity;
+      this.searchResultsVisible = !!searchEntity;
     });
 
     this.placeService.getSelectedPlace().subscribe(selectedPlace => (this.placeInfoModalVisible = !!selectedPlace));
+  }
+
+  private adjustZoomControlPosition(searchResultsVisible: boolean) {
+    const controlElement = document.querySelector('.leaflet-control-zoom');
+    searchResultsVisible
+      ? this.renderer.addClass(controlElement, '!ml-[360px]')
+      : this.renderer.removeClass(controlElement, '!ml-[360px]');
   }
 }

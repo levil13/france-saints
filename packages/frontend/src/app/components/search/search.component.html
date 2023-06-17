@@ -16,6 +16,14 @@
   </div>
 
   <div class='search__result divide-line-top'>
+    <ul class='search__result-list'>
+      <li class='search__result-list-item'>
+        <button #button (click)='searchEntitySelect(button.innerText, "global")' class='icon-search _gray'>
+          {{ searchValue }} <span class='color-gray' i18n='@@global_search'>— поиск по всему сайту</span>
+        </button>
+      </li>
+    </ul>
+
     <ul *ngIf='filteredCitiesNames.length' class='search__result-list'>
       <h3 i18n='@@cities_search' class='search__result-list-heading'>Поиск в городах</h3>
       <li *ngFor='let cityName of filteredCitiesNames' class='search__result-list-item'>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-export type SEARCH_TYPE = 'city' | 'category';
+export type SEARCH_TYPE = 'city' | 'category' | 'global';
 
 export interface SearchEntity {
   term: string,

@@ -49,7 +49,7 @@ export class SearchResultsComponent implements OnInit {
 
       switch (searchEntity.type) {
         case 'city': {
-          this.filteredPlaces = this.places.filter(place => place[searchEntity.type].name === searchEntity.typeTerm);
+          this.filteredPlaces = this.places.filter(place => place.city.name === searchEntity.typeTerm);
           const filteredPlacesCoords: [number, number][] = this.filteredPlaces.map(place => [
             place.coordinates.latitude,
             place.coordinates.longitude,
@@ -57,14 +57,21 @@ export class SearchResultsComponent implements OnInit {
           this.mapService.flyToBounds(new L.LatLngBounds(filteredPlacesCoords));
           break;
         }
-        case 'category':
+        case 'category': {
           this.filteredPlaces = this.places.filter(place => {
-            const typeFilter = place[searchEntity.type].name === searchEntity.typeTerm;
+            const typeFilter = place.category.name === searchEntity.typeTerm;
             const nameFilter = place.name.toLowerCase().includes(searchEntity.term.toLowerCase());
 
             return typeFilter && nameFilter;
           });
           break;
+        }
+        case 'global': {
+          this.filteredPlaces = this.places.filter(place =>
+            place.name.toLowerCase().includes(searchEntity.term.toLowerCase())
+          );
+          break;
+        }
         default:
           break;
       }

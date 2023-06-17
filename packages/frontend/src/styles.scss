@@ -135,6 +135,11 @@ button:focus {
   }
 }
 
+.leaflet-control-zoom {
+  transition: margin-left 500ms ease-in-out;
+  border: none !important;
+}
+
 $sizes: 11px, 15px, 20px, 25px, 30px, 50px;
 
 @each $size in $sizes {
