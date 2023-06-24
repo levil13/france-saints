@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="ru" datatype="plaintext" original="ng2.template">
+  <file source-language="ru" target-language="fr" datatype="plaintext" original="ng2.template">
     <body>
       <trans-unit id="title" datatype="html">
         <source>Православные Святыни Юга Франции</source>
+        <target>Des Sanctuaires Orthodoxes du Sud de la France</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/app.component.ts</context>
           <context context-type="linenumber">61</context>
@@ -11,6 +12,7 @@
       </trans-unit>
       <trans-unit id="read_more" datatype="html">
         <source>Читать дальше</source>
+        <target>Lire la suite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/place-info/place-info.component.html</context>
           <context context-type="linenumber">59</context>
@@ -18,6 +20,7 @@
       </trans-unit>
       <trans-unit id="search_results" datatype="html">
         <source>Результаты поиска</source>
+        <target>Résultats de recherche</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search-results/search-results.component.html</context>
           <context context-type="linenumber">3</context>
@@ -25,6 +28,7 @@
       </trans-unit>
       <trans-unit id="no_results" datatype="html">
         <source>Нет результатов</source>
+        <target>Aucun résultat</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search-results/search-results.component.html</context>
           <context context-type="linenumber">4</context>
@@ -32,6 +36,7 @@
       </trans-unit>
       <trans-unit id="global_search" datatype="html">
         <source>— поиск по всему сайту</source>
+        <target>— recherche complète</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
           <context context-type="linenumber">22</context>
@@ -39,6 +44,7 @@
       </trans-unit>
       <trans-unit id="cities_search" datatype="html">
         <source>Поиск в городах</source>
+        <target>Recherche par villes</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
           <context context-type="linenumber">28</context>
@@ -46,6 +52,7 @@
       </trans-unit>
       <trans-unit id="categories_search" datatype="html">
         <source>Поиск в категориях</source>
+        <target>Recherche par catégories</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
           <context context-type="linenumber">38</context>
@@ -53,6 +60,7 @@
       </trans-unit>
       <trans-unit id="in_category" datatype="html">
         <source>в категории <x id="INTERPOLATION" equiv-text="{{ categoryName }}"/></source>
+        <target>dans la catégorie <x id="INTERPOLATION" equiv-text="{{ categoryName }}"/></target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
           <context context-type="linenumber">41</context>
@@ -60,6 +68,7 @@
       </trans-unit>
       <trans-unit id="search_placeholder" datatype="html">
         <source>Имя, город, почтовый индекс...</source>
+        <target>Nom, ville, code postal...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.ts</context>
           <context context-type="linenumber">15</context>

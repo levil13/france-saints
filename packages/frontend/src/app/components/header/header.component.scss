@@ -2,16 +2,8 @@
   @apply px-[32px] h-[80px] flex justify-between items-center;
 
   .header__logo {
-    @apply flex gap-[15px] select-none;
-
-    &-heading {
-      font-family: zarubkaType, sans-serif;
-      color: var(--text-color);
-      @apply text-[21px];
-
-      span {
-        @apply flex flex-row leading-tight;
-      }
+    &-image {
+      @apply max-w-[250px];
     }
   }
 
