@@ -46,7 +46,8 @@
     "tailwindcss": "^3.3.2",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
-    "typescript": "~5.0.2"
+    "typescript": "~5.0.2",
+    "webpack-bundle-analyzer": "^4.9.0"
   },
   "dependencies": {
     "@angular/animations": "~16.0.0",
@@ -54,7 +55,7 @@
     "@angular/compiler": "~16.0.0",
     "@angular/core": "~16.0.0",
     "@angular/forms": "~16.0.0",
-    "@angular/localize": "^16.0.5",
+    "@angular/localize": "~16.0.0",
     "@angular/platform-browser": "~16.0.0",
     "@angular/platform-browser-dynamic": "~16.0.0",
     "@angular/router": "~16.0.0",

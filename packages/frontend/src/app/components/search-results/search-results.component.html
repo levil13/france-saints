@@ -1,40 +1,33 @@
-<div class='search-results'>
-  <span class='_closed icon-hover-style-circle'>
-    <button (click)='closeClick.emit()' class='icon-hover-style-circle__button'>
-      <img class='icon-arrow icon-30px' src='assets/icons/icon-arrow.svg' alt='icon-arrow' />
-    </button>
-  </span>
-  <div class='search-results__wrapper divide-line-top'>
-    <div class='search-results__count'>
-      <ng-container i18n='@@search_results' *ngIf='filteredPlaces.length'>Результаты поиска</ng-container>
-      <ng-container i18n='@@no_results' *ngIf='!filteredPlaces.length'>Нет результатов</ng-container>
-    </div>
-    <ul class='search-results__list'>
-      <li *ngFor='let place of filteredPlaces' class='search-results__list-item divide-line-top'>
-        <button (click)='selectPlace(place)' class='search-results__list-item_link'>
-          <div class='search-results__list-item_link-properties'>
-            <div class='search-results__list-item_link-properties_element'>
-              <div class='icon-20px'>
-                <div class='icon-with-bg-circle'>
-                  <!-- TODO move to env -->
-                  <img class='icon-with-bg-circle__image'
-                       [src]='"http://localhost:1337" + place.category.icon?.url'
-                       [alt]='place.category.icon?.alternativeText' />
-                </div>
-              </div>
-              <span>{{place.category.name}}</span>
-            </div>
-            <div class='search-results__list-item_link-properties_element'>
-              <img class='icon-20px' src='assets/icons/icon-location.svg' alt='icon-location' />
-              <span>{{place.city.name}}</span>
-            </div>
-          </div>
-          <h3 class='search-results__list-item_link-heading'>
-            {{place.name}}
-          </h3>
-        </button>
-      </li>
-    </ul>
+<div *ngIf='(filteredPlaces$ | async) as filteredPlaces' class='search-results divide-line-top'>
+  <div class='search-results__count'>
+    <ng-container i18n='@@search_results' *ngIf='filteredPlaces.length'>Результаты поиска</ng-container>
+    <ng-container i18n='@@no_results' *ngIf='!filteredPlaces.length'>Нет результатов</ng-container>
   </div>
+  <ul class='search-results__list'>
+    <li *ngFor='let place of filteredPlaces' class='search-results__list-item divide-line-top'>
+      <button (click)='selectPlace(place)' class='search-results__list-item_link'>
+        <div class='search-results__list-item_link-properties'>
+          <div class='search-results__list-item_link-properties_element'>
+            <div class='icon-20px'>
+              <div class='icon-with-bg-circle'>
+                <!-- TODO move to env -->
+                <img class='icon-with-bg-circle__image'
+                     [src]='"http://localhost:1337" + place.category.icon?.url'
+                     [alt]='place.category.icon?.alternativeText' />
+              </div>
+            </div>
+            <span>{{place.category.name}}</span>
+          </div>
+          <div class='search-results__list-item_link-properties_element'>
+            <img class='icon-20px' src='assets/icons/icon-location.svg' alt='icon-location' />
+            <span>{{place.city.name}}</span>
+          </div>
+        </div>
+        <h3 class='search-results__list-item_link-heading'>
+          {{place.name}}
+        </h3>
+      </button>
+    </li>
+  </ul>
 </div>
 

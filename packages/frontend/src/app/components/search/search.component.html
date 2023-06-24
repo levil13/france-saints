@@ -9,7 +9,7 @@
            type='text'
            [placeholder]='placeholder' />
     <span *ngIf='!!searchValue' class='icon-hover-style-circle'>
-      <button (click)='searchClear()' class='icon-hover-style-circle__button'>
+      <button (click)='searchValue = ""' class='icon-hover-style-circle__button'>
         <img class='icon-11px' src='assets/icons/icon-close.svg' alt='icon-close' />
       </button>
     </span>

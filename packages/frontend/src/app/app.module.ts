@@ -7,24 +7,12 @@ import {AppComponent} from './app.component';
 import {appRoutes} from './app.routes';
 import {HeaderComponent} from './components/header/header.component';
 import {MapComponent} from './components/map/map.component';
-import {PlaceInfoComponent} from './components/place-info/place-info.component';
-import {SearchResultsComponent} from './components/search-results/search-results.component';
 import {SearchComponent} from './components/search/search.component';
 import {FormsModule} from '@angular/forms';
-import {CarouselComponent} from './components/carousel/carousel.component';
 import {LanguageSelectorComponent} from './components/language-selector/language-selector.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    SearchResultsComponent,
-    PlaceInfoComponent,
-    MapComponent,
-    SearchComponent,
-    CarouselComponent,
-    LanguageSelectorComponent,
-  ],
+  declarations: [AppComponent, HeaderComponent, MapComponent, SearchComponent, LanguageSelectorComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

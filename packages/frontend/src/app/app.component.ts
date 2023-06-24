@@ -1,6 +1,14 @@
 import {animate, style, transition, trigger} from '@angular/animations';
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Renderer2} from '@angular/core';
-import {forkJoin} from 'rxjs';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  Renderer2,
+  Type,
+} from '@angular/core';
+import {forkJoin, from, map, of, switchMap, tap} from 'rxjs';
 import {CategoriesService} from './services/rest/categories/categories.service';
 import {PlacesService} from './services/rest/places/places.service';
 import {SearchService} from './services/search/search.service';
@@ -24,7 +32,7 @@ import {LanguagesService} from './services/rest/languages/languages.service';
     ]),
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   private _searchResultsVisible = false;
 
   get searchResultsVisible(): boolean {
@@ -34,6 +42,17 @@ export class AppComponent implements OnInit {
   set searchResultsVisible(value: boolean) {
     this._searchResultsVisible = value;
     this.adjustZoomControlPosition(value);
+    this.cdr.markForCheck();
+  }
+
+  private _searchResultsButtonVisible = false;
+
+  get searchResultsButtonVisible(): boolean {
+    return this._searchResultsButtonVisible;
+  }
+
+  set searchResultsButtonVisible(value: boolean) {
+    this._searchResultsButtonVisible = value;
     this.cdr.markForCheck();
   }
 
@@ -47,6 +66,10 @@ export class AppComponent implements OnInit {
     this._placeInfoModalVisible = value;
     this.cdr.markForCheck();
   }
+
+  placeInfoComponent!: Type<void> | null;
+
+  searchResultsComponent!: Type<void> | null;
 
   constructor(
     private placesService: PlacesService,
@@ -67,13 +90,37 @@ export class AppComponent implements OnInit {
       this.categoriesService.loadCategories(),
       this.languageService.loadLanguages(),
     ]).subscribe();
+  }
 
-    this.searchService.getSearchEntity().subscribe(searchEntity => {
-      if (searchEntity === null) return;
-      this.searchResultsVisible = !!searchEntity;
-    });
+  ngAfterViewInit() {
+    this.searchService
+      .getSearchResults()
+      .pipe(
+        switchMap(searchResults => {
+          if (!searchResults) return of(searchResults);
 
-    this.placeService.getSelectedPlace().subscribe(selectedPlace => (this.placeInfoModalVisible = !!selectedPlace));
+          return this.searchResultsLazyRender().pipe(map(() => searchResults));
+        })
+      )
+      .subscribe(searchResults => {
+        if (searchResults === null) return;
+
+        this.searchResultsButtonVisible = true;
+        this.searchResultsVisible = !!searchResults;
+      });
+
+    this.placeService
+      .getSelectedPlace()
+      .pipe(
+        switchMap(selectedPlace => {
+          if (!selectedPlace) return of(selectedPlace);
+
+          return this.placeInfoLazyRender().pipe(map(() => selectedPlace));
+        })
+      )
+      .subscribe(selectedPlace => {
+        this.placeInfoModalVisible = !!selectedPlace;
+      });
   }
 
   private adjustZoomControlPosition(searchResultsVisible: boolean) {
@@ -81,5 +128,23 @@ export class AppComponent implements OnInit {
     searchResultsVisible
       ? this.renderer.addClass(controlElement, '!ml-[360px]')
       : this.renderer.removeClass(controlElement, '!ml-[360px]');
+  }
+
+  private placeInfoLazyRender() {
+    return from(import('./modules/place-info/place-info.module')).pipe(
+      tap(module => {
+        const importedModule = Object.values(module)[0];
+        this.placeInfoComponent = importedModule.getComponent();
+      })
+    );
+  }
+
+  private searchResultsLazyRender() {
+    return from(import('./modules/search-results/search-results.module')).pipe(
+      tap(module => {
+        const importedModule = Object.values(module)[0];
+        this.searchResultsComponent = importedModule.getComponent();
+      })
+    );
   }
 }

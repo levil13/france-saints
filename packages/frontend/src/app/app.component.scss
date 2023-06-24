@@ -9,3 +9,25 @@
     @apply right-0;
   }
 }
+
+.main {
+  @apply relative;
+}
+
+.icon-hover-style-circle {
+  @apply absolute z-[401] left-[300px] top-[7.5px] bg-white rounded-full w-[40px] h-[40px];
+  transition: left 500ms ease-in-out;
+
+  .icon-arrow {
+    transition: transform 500ms ease-in-out;
+  }
+
+  &._closed {
+    @apply left-[10px];
+
+    .icon-arrow {
+      @apply ml-[1px];
+      transform: rotate(180deg);
+    }
+  }
+}

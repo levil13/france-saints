@@ -3,15 +3,24 @@
 </header>
 
 <aside @slideInOutLeft *ngIf='searchResultsVisible' class='sidebar _left'>
-  <app-search-results
-    (closeClick)='searchResultsVisible = false'>
-  </app-search-results>
+  <ng-container
+    *ngComponentOutlet='$any(searchResultsComponent)'>
+  </ng-container>
 </aside>
 
-<main>
+<main class='main'>
+  <span @slideInOutLeft *ngIf='searchResultsButtonVisible'
+        class='icon-hover-style-circle'
+        [class._closed]='!searchResultsVisible'>
+    <button (click)='searchResultsVisible = !searchResultsVisible' class='icon-hover-style-circle__button'>
+      <img class='icon-arrow icon-30px' src='assets/icons/icon-arrow.svg' alt='icon-arrow' />
+    </button>
+  </span>
   <app-map></app-map>
 </main>
 
 <aside @slideInOutRight *ngIf='placeInfoModalVisible' class='sidebar _right'>
-  <app-place-info></app-place-info>
+  <ng-container
+    *ngComponentOutlet='$any(placeInfoComponent)'>
+  </ng-container>
 </aside>

@@ -1,31 +1,9 @@
 .search-results {
+  @apply relative w-[350px] px-[32px] py-[15px];
   height: calc(100vh - 80px);
+  background-color: #fff;
   overflow-y: scroll;
   overflow-x: hidden;
-  background-color: #fff;
-
-  &__wrapper {
-    @apply relative w-[350px] px-[32px] py-[15px];
-    background-color: #fff;
-  }
-
-  .icon-hover-style-circle {
-    @apply absolute z-[1] right-[15px] top-[7.5px] bg-white rounded-full w-[40px] h-[40px];
-    transition: margin-right 500ms ease-in-out;
-
-    .icon-arrow {
-      transition: transform 500ms ease-in-out;
-    }
-
-    &._closed {
-      @apply mr-[-65px];
-
-      .icon-arrow {
-        @apply ml-[1px];
-        transform: rotate(180deg);
-      }
-    }
-  }
 
   .search-results__list {
     @apply mt-[15px];

@@ -69,13 +69,7 @@ export class SearchComponent implements OnInit {
       .pipe(
         debounceTime(300),
         map(value => value.trim()),
-        tap(value => {
-          this.dropdownVisible = !!value.length;
-
-          if (!value) {
-            this.searchService.setSearchEntity(null);
-          }
-        })
+        tap(value => this.dropdownVisible = !!value.length)
       )
       .subscribe(searchValue => this.filterCities(searchValue));
   }
@@ -109,12 +103,8 @@ export class SearchComponent implements OnInit {
       this.filterCities(typeTerm);
       this.placeService.setSelectedPlace(null);
     }
+
     this.dropdownVisible = false;
     this.searchService.setSearchEntity({term: this.searchValue, typeTerm, type});
-  }
-
-  searchClear() {
-    this.searchValue = '';
-    this.searchService.setSearchEntity(null);
   }
 }
