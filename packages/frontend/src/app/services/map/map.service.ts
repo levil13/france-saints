@@ -7,13 +7,14 @@ import * as L from 'leaflet';
 export class MapService {
   private map!: L.Map;
 
-  initMap(element: HTMLElement, layers: L.Layer[], center: L.LatLngExpression) {
-    const map = new L.Map(element, {zoom: 6, minZoom: 6, center, zoomControl: false})
-      .addControl(L.control.zoom({position: 'bottomleft'}));
+  initMap(element: HTMLElement, tileLayer: L.Layer, markersLayer: L.MarkerClusterGroup) {
+    const markersLayerBounds = markersLayer.getBounds();
 
-    layers.forEach(layer => map.addLayer(layer));
-
-    this.map = map;
+    this.map = new L.Map(element, {zoom: 6, minZoom: 6, center: markersLayerBounds.getCenter(), zoomControl: false})
+      .addControl(L.control.zoom({position: 'bottomleft'}))
+      .addLayer(tileLayer)
+      .addLayer(markersLayer)
+      .fitBounds(markersLayerBounds, {animate: false});
   }
 
   flyToBounds(bounds: L.LatLngBounds) {

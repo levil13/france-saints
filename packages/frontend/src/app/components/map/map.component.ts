@@ -18,9 +18,11 @@ export class MapComponent implements OnInit {
   @ViewChild('map', {read: ElementRef, static: true})
   private mapEl!: ElementRef;
 
-  private tileLayer!: L.TileLayer;
+  private tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  });
 
-  private markersLayer!: L.MarkerClusterGroup;
+  private markersLayer = L.markerClusterGroup({zoomToBoundsOnClick: false, showCoverageOnHover: false});
 
   private markers: L.Marker[] = [];
 
@@ -31,15 +33,9 @@ export class MapComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.placesService
-      .getPlaces()
+    this.placesService.getPlaces()
       .pipe(filter(places => !!places.length))
       .subscribe(places => {
-        this.tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        });
-
-        this.markersLayer = L.markerClusterGroup({zoomToBoundsOnClick: false, showCoverageOnHover: false});
         this.markers = this.createMarkers(places);
         this.refreshMarkers();
 
@@ -47,11 +43,7 @@ export class MapComponent implements OnInit {
           this.mapService.flyToBounds(cluster.propagatedFrom.getBounds())
         );
 
-        this.mapService.initMap(
-          this.mapEl.nativeElement,
-          [this.tileLayer, this.markersLayer],
-          this.markersLayer.getBounds().getCenter()
-        );
+        this.mapService.initMap(this.mapEl.nativeElement, this.tileLayer, this.markersLayer);
       });
 
     this.placeService.getSelectedPlace().subscribe(place => {
