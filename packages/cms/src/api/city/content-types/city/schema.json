@@ -4,14 +4,11 @@
   "info": {
     "singularName": "city",
     "pluralName": "cities",
-    "displayName": "City"
+    "displayName": "City",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": false,
-    "privateAttributes": [
-      "createdAt",
-      "updatedAt"
-    ]
+    "draftAndPublish": false
   },
   "pluginOptions": {
     "i18n": {
@@ -19,17 +16,6 @@
     }
   },
   "attributes": {
-    "coordinates": {
-      "type": "component",
-      "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "component": "shared.coordinates",
-      "required": true
-    },
     "name": {
       "pluginOptions": {
         "i18n": {
@@ -38,7 +24,7 @@
       },
       "type": "string",
       "required": true,
-      "unique": true
+      "unique": false
     },
     "places": {
       "type": "relation",
