@@ -30,7 +30,7 @@ export class CategoriesService {
       );
   }
 
-  private processResponse(response: StrapiResponseMulti<Category>) {
+  private processResponse(response: StrapiResponseMulti<Category>): Category[] {
     return response.data.map(categoryResponse => ({...categoryResponse.attributes, id: categoryResponse.id}));
   }
 }

@@ -1,16 +1,7 @@
 export interface StrapiResponseMulti<T> {
-  data: Array<{ attributes: T, id: number }>;
-  meta: { pagination: StrapiPagination };
+  data: Array<{attributes: T; id: number}>;
 }
 
 export interface StrapiResponseSingle<T> {
-  data: { attributes: T, id: number };
-  meta: { pagination: StrapiPagination };
-}
-
-export interface StrapiPagination {
-  page: number;
-  pageCount: number;
-  pageSize: number;
-  total: number;
+  data: {attributes: T; id: number};
 }

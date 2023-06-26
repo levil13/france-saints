@@ -30,8 +30,10 @@ export class PlacesService {
       .get<StrapiResponseMulti<PlaceResponse>>(
         `${this.apiUrl}/places?locale=${this.languagesService.currentLanguageCode}&${query}`
       )
-      .pipe(map(response => this.processResponse(response)))
-      .pipe(tap(places => this.places$.next(places)));
+      .pipe(
+        map(response => this.processResponse(response)),
+        tap(places => this.places$.next(places))
+      );
   }
 
   private processResponse(response: StrapiResponseMulti<PlaceResponse>) {

@@ -5,8 +5,7 @@
   "sourceRoot": "packages/cms/src",
   "targets": {
     "serve": {
-      "executor": "@nx-extend/strapi:serve",
-      "options": {}
+      "executor": "@nx-extend/strapi:serve"
     },
     "build": {
       "executor": "@nx-extend/strapi:build",

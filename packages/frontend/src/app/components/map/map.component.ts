@@ -33,6 +33,8 @@ export class MapComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.mapService.initMap(this.mapEl.nativeElement, this.tileLayer);
+
     this.placesService.getPlaces()
       .pipe(filter(places => !!places.length))
       .subscribe(places => {
@@ -43,7 +45,7 @@ export class MapComponent implements OnInit {
           this.mapService.flyToBounds(cluster.propagatedFrom.getBounds())
         );
 
-        this.mapService.initMap(this.mapEl.nativeElement, this.tileLayer, this.markersLayer);
+        this.mapService.addMarkers(this.markersLayer);
       });
 
     this.placeService.getSelectedPlace().subscribe(place => {
