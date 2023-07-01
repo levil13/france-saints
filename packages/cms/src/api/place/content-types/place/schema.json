@@ -8,11 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": false,
-    "privateAttributes": [
-      "createdAt",
-      "updatedAt"
-    ]
+    "draftAndPublish": false
   },
   "pluginOptions": {
     "i18n": {
@@ -73,6 +69,17 @@
           "localized": false
         }
       }
+    },
+    "coordinates_text": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "required": true,
+      "unique": false,
+      "regex": "[0-9]*, [0-9]*"
     }
   }
 }

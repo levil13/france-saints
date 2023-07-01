@@ -23,7 +23,7 @@ export class MapService {
   }
 
   addMarkers(markersLayer: L.MarkerClusterGroup) {
-    this.map.addLayer(markersLayer).fitBounds(markersLayer.getBounds());
+    this.map.addLayer(markersLayer).fitBounds(markersLayer.getBounds(), {animate: false});
   }
 
   flyToBounds(bounds: L.LatLngBounds) {
