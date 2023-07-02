@@ -14,6 +14,8 @@ export class PlacesService {
 
   private places$ = new BehaviorSubject<Place[]>([]);
 
+  private populateQuery = {populate: ['images', 'category', 'category.icon', 'city']};
+
   constructor(private http: HttpClient, private languagesService: LanguagesService) {}
 
   getPlaces() {
@@ -21,8 +23,21 @@ export class PlacesService {
   }
 
   loadPlaces() {
+    const query = stringify(this.populateQuery, {encodeValuesOnly: true});
+
+    return this.http
+      .get<StrapiResponseMulti<PlaceResponse>>(
+        `${this.apiUrl}/places?locale=${this.languagesService.currentLanguageCode}&${query}`
+      )
+      .pipe(
+        map(response => response.data.map(placeResponse => this.processPlace(placeResponse))),
+        tap(places => this.places$.next(places))
+      );
+  }
+
+  findPlace(coordinates: string) {
     const query = stringify(
-      {populate: ['coordinates', 'images', 'category', 'category.icon', 'city']},
+      {...this.populateQuery, filters: {coordinates: {$eq: coordinates}}},
       {encodeValuesOnly: true}
     );
 
@@ -30,35 +45,26 @@ export class PlacesService {
       .get<StrapiResponseMulti<PlaceResponse>>(
         `${this.apiUrl}/places?locale=${this.languagesService.currentLanguageCode}&${query}`
       )
-      .pipe(
-        map(response => this.processResponse(response)),
-        tap(places => this.places$.next(places))
-      );
+      .pipe(map(response => this.processPlace(response.data[0])));
   }
 
-  private processResponse(response: StrapiResponseMulti<PlaceResponse>) {
-    const places: Place[] = response.data
-      .filter(placeResponse => placeResponse.attributes.coordinates)
-      .map(placeResponse => {
-        const placeId = placeResponse.id;
-        const placeAttrs = placeResponse.attributes;
-        const placeCategory = placeAttrs.category.data.attributes;
-        const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data?.attributes;
-        const placeCity = placeAttrs.city.data.attributes;
-        const placeImages = placeAttrs.images?.data?.map(image => ({...image.attributes, id: image.id}));
-        const placeCoordinates = this.processPlaceCoordinates(placeResponse.attributes.coordinates);
+  private processPlace(placeResponse: {attributes: PlaceResponse; id: number}) {
+    const placeId = placeResponse.id;
+    const placeAttrs = placeResponse.attributes;
+    const placeCategory = placeAttrs.category.data.attributes;
+    const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data?.attributes;
+    const placeCity = placeAttrs.city.data.attributes;
+    const placeImages = placeAttrs.images?.data?.map(image => ({...image.attributes, id: image.id}));
+    const placeCoordinates = this.processPlaceCoordinates(placeResponse.attributes.coordinates);
 
-        return {
-          ...placeAttrs,
-          id: placeId,
-          category: {...placeCategory, icon: placeCategoryIcon},
-          city: placeCity,
-          images: placeImages,
-          coordinates: placeCoordinates,
-        };
-      });
-
-    return places;
+    return {
+      ...placeAttrs,
+      id: placeId,
+      category: {...placeCategory, icon: placeCategoryIcon},
+      city: placeCity,
+      images: placeImages,
+      coordinates: placeCoordinates,
+    };
   }
 
   private processPlaceCoordinates(coordinates: string): Coordinates {

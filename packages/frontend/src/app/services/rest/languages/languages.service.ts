@@ -12,9 +12,17 @@ export class LanguagesService {
   private languages$ = new BehaviorSubject<Language[]>([]);
 
   //TODO move to env
-  currentLanguageCode = window.location.pathname.replace(/\//g, '') || 'en';
+  currentLanguageCode: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const selectedLocale = window.location.pathname.replace(/\//g, '');
+
+    if (['en', 'ru', 'fr'].includes(selectedLocale)) {
+      this.currentLanguageCode = selectedLocale;
+    } else {
+      this.currentLanguageCode = 'ru';
+    }
+  }
 
   getLanguages() {
     return this.languages$.asObservable();

@@ -7,7 +7,8 @@ import {StrapiResponseMulti, StrapiResponseSingle} from '../strapi-response.mode
 export interface Place extends StrapiBaseEntityLocalized {
   name: string;
   coordinates: Coordinates;
-  description?: string;
+  shortDescription: string;
+  longDescription: string;
   category: Category;
   city: City;
   images?: Image[];

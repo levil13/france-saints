@@ -30,31 +30,8 @@
                 [images]='selectedPlace.images'>
   </app-carousel>
 
-  <div class='place-info__information'>
-    <div class='place-info__information-item'>
-      <h6 class='place-info__information-item_title'>Место хранения</h6>
-      <p class='place-info__information-item_text'>В предместье Парижа Сен-Дени</p>
-    </div>
-    <div class='place-info__information-item'>
-      <h6 class='place-info__information-item_title'>Адрес</h6>
-      <p class='place-info__information-item_text'>
-        Прп. Тимофея в Символех (795). Свт. Евстафия, архиеп. Антиохийского
-        (337). Свт. Георгия, еп. Амастридского (802–811)
-      </p>
-    </div>
-  </div>
   <div class='place-info__description divide-line-top'>
-    <p>
-      Этот образ был вывезен во Францию в 1812 году офицером отступавшей армии
-      Наполеона. Промыслом Божиим, икона пребывала в безвестности почти 120 лет
-      и в 1930 году была обнаружена русским эмигрантом в антикварном магазине
-      Парижа. Неимоверными усилиями эмиграdsadsadsadsadsa sxsadsadasdsa
-      sasadasdadsa Этот образ был вывезен во Францию в 1812 году офицером
-      отступавшей армии Наполеона. Промыслом Божиим, икона пребывала в
-      безвестности почти 120 лет и в 1930 году была обнаружена русским
-      эмигрантом в антикварном магазине Парижа. Неимоверными усилиями
-      эмиграdsadsadsadsadsa sxsadsadasdsa
-    </p>
+    <p>{{selectedPlace.shortDescription}}</p>
   </div>
-  <a i18n='@@read_more' class='place-info__read-more'>Читать дальше</a>
+  <a (click)='navigateToPlace(selectedPlace)' i18n='@@read_more' class='place-info__read-more'>Читать дальше</a>
 </div>

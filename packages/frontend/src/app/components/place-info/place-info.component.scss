@@ -6,11 +6,12 @@
   overflow-x: hidden;
 
   .place-info__read-more {
-    @apply inline-block px-[32px] py-[10px] mt-[10px] text-white rounded-full select-none;
+    @apply inline-block px-[32px] py-[10px] mt-[15px] text-white rounded-full select-none;
     background-color: var(--text-color);
 
     &:hover {
       background-color: var(--text-primary-color);
+      cursor: pointer;
     }
   }
 
@@ -44,32 +45,7 @@
     color: var(--text-color);
   }
 
-  .place-info__information {
-    &-item {
-      @apply py-[15px];
-      border-top: 1px solid var(--border-color);
-
-      &:first-child {
-        border: none;
-      }
-
-      &_title {
-        @apply text-[13px] uppercase;
-        color: var(--text-primary-color);
-      }
-
-      &_text {
-        @apply pt-[5px] leading-[21px] font-bold;
-      }
-    }
-  }
-
   .place-info__description {
     @apply leading-[21px] pt-[15px];
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 7; /* number of lines to show */
-    line-clamp: 7;
-    -webkit-box-orient: vertical;
   }
 }
