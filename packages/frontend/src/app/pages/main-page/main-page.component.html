@@ -2,13 +2,13 @@
   <app-header></app-header>
 </header>
 
-<aside @slideInOutLeft *ngIf='searchResultsVisible' class='sidebar _left'>
+<aside @slideInOutLeft *ngIf='searchResultsVisible' class='main-page__sidebar _left'>
   <ng-container
     *ngComponentOutlet='$any(searchResultsComponent)'>
   </ng-container>
 </aside>
 
-<main class='main'>
+<main class='main-page__main'>
   <span @slideInOutLeft *ngIf='searchResultsButtonVisible'
         class='icon-hover-style-circle'
         [class._closed]='!searchResultsVisible'>
@@ -19,7 +19,7 @@
   <app-map></app-map>
 </main>
 
-<aside @slideInOutRight *ngIf='placeInfoModalVisible' class='sidebar _right'>
+<aside @slideInOutRight *ngIf='placeInfoModalVisible' class='main-page__sidebar _right'>
   <ng-container
     *ngComponentOutlet='$any(placeInfoComponent)'>
   </ng-container>

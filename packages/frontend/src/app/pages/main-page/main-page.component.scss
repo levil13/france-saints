@@ -1,17 +1,19 @@
-.sidebar {
-  @apply absolute bottom-0 z-[401];
+.main-page {
+  &__sidebar {
+    @apply absolute bottom-0 z-[401];
 
-  &._left {
-    @apply left-0;
+    &._left {
+      @apply left-0;
+    }
+
+    &._right {
+      @apply right-0;
+    }
   }
 
-  &._right {
-    @apply right-0;
+  &__main {
+    @apply relative;
   }
-}
-
-.main {
-  @apply relative;
 }
 
 .icon-hover-style-circle {
