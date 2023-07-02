@@ -34,17 +34,6 @@
       },
       "type": "text"
     },
-    "coordinates": {
-      "type": "component",
-      "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
-      "component": "shared.coordinates",
-      "required": true
-    },
     "category": {
       "type": "relation",
       "relation": "manyToOne",
@@ -70,7 +59,7 @@
         }
       }
     },
-    "coordinates_text": {
+    "coordinates": {
       "pluginOptions": {
         "i18n": {
           "localized": false
@@ -79,7 +68,7 @@
       "type": "string",
       "required": true,
       "unique": false,
-      "regex": "[0-9]*, [0-9]*"
+      "regex": "^[0-9]+\\.[0-9]+,\\s[0-9]+\\.[0-9]+$"
     }
   }
 }

@@ -2,7 +2,7 @@ import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {stringify} from 'qs';
 import {BehaviorSubject, map, tap} from 'rxjs';
-import {Place, PlaceResponse} from '../../../models/rest/places/places.model';
+import {Coordinates, Place, PlaceResponse} from '../../../models/rest/places/places.model';
 import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 import {LanguagesService} from '../languages/languages.service';
 
@@ -37,26 +37,32 @@ export class PlacesService {
   }
 
   private processResponse(response: StrapiResponseMulti<PlaceResponse>) {
-    const places: Place[] = response.data.map(placeResponse => {
-      const placeId = placeResponse.id;
-      const placeAttrs = placeResponse.attributes;
-      const placeCategory = placeAttrs.category.data.attributes;
-      const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data?.attributes;
-      const placeCity = placeAttrs.city.data.attributes;
-      const placeImages = placeAttrs.images?.data?.map(imageResponse => ({
-        ...imageResponse.attributes,
-        id: imageResponse.id,
-      }));
+    const places: Place[] = response.data
+      .filter(placeResponse => placeResponse.attributes.coordinates)
+      .map(placeResponse => {
+        const placeId = placeResponse.id;
+        const placeAttrs = placeResponse.attributes;
+        const placeCategory = placeAttrs.category.data.attributes;
+        const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data?.attributes;
+        const placeCity = placeAttrs.city.data.attributes;
+        const placeImages = placeAttrs.images?.data?.map(image => ({...image.attributes, id: image.id}));
+        const placeCoordinates = this.processPlaceCoordinates(placeResponse.attributes.coordinates);
 
-      return {
-        ...placeAttrs,
-        id: placeId,
-        category: {...placeCategory, icon: placeCategoryIcon},
-        city: placeCity,
-        images: placeImages,
-      };
-    });
+        return {
+          ...placeAttrs,
+          id: placeId,
+          category: {...placeCategory, icon: placeCategoryIcon},
+          city: placeCity,
+          images: placeImages,
+          coordinates: placeCoordinates,
+        };
+      });
 
     return places;
+  }
+
+  private processPlaceCoordinates(coordinates: string): Coordinates {
+    const coordinatesSplit = coordinates.split(', ');
+    return {latitude: +coordinatesSplit[0], longitude: +coordinatesSplit[1]};
   }
 }
