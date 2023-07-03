@@ -1,0 +1,27 @@
+.marked-template {
+  @apply text-[19px] leading-[1.5em];
+  color: rgba(0, 0, 0, .86);
+  word-break: break-word;
+  word-wrap: break-word;
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply leading-[41px];
+    font-size: revert;
+    font-weight: revert;
+    margin: revert;
+  }
+
+  ol, ul {
+    @apply pl-[20px];
+    list-style: revert;
+    margin: revert;
+  }
+
+  a {
+    color: var(--text-color);
+
+    &:hover {
+      @apply underline;
+    }
+  }
+}

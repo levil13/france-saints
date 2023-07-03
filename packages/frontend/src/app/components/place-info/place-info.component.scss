@@ -15,13 +15,6 @@
     }
   }
 
-  .icon-hover-style-circle {
-    @apply absolute right-[25px] top-[25px];
-    .icon-hover-style-circle__button {
-      @apply p-[10px];
-    }
-  }
-
   .place-info__properties {
     @apply flex items-center gap-[15px];
 

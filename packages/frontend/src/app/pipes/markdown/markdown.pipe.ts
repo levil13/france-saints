@@ -6,6 +6,6 @@ import {marked} from 'marked';
 })
 export class MarkdownPipe implements PipeTransform {
   transform(value: string): string {
-    return marked.parse(value);
+    return `<div class="marked-template">${marked.parse(value)}</div>`;
   }
 }

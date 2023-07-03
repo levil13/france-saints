@@ -39,7 +39,7 @@ export class MapService {
     this.map.flyToBounds(bounds.pad(0.1), {animate: true, duration: 0.5});
   }
 
-  flyTo(coords: Coordinates) {
-    this.map.flyTo({lat: coords.latitude, lng: coords.longitude}, 15, {animate: true, duration: 0.5});
+  flyTo(coords: Coordinates, disableAnim = false) {
+    this.map.flyTo({lat: coords.latitude, lng: coords.longitude}, 18, {animate: !disableAnim, duration: 0.5});
   }
 }

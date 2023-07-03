@@ -8,6 +8,8 @@ import {PlacesService} from '../../services/rest/places/places.service';
 import {filter, map, switchMap} from 'rxjs';
 import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Router} from "@angular/router";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-map',
@@ -27,12 +29,19 @@ export class MapComponent implements AfterViewInit {
 
   private markers: L.Marker[] = [];
 
+  private disableZoomAnim = false;
+
   constructor(
     private mapService: MapService,
     private placesService: PlacesService,
     private placeService: PlaceService,
-    private destroyRef: DestroyRef
-  ) {}
+    private destroyRef: DestroyRef,
+    private router: Router,
+    private location: Location
+  ) {
+    this.disableZoomAnim = this.router.getCurrentNavigation()?.extras.state?.['fromPlacePage'];
+    this.location.replaceState(this.location.path());
+  }
 
   ngAfterViewInit() {
     this.mapService
@@ -68,7 +77,8 @@ export class MapComponent implements AfterViewInit {
         this.selectMarker(place);
 
         if (place) {
-          this.mapService.flyTo(place.coordinates);
+          this.mapService.flyTo(place.coordinates, this.disableZoomAnim);
+          this.disableZoomAnim = false;
         }
       })
     );

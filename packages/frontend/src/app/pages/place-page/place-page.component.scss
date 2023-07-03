@@ -1,0 +1,35 @@
+.place-page {
+  @apply w-[800px];
+  margin: 30px auto;
+
+  &__wrapper {
+    @apply relative;
+  }
+
+  &__properties {
+    @apply flex items-center gap-[15px];
+
+    &-element {
+      @apply flex items-center gap-[5px];
+      max-width: 50%;
+
+      div {
+        @apply shrink-0;
+      }
+
+      span {
+        @apply text-[18px] whitespace-nowrap overflow-hidden overflow-ellipsis;
+        color: rgba(0, 0, 0, .86);
+      }
+    }
+  }
+
+  &__heading {
+    @apply mt-[10px] text-[38px] font-[700] leading-[41px];
+    color: var(--text-color);
+  }
+
+  &__article {
+    @apply mt-[30px] pt-[30px];
+  }
+}

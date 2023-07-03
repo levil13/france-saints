@@ -8,7 +8,7 @@
 
 <main class='main-page__main'>
   <span @slideInOutLeft *ngIf='searchResultsButtonVisible'
-        class='icon-hover-style-circle'
+        class='icon-hover-style-circle main-page__icon'
         [class._closed]='!searchResultsVisible'>
     <button (click)='searchResultsVisible = !searchResultsVisible' class='icon-hover-style-circle__button'>
       <img class='icon-arrow icon-30px' src='assets/icons/icon-arrow.svg' alt='icon-arrow' />

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, Renderer2} from '@angular/core';
 import {PlaceService} from '../../services/place/place.service';
 import {PlacesService} from '../../services/rest/places/places.service';
 import {of, switchMap, tap} from 'rxjs';
@@ -12,17 +12,24 @@ import {Place} from '../../models/rest/places/places.model';
   styleUrls: ['./place-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PlacePageComponent {
+export class PlacePageComponent implements OnDestroy {
   selectedPlace: Place | null = null;
+  bodyEl = document.querySelector('body');
 
   constructor(
     private placeService: PlaceService,
     private placesService: PlacesService,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private cdr: ChangeDetectorRef
+    public router: Router,
+    private cdr: ChangeDetectorRef,
+    private renderer: Renderer2
   ) {
+    this.renderer.setStyle(this.bodyEl, 'overflow', 'auto');
     this.initSelectedPlace();
+  }
+
+  ngOnDestroy() {
+    this.renderer.removeStyle(this.bodyEl, 'overflow');
   }
 
   private initSelectedPlace() {
@@ -38,6 +45,8 @@ export class PlacePageComponent {
         tap(selectedPlace => {
           if (!selectedPlace) {
             this.router.navigate(['/']);
+          } else {
+            this.placeService.setSelectedPlace(selectedPlace);
           }
         }),
         takeUntilDestroyed()

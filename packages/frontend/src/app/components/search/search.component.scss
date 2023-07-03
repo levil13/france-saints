@@ -23,11 +23,6 @@
         color: var(--text-primary-color);
       }
     }
-
-    .icon-hover-style-circle {
-      @apply absolute mr-[15px] top-1/2 right-0;
-      transform: translateY(-50%);
-    }
   }
 
   .search__result {
