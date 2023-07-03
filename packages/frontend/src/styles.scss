@@ -139,6 +139,12 @@ button:focus {
   &__image {
     @apply absolute z-[1] top-0 left-0 w-full h-full p-[4px];
   }
+
+  &.article__category-icon {
+    .icon-with-bg-circle__image {
+      @apply p-[5px];
+    }
+  }
 }
 
 .icon-marker-map {
