@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit} from '@angular/core';
 import {LanguagesService} from '../../services/rest/languages/languages.service';
 import {Language} from '../../models/rest/languages/languages.model';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-language-selector',
@@ -49,12 +50,19 @@ export class LanguageSelectorComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  constructor(private cdr: ChangeDetectorRef, private languagesService: LanguagesService) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private languagesService: LanguagesService,
+    private destroyRef: DestroyRef
+  ) {}
 
   ngOnInit(): void {
-    this.languagesService.getLanguages().subscribe(languages => {
-      this.selectedLanguage = languages.find(lang => lang.code === this.languagesService.currentLanguageCode);
-      this.nonSelectedLanguages = languages.filter(lang => lang !== this.selectedLanguage);
-    });
+    this.languagesService
+      .getLanguages()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(languages => {
+        this.selectedLanguage = languages.find(lang => lang.code === this.languagesService.selectedLanguage);
+        this.nonSelectedLanguages = languages.filter(lang => lang !== this.selectedLanguage);
+      });
   }
 }

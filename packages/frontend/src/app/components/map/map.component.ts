@@ -1,12 +1,13 @@
-import {ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, ViewChild} from '@angular/core';
 import {Place} from '../../models/rest/places/places.model';
 
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import {MapService} from '../../services/map/map.service';
 import {PlacesService} from '../../services/rest/places/places.service';
-import {filter} from 'rxjs';
+import {filter, map, switchMap} from 'rxjs';
 import {PlaceService} from '../../services/place/place.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-map',
@@ -14,7 +15,7 @@ import {PlaceService} from '../../services/place/place.service';
   styleUrls: ['./map.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements AfterViewInit {
   @ViewChild('map', {read: ElementRef, static: true})
   private mapEl!: ElementRef;
 
@@ -29,31 +30,48 @@ export class MapComponent implements OnInit {
   constructor(
     private mapService: MapService,
     private placesService: PlacesService,
-    private placeService: PlaceService
+    private placeService: PlaceService,
+    private destroyRef: DestroyRef
   ) {}
 
-  ngOnInit() {
-    this.mapService.initMap(this.mapEl.nativeElement, this.tileLayer);
+  ngAfterViewInit() {
+    this.mapService
+      .initMap(this.mapEl.nativeElement, this.tileLayer)
+      .pipe(
+        switchMap(() => this.initPlacesWatcher()),
+        switchMap(() => this.initSelectedPlaceWatcher()),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
+  }
 
-    this.placesService.getPlaces()
-      .pipe(filter(places => !!places.length))
-      .subscribe(places => {
-        this.markers = this.createMarkers(places);
-        this.refreshMarkers();
+  private initPlacesWatcher() {
+    return this.placesService.getPlaces().pipe(
+      filter(places => !!places.length),
+      map(places => {
+        this.initMarkers(places);
 
         this.markersLayer.on('clusterclick', cluster =>
           this.mapService.flyToBounds(cluster.propagatedFrom.getBounds())
         );
 
         this.mapService.addMarkers(this.markersLayer);
-      });
+      })
+    );
+  }
 
-    this.placeService.getSelectedPlace().subscribe(place => {
-      if (!this.markersLayer) return;
+  private initSelectedPlaceWatcher() {
+    return this.placeService.getSelectedPlace().pipe(
+      map(place => {
+        if (!this.markersLayer) return;
 
-      this.selectMarker(place);
-      this.refreshMarkers();
-    });
+        this.selectMarker(place);
+
+        if (place) {
+          this.mapService.flyTo(place.coordinates);
+        }
+      })
+    );
   }
 
   private refreshMarkers() {
@@ -61,13 +79,14 @@ export class MapComponent implements OnInit {
     this.markersLayer.addLayers(this.markers);
   }
 
-  private createMarkers(places: Place[]) {
-    return places.map(place => {
+  private initMarkers(places: Place[]) {
+    this.markers = places.map(place => {
       return L.marker([place.coordinates.latitude, place.coordinates.longitude], {
         icon: this.createMarkerIcon(place),
         title: place.name,
       }).on('click', () => this.selectPlace(place));
     });
+    this.refreshMarkers();
   }
 
   private createMarkerIcon(place: Place) {
@@ -103,5 +122,6 @@ export class MapComponent implements OnInit {
         }
       }
     });
+    this.refreshMarkers();
   }
 }

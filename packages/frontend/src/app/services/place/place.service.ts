@@ -1,20 +1,14 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Place} from '../../models/rest/places/places.model';
-import {MapService} from '../map/map.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class PlaceService {
   private selectedPlace$ = new BehaviorSubject<Place | null>(null);
 
-  constructor(private mapService: MapService) {}
-
   setSelectedPlace(entity: Place | null) {
-    if (entity && this.selectedPlace$.value !== entity) {
-      this.mapService.flyTo({lat: entity.coordinates.latitude, lng: entity.coordinates.longitude}, 18);
-    }
+    if (entity?.id === this.selectedPlace$.value?.id) return;
+
     this.selectedPlace$.next(entity);
   }
 

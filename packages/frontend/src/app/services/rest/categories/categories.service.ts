@@ -5,9 +5,7 @@ import {Category} from '../../../models/rest/categories/categories.model';
 import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 import {LanguagesService} from '../languages/languages.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CategoriesService {
   private apiUrl = 'http://localhost:1337/api';
 
@@ -21,9 +19,7 @@ export class CategoriesService {
 
   loadCategories() {
     return this.http
-      .get<StrapiResponseMulti<Category>>(
-        `${this.apiUrl}/categories?locale=${this.languagesService.currentLanguageCode}`
-      )
+      .get<StrapiResponseMulti<Category>>(`${this.apiUrl}/categories?locale=${this.languagesService.selectedLanguage}`)
       .pipe(
         map(response => this.processResponse(response)),
         tap(categories => this.categories$.next(categories))

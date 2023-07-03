@@ -1,9 +1,18 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import {debounceTime, map, Subject, tap} from 'rxjs';
 import {CategoriesService} from '../../services/rest/categories/categories.service';
 import {PlacesService} from '../../services/rest/places/places.service';
 import {SEARCH_TYPE, SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-search',
@@ -44,22 +53,24 @@ export class SearchComponent implements OnInit {
     private categoriesService: CategoriesService,
     private searchService: SearchService,
     private placeService: PlaceService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private destroyRef: DestroyRef
   ) {}
 
   ngOnInit(): void {
     this.categoriesService
       .getCategories()
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(categories => (this.categoriesNames = categories.map(category => category.name)));
 
     this.placesService
       .getPlaces()
-      .subscribe(
-        places =>
-          (this.citiesNames = Array.from(
-            new Set(places.reduce((arr: string[], place) => arr.concat(place.city.name), []))
-          ))
-      );
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(places => {
+        this.citiesNames = Array.from(
+          new Set(places.reduce((arr: string[], place) => arr.concat(place.city.name), []))
+        );
+      });
 
     this.initSearchValueChangeHandler();
   }
@@ -69,7 +80,8 @@ export class SearchComponent implements OnInit {
       .pipe(
         debounceTime(300),
         map(value => value.trim()),
-        tap(value => this.dropdownVisible = !!value.length)
+        tap(value => (this.dropdownVisible = !!value.length)),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(searchValue => this.filterCities(searchValue));
   }

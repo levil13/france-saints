@@ -1,8 +1,10 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {PlaceService} from '../../services/place/place.service';
 import {PlacesService} from '../../services/rest/places/places.service';
-import {of, switchMap} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {of, switchMap, tap} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {Place} from '../../models/rest/places/places.model';
 
 @Component({
   selector: 'app-place-page',
@@ -11,19 +13,43 @@ import {ActivatedRoute} from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlacePageComponent {
+  selectedPlace: Place | null = null;
+
   constructor(
     private placeService: PlaceService,
     private placesService: PlacesService,
-    private activatedRoute: ActivatedRoute
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.initSelectedPlace();
+  }
 
-  selectedPlace$ = this.placeService.getSelectedPlace().pipe(
-    switchMap(selectedPlace => {
-      if (!selectedPlace) {
-        const coordinates = this.activatedRoute.snapshot.params['place'];
-        return this.placesService.findPlace(coordinates.replace(',', ', '));
-      }
-      return of(selectedPlace);
-    })
-  );
+  private initSelectedPlace() {
+    this.placeService
+      .getSelectedPlace()
+      .pipe(
+        switchMap(selectedPlace => {
+          if (selectedPlace) {
+            return of(selectedPlace);
+          }
+          return this.findPlaceFromUrl();
+        }),
+        tap(selectedPlace => {
+          if (!selectedPlace) {
+            this.router.navigate(['/']);
+          }
+        }),
+        takeUntilDestroyed()
+      )
+      .subscribe(selectedPlace => {
+        this.selectedPlace = selectedPlace;
+        this.cdr.markForCheck();
+      });
+  }
+
+  private findPlaceFromUrl() {
+    const coordinates = this.activatedRoute.snapshot.params['place'];
+    return this.placesService.findPlace(coordinates.replace(',', ', '));
+  }
 }

@@ -4,17 +4,19 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   OnInit,
   Renderer2,
-  Type,
 } from '@angular/core';
-import {forkJoin, from, map, of, switchMap, tap} from 'rxjs';
+import {forkJoin} from 'rxjs';
 import {CategoriesService} from '../../services/rest/categories/categories.service';
 import {PlacesService} from '../../services/rest/places/places.service';
 import {SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
 import {Title} from '@angular/platform-browser';
 import {LanguagesService} from '../../services/rest/languages/languages.service';
+import {MapService} from '../../services/map/map.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-main-page',
@@ -67,10 +69,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     this.cdr.markForCheck();
   }
 
-  placeInfoComponent!: Type<void> | null;
-
-  searchResultsComponent!: Type<void> | null;
-
   constructor(
     private placesService: PlacesService,
     private categoriesService: CategoriesService,
@@ -79,7 +77,9 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     private languageService: LanguagesService,
     private cdr: ChangeDetectorRef,
     private titleService: Title,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private mapService: MapService,
+    private destroyRef: DestroyRef
   ) {
     this.titleService.setTitle($localize`:@@title:Православные Святыни Юга Франции`);
   }
@@ -87,21 +87,17 @@ export class MainPageComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     forkJoin([
       this.placesService.loadPlaces(),
-      this.categoriesService.loadCategories(),
       this.languageService.loadLanguages(),
-    ]).subscribe();
+      this.categoriesService.loadCategories(),
+    ])
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 
   ngAfterViewInit() {
     this.searchService
       .getSearchResults()
-      .pipe(
-        switchMap(searchResults => {
-          if (!searchResults) return of(searchResults);
-
-          return this.searchResultsLazyRender().pipe(map(() => searchResults));
-        })
-      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(searchResults => {
         if (searchResults === null) return;
 
@@ -111,13 +107,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
     this.placeService
       .getSelectedPlace()
-      .pipe(
-        switchMap(selectedPlace => {
-          if (!selectedPlace) return of(selectedPlace);
-
-          return this.placeInfoLazyRender().pipe(map(() => selectedPlace));
-        })
-      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(selectedPlace => {
         this.placeInfoModalVisible = !!selectedPlace;
       });
@@ -128,23 +118,5 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     searchResultsVisible
       ? this.renderer.addClass(controlElement, '!ml-[360px]')
       : this.renderer.removeClass(controlElement, '!ml-[360px]');
-  }
-
-  private placeInfoLazyRender() {
-    return from(import('../../modules/place-info/place-info.module')).pipe(
-      tap(module => {
-        const importedModule = Object.values(module)[0];
-        this.placeInfoComponent = importedModule.getComponent();
-      })
-    );
-  }
-
-  private searchResultsLazyRender() {
-    return from(import('../../modules/search-results/search-results.module')).pipe(
-      tap(module => {
-        const importedModule = Object.values(module)[0];
-        this.searchResultsComponent = importedModule.getComponent();
-      })
-    );
   }
 }

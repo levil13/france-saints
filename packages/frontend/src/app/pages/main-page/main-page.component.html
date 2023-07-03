@@ -3,9 +3,7 @@
 </header>
 
 <aside @slideInOutLeft *ngIf='searchResultsVisible' class='main-page__sidebar _left'>
-  <ng-container
-    *ngComponentOutlet='$any(searchResultsComponent)'>
-  </ng-container>
+  <app-search-results></app-search-results>
 </aside>
 
 <main class='main-page__main'>
@@ -20,7 +18,5 @@
 </main>
 
 <aside @slideInOutRight *ngIf='placeInfoModalVisible' class='main-page__sidebar _right'>
-  <ng-container
-    *ngComponentOutlet='$any(placeInfoComponent)'>
-  </ng-container>
+  <app-place-info></app-place-info>
 </aside>
