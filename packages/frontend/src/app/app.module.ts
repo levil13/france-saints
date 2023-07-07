@@ -29,6 +29,7 @@ import Token = marked.Token;
         };
 
         marked.use({walkTokens});
+        marked.options({mangle: false, headerIds: false});
       },
       multi: true,
     },

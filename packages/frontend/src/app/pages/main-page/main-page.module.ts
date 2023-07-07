@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {AsyncPipe, NgIf} from '@angular/common';
 import {MainPageComponent} from './main-page.component';
 import {MainPageRoutingModule} from './main-page-routing.module';
 import {HeaderModule} from '../../modules/header/header.module';
@@ -13,7 +13,7 @@ import {PlacesService} from '../../services/rest/places/places.service';
 
 @NgModule({
   declarations: [MainPageComponent, SearchResultsComponent, PlaceInfoComponent],
-  imports: [CommonModule, MainPageRoutingModule, HeaderModule, MapModule, CarouselModule],
+  imports: [NgIf, AsyncPipe, MainPageRoutingModule, HeaderModule, MapModule, CarouselModule],
   providers: [CategoriesService, PlacesService, SearchService],
 })
 export class MainPageModule {}

@@ -1,0 +1,10 @@
+<div class='content-wrapper'>
+  <span class='icon-hover-style-circle content-wrapper__icon'>
+    <button (click)="router.navigate(['/'])" class='icon-hover-style-circle__button'>
+      <img class='icon-30px icon-style-circle__img' src='assets/icons/icon-close.svg' alt='icon-close' />
+    </button>
+  </span>
+  <div class='content-wrapper__container'>
+    <ng-content></ng-content>
+  </div>
+</div>

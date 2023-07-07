@@ -1,0 +1,6 @@
+<app-content-wrapper *ngIf='page$ && (page$ | async) as page'>
+  <p>about-page works!</p>
+  <div
+    [innerHTML]='page.content | markdown'>
+  </div>
+</app-content-wrapper>

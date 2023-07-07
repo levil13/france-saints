@@ -37,7 +37,7 @@ export class MapComponent implements AfterViewInit {
     private destroyRef: DestroyRef,
     private routesService: RoutesService
   ) {
-    this.disableZoomAnim = this.fromPlacesPage();
+    this.disableZoomAnim = this.fromOtherPage();
   }
 
   ngAfterViewInit() {
@@ -69,10 +69,10 @@ export class MapComponent implements AfterViewInit {
     );
   }
 
-  private fromPlacesPage() {
+  private fromOtherPage() {
     const routes = this.routesService.routes$.value;
     if (!routes) return false;
-    return routes.prevRoute.includes('places') && !routes.curRoute.includes('places');
+    return routes.prevRoute !== '/' && routes.curRoute === '/';
   }
 
   private refreshMarkers() {

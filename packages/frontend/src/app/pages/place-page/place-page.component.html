@@ -1,33 +1,26 @@
-<div class="place-page">
-  <span class='icon-hover-style-circle place-page__icon'>
-    <button (click)="router.navigate(['/'])" class='icon-hover-style-circle__button'>
-      <img class='icon-30px icon-style-circle__img' src='assets/icons/icon-close.svg' alt='icon-close'/>
-    </button>
-  </span>
-  <div *ngIf='selectedPlace' class="place-page__wrapper">
-    <div class='place-page__properties'>
-      <div class='place-page__properties-element'>
-        <div class='icon-25px'>
-          <div class='icon-with-bg-circle article__category-icon'>
-            <!-- TODO move to env -->
-            <img class='icon-with-bg-circle__image'
-                 [src]='"http://localhost:1337" + selectedPlace.category.icon?.url'
-                 [alt]='selectedPlace.category.icon?.alternativeText'/>
-          </div>
+<app-content-wrapper *ngIf='selectedPlace'>
+  <div class='place-page__properties'>
+    <div class='place-page__properties-element'>
+      <div class='icon-25px'>
+        <div class='icon-with-bg-circle article__category-icon'>
+          <!-- TODO move to env -->
+          <img class='icon-with-bg-circle__image'
+               [src]='"http://localhost:1337" + selectedPlace.category.icon?.url'
+               [alt]='selectedPlace.category.icon?.alternativeText' />
         </div>
-        <span>{{selectedPlace.category.name}}</span>
       </div>
-      <div class='place-page__properties-element'>
-        <img
-          class='icon-25px'
-          src='assets/icons/icon-location.svg'
-          alt='icon-location'/>
-        <span>{{selectedPlace.city.name}}</span>
-      </div>
+      <span>{{selectedPlace.category.name}}</span>
     </div>
-    <h1 class='place-page__heading'>{{selectedPlace.name}}</h1>
-    <div [innerHTML]='selectedPlace.longDescription | markdown'
-         class="place-page__article divide-line-top">
+    <div class='place-page__properties-element'>
+      <img
+        class='icon-25px'
+        src='assets/icons/icon-location.svg'
+        alt='icon-location' />
+      <span>{{selectedPlace.city.name}}</span>
     </div>
   </div>
-</div>
+  <h1 class='place-page__heading'>{{selectedPlace.name}}</h1>
+  <div [innerHTML]='selectedPlace.longDescription | markdown'
+       class='place-page__article divide-line-top'>
+  </div>
+</app-content-wrapper>
