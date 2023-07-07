@@ -1,6 +1,8 @@
 <nav class='header__nav'>
   <button (click)='homeClick()' class='header__logo'>
-    <img class='header__logo-image' src='assets/icons/logo.svg' alt='logo' />
+    <img class='header__logo-image'
+         [src]='"assets/icons/logo-" + languageService.selectedLanguage + ".svg"'
+         alt='logo' />
   </button>
 
   <app-search></app-search>
