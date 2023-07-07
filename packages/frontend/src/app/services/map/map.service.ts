@@ -20,15 +20,15 @@ export class MapService {
         zoomControl: false,
       })
         .addControl(L.control.zoom({position: 'bottomleft'}))
-        .addLayer(tileLayer)
-        .whenReady(() => {
-          subscriber.next();
-          subscriber.complete();
-        });
+        .addLayer(tileLayer);
+
+      subscriber.next();
+      subscriber.complete();
     });
   }
 
   addMarkers(markersLayer: L.MarkerClusterGroup) {
+    markersLayer.on('clusterclick', cluster => this.flyToBounds(cluster.propagatedFrom.getBounds()));
     this.map.addLayer(markersLayer).fitBounds(markersLayer.getBounds(), {animate: false});
   }
 

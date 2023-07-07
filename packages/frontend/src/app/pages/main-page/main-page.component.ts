@@ -5,10 +5,8 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  OnInit,
   Renderer2,
 } from '@angular/core';
-import {forkJoin} from 'rxjs';
 import {CategoriesService} from '../../services/rest/categories/categories.service';
 import {PlacesService} from '../../services/rest/places/places.service';
 import {SearchService} from '../../services/search/search.service';
@@ -34,7 +32,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
     ]),
   ],
 })
-export class MainPageComponent implements OnInit, AfterViewInit {
+export class MainPageComponent implements AfterViewInit {
   private _searchResultsVisible = false;
 
   get searchResultsVisible(): boolean {
@@ -82,16 +80,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     private destroyRef: DestroyRef
   ) {
     this.titleService.setTitle($localize`:@@title:Православные Святыни Юга Франции`);
-  }
-
-  ngOnInit(): void {
-    forkJoin([
-      this.placesService.loadPlaces(),
-      this.languageService.loadLanguages(),
-      this.categoriesService.loadCategories(),
-    ])
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
   }
 
   ngAfterViewInit() {

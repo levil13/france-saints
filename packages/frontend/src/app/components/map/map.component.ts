@@ -5,11 +5,10 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import {MapService} from '../../services/map/map.service';
 import {PlacesService} from '../../services/rest/places/places.service';
-import {filter, map, switchMap} from 'rxjs';
+import {combineLatest, filter, switchMap, tap} from 'rxjs';
 import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {Router} from "@angular/router";
-import {Location} from "@angular/common";
+import {RoutesService} from '../../services/routes/routes.service';
 
 @Component({
   selector: 'app-map',
@@ -36,52 +35,44 @@ export class MapComponent implements AfterViewInit {
     private placesService: PlacesService,
     private placeService: PlaceService,
     private destroyRef: DestroyRef,
-    private router: Router,
-    private location: Location
+    private routesService: RoutesService
   ) {
-    this.disableZoomAnim = this.router.getCurrentNavigation()?.extras.state?.['fromPlacePage'];
-    this.location.replaceState(this.location.path());
+    this.disableZoomAnim = this.fromPlacesPage();
   }
 
   ngAfterViewInit() {
     this.mapService
       .initMap(this.mapEl.nativeElement, this.tileLayer)
       .pipe(
-        switchMap(() => this.initPlacesWatcher()),
-        switchMap(() => this.initSelectedPlaceWatcher()),
+        switchMap(() => combineLatest([this.initPlacesWatcher(), this.placeService.getSelectedPlace()])),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe();
+      .subscribe(([places, place]) => {
+        if (places.length && place) {
+          this.selectMarker(place);
+          this.mapService.flyTo(place.coordinates, this.disableZoomAnim);
+
+          if (this.disableZoomAnim) {
+            this.disableZoomAnim = false;
+          }
+        }
+      });
   }
 
   private initPlacesWatcher() {
     return this.placesService.getPlaces().pipe(
       filter(places => !!places.length),
-      map(places => {
+      tap(places => {
         this.initMarkers(places);
-
-        this.markersLayer.on('clusterclick', cluster =>
-          this.mapService.flyToBounds(cluster.propagatedFrom.getBounds())
-        );
-
         this.mapService.addMarkers(this.markersLayer);
       })
     );
   }
 
-  private initSelectedPlaceWatcher() {
-    return this.placeService.getSelectedPlace().pipe(
-      map(place => {
-        if (!this.markersLayer) return;
-
-        this.selectMarker(place);
-
-        if (place) {
-          this.mapService.flyTo(place.coordinates, this.disableZoomAnim);
-          this.disableZoomAnim = false;
-        }
-      })
-    );
+  private fromPlacesPage() {
+    const routes = this.routesService.routes$.value;
+    if (!routes) return false;
+    return routes.prevRoute.includes('places') && !routes.curRoute.includes('places');
   }
 
   private refreshMarkers() {

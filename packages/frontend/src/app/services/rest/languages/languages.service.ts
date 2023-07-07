@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, tap} from 'rxjs';
+import {Observable, shareReplay} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Language} from '../../../models/rest/languages/languages.model';
 import {LocationStrategy} from '@angular/common';
@@ -8,7 +8,7 @@ import {LocationStrategy} from '@angular/common';
 export class LanguagesService {
   private apiUrl = 'http://localhost:1337/api';
 
-  private languages$ = new BehaviorSubject<Language[]>([]);
+  private languages$: Observable<Language[]> | undefined;
 
   //TODO move to env
   selectedLanguage: string;
@@ -18,12 +18,10 @@ export class LanguagesService {
   }
 
   getLanguages() {
-    return this.languages$.asObservable();
-  }
+    if (!this.languages$) {
+      this.languages$ = this.http.get<Language[]>(`${this.apiUrl}/i18n/locales`).pipe(shareReplay(1));
+    }
 
-  loadLanguages() {
-    return this.http
-      .get<Language[]>(`${this.apiUrl}/i18n/locales`)
-      .pipe(tap(languages => this.languages$.next(languages)));
+    return this.languages$;
   }
 }

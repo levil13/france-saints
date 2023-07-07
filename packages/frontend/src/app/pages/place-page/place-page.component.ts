@@ -36,19 +36,11 @@ export class PlacePageComponent implements OnDestroy {
     this.placeService
       .getSelectedPlace()
       .pipe(
-        switchMap(selectedPlace => {
-          if (selectedPlace) {
-            return of(selectedPlace);
-          }
-          return this.findPlaceFromUrl();
-        }),
-        tap(selectedPlace => {
-          if (!selectedPlace) {
-            this.router.navigate(['/']);
-          } else {
-            this.placeService.setSelectedPlace(selectedPlace);
-          }
-        }),
+        switchMap(selectedPlace =>
+          selectedPlace ? of(selectedPlace) : this.findPlaceFromUrl()),
+        tap(selectedPlace =>
+          selectedPlace ? this.placeService.setSelectedPlace(selectedPlace) : this.router.navigate(['/'])
+        ),
         takeUntilDestroyed()
       )
       .subscribe(selectedPlace => {

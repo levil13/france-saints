@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {stringify} from 'qs';
-import {BehaviorSubject, map, Observable, tap} from 'rxjs';
+import {map, Observable, shareReplay} from 'rxjs';
 import {Coordinates, Place, PlaceResponse} from '../../../models/rest/places/places.model';
 import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 import {LanguagesService} from '../languages/languages.service';
@@ -10,7 +10,7 @@ import {LanguagesService} from '../languages/languages.service';
 export class PlacesService {
   private apiUrl = 'http://localhost:1337/api';
 
-  private places$ = new BehaviorSubject<Place[]>([]);
+  private places$: Observable<Place[]> | undefined;
 
   private populateQuery = {populate: ['images', 'category', 'category.icon', 'city']};
 
@@ -19,16 +19,16 @@ export class PlacesService {
   constructor(private http: HttpClient, private languagesService: LanguagesService) {}
 
   getPlaces() {
-    return this.places$.asObservable();
-  }
-
-  loadPlaces(): Observable<Place[]> {
     const query = stringify(this.populateQuery, {encodeValuesOnly: true});
 
-    return this.http.get<StrapiResponseMulti<PlaceResponse>>(this.buildPlacesApiUrl(query)).pipe(
-      map(response => response.data.map(placeResponse => this.processPlace(placeResponse))),
-      tap(places => this.places$.next(places))
-    );
+    if (!this.places$) {
+      this.places$ = this.http.get<StrapiResponseMulti<PlaceResponse>>(this.buildPlacesApiUrl(query)).pipe(
+        map(response => response.data.map(placeResponse => this.processPlace(placeResponse))),
+        shareReplay(1)
+      );
+    }
+
+    return this.places$;
   }
 
   findPlace(coordinates: string): Observable<Place | null> {
