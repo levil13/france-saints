@@ -20,7 +20,8 @@
     </div>
   </div>
   <h1 class='place-page__heading'>{{selectedPlace.name}}</h1>
-  <div [innerHTML]='selectedPlace.longDescription | markdown'
+  <div *ngIf='selectedPlace.longDescription'
+       [innerHTML]='selectedPlace.longDescription | markdown'
        class='place-page__article divide-line-top'>
   </div>
 </app-content-wrapper>

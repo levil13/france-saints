@@ -40,6 +40,11 @@ export class MapService {
   }
 
   flyTo(coords: Coordinates, disableAnim = false) {
-    this.map.flyTo({lat: coords.latitude, lng: coords.longitude}, 18, {animate: !disableAnim, duration: 0.5});
+    const latLngExpression = {lat: coords.latitude, lng: coords.longitude};
+    if (this.map.getZoom() === 18) {
+      this.map.panTo(latLngExpression);
+    } else {
+      this.map.flyTo(latLngExpression, 18, {animate: !disableAnim, duration: 0.5});
+    }
   }
 }

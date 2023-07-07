@@ -2,12 +2,36 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="ru" target-language="fr" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="title" datatype="html">
-        <source>Православные Святыни Юга Франции</source>
-        <target>Des Sanctuaires Orthodoxes du Sud de la France</target>
+      <trans-unit id="about_us" datatype="html">
+        <source>О нас</source>
+        <target>A propos de nous</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">packages/frontend/src/app/app.component.ts</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="sourcefile">packages/frontend/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/pages/about-page/about-page.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="blog" datatype="html">
+        <source>Блог</source>
+        <target>Blog</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contacts" datatype="html">
+        <source>Контакты</source>
+        <target>Contacts</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/components/header/header.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/app/pages/contacts-page/contacts-page.component.html</context>
+          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="read_more" datatype="html">
@@ -15,7 +39,7 @@
         <target>Lire la suite</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/place-info/place-info.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="search_results" datatype="html">
@@ -66,12 +90,20 @@
           <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="title" datatype="html">
+        <source>Православные Святыни Юга Франции</source>
+        <target>Lieux des pèlerinages chrétiens orthodoxes en Provence</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="search_placeholder" datatype="html">
         <source>Имя, город, почтовый индекс...</source>
         <target>Nom, ville, code postal...</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.ts</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
     </body>

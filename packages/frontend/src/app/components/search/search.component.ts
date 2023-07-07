@@ -13,6 +13,7 @@ import {PlacesService} from '../../services/rest/places/places.service';
 import {SEARCH_TYPE, SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {translations} from '../../../locale/translations';
 
 @Component({
   selector: 'app-search',
@@ -21,7 +22,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent implements OnInit {
-  placeholder = $localize`:@@search_placeholder:Имя, город, почтовый индекс...`;
+  placeholder = translations.searchPlaceholder;
 
   private _dropdownVisible = false;
 

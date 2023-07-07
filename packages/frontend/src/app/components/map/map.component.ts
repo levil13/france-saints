@@ -48,9 +48,12 @@ export class MapComponent implements AfterViewInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(([places, place]) => {
-        if (places.length && place) {
+        if (places.length) {
           this.selectMarker(place);
-          this.mapService.flyTo(place.coordinates, this.disableZoomAnim);
+
+          if (place) {
+            this.mapService.flyTo(place.coordinates, this.disableZoomAnim);
+          }
 
           if (this.disableZoomAnim) {
             this.disableZoomAnim = false;

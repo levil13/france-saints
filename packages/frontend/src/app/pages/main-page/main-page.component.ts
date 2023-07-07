@@ -11,7 +11,6 @@ import {CategoriesService} from '../../services/rest/categories/categories.servi
 import {PlacesService} from '../../services/rest/places/places.service';
 import {SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
-import {Title} from '@angular/platform-browser';
 import {LanguagesService} from '../../services/rest/languages/languages.service';
 import {MapService} from '../../services/map/map.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -74,13 +73,10 @@ export class MainPageComponent implements AfterViewInit {
     private placeService: PlaceService,
     private languageService: LanguagesService,
     private cdr: ChangeDetectorRef,
-    private titleService: Title,
     private renderer: Renderer2,
     private mapService: MapService,
     private destroyRef: DestroyRef
-  ) {
-    this.titleService.setTitle($localize`:@@title:Православные Святыни Юга Франции`);
-  }
+  ) {}
 
   ngAfterViewInit() {
     this.searchService

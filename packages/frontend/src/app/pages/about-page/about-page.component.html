@@ -1,6 +1,6 @@
 <app-content-wrapper *ngIf='page$ && (page$ | async) as page'>
-  <p>about-page works!</p>
-  <div
-    [innerHTML]='page.content | markdown'>
+  <h1 class='about-page__heading' i18n='@@about_us'>О нас</h1>
+  <div class='about-page__article divide-line-top'
+       [innerHTML]='page.content | markdown'>
   </div>
 </app-content-wrapper>

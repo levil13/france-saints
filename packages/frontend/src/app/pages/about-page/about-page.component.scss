@@ -1,0 +1,10 @@
+.about-page {
+  &__heading {
+    @apply mt-[10px] text-[38px] font-[700] leading-[41px];
+    color: var(--text-color);
+  }
+
+  &__article {
+    @apply mt-[30px] pt-[15px];
+  }
+}

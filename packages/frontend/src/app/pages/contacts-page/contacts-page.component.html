@@ -1,6 +1,6 @@
 <app-content-wrapper *ngIf='page$ && (page$ | async) as page'>
-  <p>contacts-page works!</p>
-  <div
-    [innerHTML]='page.content | markdown'>
+  <h1 class='contacts-page__heading' i18n='@@contacts'>Контакты</h1>
+  <div class='contacts-page__article divide-line-top'
+       [innerHTML]='page.content | markdown'>
   </div>
 </app-content-wrapper>
