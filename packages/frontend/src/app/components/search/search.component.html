@@ -1,4 +1,5 @@
-<div class='search' [class._focused]='dropdownVisible'>
+<!--  стиль для открытия на мобилке _mobile-opened-->
+<div class='search _mobile-opened' [class._focused]='dropdownVisible'>
   <div class='search__input'>
     <input #input
            (focus)='dropdownVisible = !!searchValue; input.classList.add("_gray")'

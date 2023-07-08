@@ -2,7 +2,8 @@
   @apply relative;
 
   button {
-    @apply flex items-center gap-[10px];
+    @apply flex items-center gap-[10px] select-none;
+    transition: color 200ms;
 
     &:hover {
       color: var(--text-color);
@@ -14,26 +15,41 @@
   }
 
   &__dropdown {
-    @apply absolute left-1/2 bg-white rounded-[15px] mt-[15px] px-[15px];
-    z-index: 402;
+    @apply absolute left-1/2 bg-white rounded-[15px] mt-[15px] px-[15px] z-[402];
     transform: translateX(-50%);
     box-shadow: 0 0 15px -5px var(--shadow-color);
 
     &-item {
-      @apply w-full;
+      @apply w-full select-none;
       border-top: 1px solid var(--border-color);
 
       &:first-child {
-        border: 0;
+        @apply border-none;
       }
 
       a {
         @apply block py-[15px];
+        transition: color 200ms;
 
         &:hover {
           color: var(--text-color);
         }
       }
+    }
+  }
+}
+
+@media (max-width: 1279px) {
+  .language-selector {
+    @apply w-[170px];
+    border-top: 1px solid var(--border-color);
+
+    button {
+      @apply w-full justify-center py-[15px];
+    }
+
+    &__dropdown {
+      @apply w-[200px] text-center;
     }
   }
 }

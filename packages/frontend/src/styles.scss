@@ -9,11 +9,13 @@
 @import 'assets/styles/colors';
 @import 'assets/styles/marked';
 
+/** ------------ **/
+/** BASIC STYLES **/
+/** ------------ **/
+
 body {
-  margin: 0;
+  @apply text-[16px] font-normal m-0 overflow-hidden;
   font-family: Roboto, sans-serif;
-  @apply text-[16px] font-normal;
-  overflow: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -44,15 +46,21 @@ body {
 textarea:focus,
 input:focus,
 button:focus {
-  outline: none;
+  @apply outline-none;
 }
 
-.color-gray {
-  color: var(--text-primary-color);
-}
+/** ------------ **/
+/** ICONS STYLES **/
+/** ------------ **/
 
-.divide-line-top {
-  border-top: 1px solid var(--border-color);
+$sizes: 11px, 15px, 20px, 25px, 30px, 50px;
+
+@each $size in $sizes {
+  .icon-#{$size} {
+    font-size: $size;
+    height: $size;
+    width: $size;
+  }
 }
 
 .icon-arrow {
@@ -74,6 +82,7 @@ button:focus {
   background-repeat: no-repeat;
   background-size: 18px 18px;
   background-position: 15px center;
+  transition: background-image 200ms;
 
   &._gray {
     background-image: url('assets/icons/icon-search-focus.svg');
@@ -84,11 +93,15 @@ button:focus {
   @apply select-none;
 
   .icon-hover-style-circle__button {
-    @apply p-[5px] rounded-full;
-    padding: 5px;
+    @apply p-[5px] rounded-full p-[5px];
+    transition: background-color 200ms;
 
     &:hover {
       background-color: var(--border-color);
+    }
+
+    img {
+      @apply select-none pointer-events-none;
     }
   }
 
@@ -130,6 +143,26 @@ button:focus {
       @apply p-[15px];
     }
   }
+
+  &.search__mobile-icon {
+    @apply bg-white rounded-full;
+
+    .icon-hover-style-circle__button {
+      @apply p-[10px];
+
+      span {
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-image: url('assets/icons/icon-search.svg');
+        background-repeat: no-repeat;
+        background-size: 20px 20px;
+        background-position: center;
+        transition: background-image 200ms;
+        filter: brightness(0.5);
+      }
+    }
+  }
 }
 
 .icon-with-bg-circle {
@@ -151,8 +184,16 @@ button:focus {
   @apply rounded-full;
 
   &__pin {
-    @apply w-full h-full relative rounded-full;
-    background-color: #fff;
+    @apply w-full h-full relative rounded-full bg-white;
+    transition: background-color 200ms;
+
+    &:hover {
+      background-color: var(--border-color);
+
+      &:after {
+        border-top-color: var(--border-color);
+      }
+    }
 
     &:after {
       content: '';
@@ -161,6 +202,7 @@ button:focus {
       border-left: 16px solid transparent;
       border-right: 16px solid transparent;
       border-top: 25px solid #fff;
+      transition: border-top-color 200ms;
     }
 
     &-image {
@@ -172,6 +214,7 @@ button:focus {
 
   &._selected {
     .icon-marker-map__pin {
+      @apply cursor-auto;
       background-color: var(--text-color);
 
       &:after {
@@ -179,28 +222,103 @@ button:focus {
       }
 
       &-image {
+        @apply select-none pointer-events-none;
         filter: none;
       }
     }
   }
 }
 
-.leaflet-control-zoom {
-  transition: margin-left 500ms ease-in-out;
-  border: none !important;
+/** --------------- **/
+/** ELEMENTS STYLES **/
+/** --------------- **/
+
+.color-gray {
+  color: var(--text-primary-color);
 }
 
-$sizes: 11px, 15px, 20px, 25px, 30px, 50px;
+.divide-line-top {
+  border-top: 1px solid var(--border-color);
+}
 
-@each $size in $sizes {
-  .icon-#{$size} {
-    font-size: $size;
-    height: $size;
-    width: $size;
+.leaflet-touch .leaflet-bar a {
+  @apply w-[35px] h-[35px] leading-[35px];
+
+  &:first-child {
+    @apply rounded-full;
+    color: var(--text-primary-color);
+    transition: background-color 200ms;
+
+    &:hover {
+      background-color: var(--border-color);
+    }
+  }
+
+  &:last-child {
+    @apply mt-[5px] rounded-full;
+    color: var(--text-primary-color);
+    transition: background-color 200ms;
+
+    &:hover {
+      background-color: var(--border-color);
+    }
+
+    span {
+      @apply ml-[-2px];
+    }
   }
 }
 
-//header media
+.leaflet-control-zoom {
+  border: none !important;
+  transition: margin-left 500ms ease-in-out;
+}
+
+.preloader {
+  @apply relative overflow-hidden pointer-events-none select-none;
+  background-image: url('assets/icons/preloader.svg');
+  background-repeat: no-repeat;
+
+  &__wrapper {
+    @apply fixed top-1/2 left-1/2;
+    transform: translate(-50%, -50%);
+  }
+
+  &__logo {
+    @apply relative w-[80px] h-[80px];
+  }
+
+  &__liquid {
+    @apply absolute top-[-40px] left-[-50%] w-[160px] h-[160px] opacity-[0.5];
+    transition: 500ms;
+
+    &::after, &::before {
+      content: '';
+      @apply w-[200%] h-[200%] absolute top-0 left-1/2;
+      transform: translate(-50%, -75%);
+    }
+
+    &::before {
+      @apply rounded-[45%] bg-white;
+      animation: liquid-animate 5s linear infinite;
+    }
+
+    &::after {
+      @apply rounded-[40%] bg-white;
+      animation: liquid-animate 8s linear infinite;
+    }
+  }
+
+  @keyframes liquid-animate {
+    0% {
+      transform: translate(-50%, -75%) rotate(0deg);
+    }
+    100% {
+      transform: translate(-50%, -75%) rotate(360deg);
+    }
+  }
+}
+
 @media screen and (max-width: 1024px) {
 }
 

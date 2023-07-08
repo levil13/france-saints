@@ -1,18 +1,23 @@
 <nav class='header__nav'>
-  <button (click)='homeClick()' class='header__logo'>
-    <img class='header__logo-image'
-         [src]='"assets/icons/logo-" + languageService.selectedLanguage + ".svg"'
-         alt='logo' />
-  </button>
+  <div class="header__logo">
+    <button (click)='homeClick()' class='header__logo-button'>
+      <img class='header__logo-button_image'
+           [src]='"assets/icons/logo-" + languageService.selectedLanguage + ".svg"'
+           alt='logo'/>
+    </button>
+  </div>
+
 
   <app-search></app-search>
 
+
+<!--  стиль для открытия на мобилке _mobile-opened-->
   <ul class='header__menu'>
     <li class='header__menu-item'>
       <a routerLink='about' i18n='@@about_us'>О нас</a>
     </li>
     <li class='header__menu-item'>
-      <a href='#blog' i18n='@@blog'>Блог</a>
+      <a href='#' i18n='@@blog'>Блог</a>
     </li>
     <li class='header__menu-item'>
       <a routerLink='contacts' i18n='@@contacts'>Контакты</a>
@@ -20,4 +25,21 @@
 
     <app-language-selector></app-language-selector>
   </ul>
+
+
+  <div class="header__mobile">
+
+    <!--  стиль для открытия на мобилке _mobile-opened-->
+    <div class="header__mobile-search _mobile-opened">
+      <span class='icon-hover-style-circle search__mobile-icon'>
+        <button class='icon-hover-style-circle__button'><span></span></button>
+      </span>
+    </div>
+    <div class="header__mobile-menu">
+      <div class="header__mobile-menu_bar top-bar"></div>
+      <div class="header__mobile-menu_bar center-bar"></div>
+      <div class="header__mobile-menu_bar bottom-bar"></div>
+    </div>
+
+  </div>
 </nav>

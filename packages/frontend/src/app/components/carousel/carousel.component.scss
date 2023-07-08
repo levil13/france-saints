@@ -7,7 +7,7 @@
 
     &-item {
       img {
-        @apply inline-block w-auto h-[214px];
+        @apply inline-block w-auto h-[214px] select-none;
       }
     }
   }
@@ -35,21 +35,16 @@
     transform: translateX(-50%);
 
     &-item {
-      display: inline-block;
-      cursor: pointer;
-      height: 12px;
-      width: 12px;
-      margin: 0 3px;
-      background-color: #fff;
+      @apply inline-block cursor-pointer h-[12px] w-[12px] my-0 mx-[3px] bg-white rounded-[50%];
       border: 2px solid var(--border-color);
-      border-radius: 50%;
+      transition: background-color 200ms;
 
       &:hover {
         background-color: var(--shadow-color);
       }
 
-      &._active, {
-        cursor: default;
+      &._active {
+        @apply cursor-default;
         background-color: var(--text-color);
       }
     }
