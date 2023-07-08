@@ -37,7 +37,7 @@
     &-item {
       @apply inline-block cursor-pointer h-[12px] w-[12px] my-0 mx-[3px] bg-white rounded-[50%];
       border: 2px solid var(--border-color);
-      transition: background-color 200ms;
+      transition: background-color 250ms;
 
       &:hover {
         background-color: var(--shadow-color);

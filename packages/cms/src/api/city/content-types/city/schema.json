@@ -31,6 +31,16 @@
       "relation": "oneToMany",
       "target": "api::place.place",
       "mappedBy": "city"
+    },
+    "postalCodes": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "required": true,
+      "regex": "^((,\\s)?[0-9]{5})+$"
     }
   }
 }

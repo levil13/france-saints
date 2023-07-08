@@ -16,11 +16,15 @@
                      [alt]='place.category.icon?.alternativeText' />
               </div>
             </div>
-            <span>{{place.category.name}}</span>
+            <span [title]='place.category.name'>
+              {{place.category.name}}
+            </span>
           </div>
           <div class='search-results__list-item_link-properties_element'>
             <img class='icon-20px' src='assets/icons/icon-location.svg' alt='icon-location' />
-            <span>{{place.city.name}}</span>
+            <span [title]='place.city.name'>
+              {{place.city.name}}
+            </span>
           </div>
         </div>
         <h3 class='search-results__list-item_link-heading'>

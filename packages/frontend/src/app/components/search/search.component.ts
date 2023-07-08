@@ -5,7 +5,10 @@ import {
   DestroyRef,
   ElementRef,
   HostListener,
+  Input,
   OnInit,
+  QueryList,
+  ViewChildren,
 } from '@angular/core';
 import {debounceTime, map, Subject, tap} from 'rxjs';
 import {CategoriesService} from '../../services/rest/categories/categories.service';
@@ -14,6 +17,8 @@ import {SEARCH_TYPE, SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {translations} from '../../../locale/translations';
+import {City} from '../../models/rest/cities/cities.model';
+import {Place} from '../../models/rest/places/places.model';
 
 @Component({
   selector: 'app-search',
@@ -32,21 +37,35 @@ export class SearchComponent implements OnInit {
 
   public set dropdownVisible(value) {
     this._dropdownVisible = value;
+    this.selectedButton = undefined;
     this.cdr.markForCheck();
   }
+
+  @Input()
+  mobileSearchOpened = false;
 
   searchValue = '';
   searchValueChange$ = new Subject<string>();
 
   categoriesNames: string[] = [];
-  citiesNames: string[] = [];
+  cities: City[] = [];
 
-  filteredCitiesNames: string[] = [];
+  filteredCities: City[] = [];
 
   @HostListener('document:click', ['$event'])
   clickHandler(event: Event) {
     this.checkAndHandleOutsideClick(event);
   }
+
+  @HostListener('window:keyup', ['$event'])
+  keyHandler(event: KeyboardEvent) {
+    this.checkAndHandleDownClick(event);
+  }
+
+  @ViewChildren('dropDownButton', {read: ElementRef})
+  private dropDownButtons: QueryList<ElementRef> | undefined;
+
+  private selectedButton: ElementRef | undefined;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -67,13 +86,20 @@ export class SearchComponent implements OnInit {
     this.placesService
       .getPlaces()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(places => {
-        this.citiesNames = Array.from(
-          new Set(places.reduce((arr: string[], place) => arr.concat(place.city.name), []))
-        );
-      });
+      .subscribe(places => (this.cities = this.getCities(places)));
 
     this.initSearchValueChangeHandler();
+  }
+
+  private getCities(places: Place[]) {
+    const citiesMap: Map<string, City> = new Map();
+
+    places.forEach(place => {
+      if (citiesMap.has(place.city.name)) return;
+      citiesMap.set(place.city.name, place.city);
+    });
+
+    return Array.from(citiesMap.values());
   }
 
   private initSearchValueChangeHandler() {
@@ -95,15 +121,61 @@ export class SearchComponent implements OnInit {
         .join('\\s*'),
       'gi'
     );
-    this.filteredCitiesNames = this.citiesNames
-      .filter(cityName => cityName.match(searchValueRegExp))
-      .map(filteredCityName => filteredCityName.replace(searchValueRegExp, '<b>$&</b>'));
+
+    this.filteredCities = this.cities
+      .filter(city => city.name.match(searchValueRegExp) || city.postalCodes.some(code => code.includes(searchValue)))
+      .slice(0, 5)
+      .map(filteredCity => {
+        const name = filteredCity.name.replace(searchValueRegExp, '<b>$&</b>');
+        const postalCodes = filteredCity.postalCodes.map(postalCode => postalCode.replace(searchValue, '<b>$&</b>'));
+
+        return {...filteredCity, name, postalCodes};
+      });
   }
 
   private checkAndHandleOutsideClick(event: Event) {
     if (!this.elementRef.nativeElement.contains(event.target)) {
       this.dropdownVisible = false;
     }
+  }
+
+  private checkAndHandleDownClick(event: KeyboardEvent) {
+    if (!this.dropdownVisible || !this.dropDownButtons) return;
+
+    if (!this.selectedButton) {
+      if (event.key === 'ArrowDown') {
+        this.selectedButton = this.dropDownButtons.first;
+      }
+
+      if (event.key === 'ArrowUp') {
+        this.selectedButton = this.dropDownButtons.last;
+      }
+    } else {
+      const selectedButtonIndex = Array.from(this.dropDownButtons).indexOf(this.selectedButton);
+      let newSelectedButton;
+
+      if (event.key === 'ArrowDown') {
+        if (selectedButtonIndex === this.dropDownButtons.length - 1) {
+          newSelectedButton = this.dropDownButtons.first;
+        } else {
+          newSelectedButton = this.dropDownButtons.get(selectedButtonIndex + 1);
+        }
+      }
+
+      if (event.key === 'ArrowUp') {
+        if (selectedButtonIndex === 0) {
+          newSelectedButton = this.dropDownButtons.last;
+        } else {
+          newSelectedButton = this.dropDownButtons.get(selectedButtonIndex - 1);
+        }
+      }
+
+      if (newSelectedButton) {
+        this.selectedButton = newSelectedButton;
+      }
+    }
+
+    this.selectedButton?.nativeElement.focus();
   }
 
   searchValueChange(value: string) {
@@ -119,5 +191,14 @@ export class SearchComponent implements OnInit {
 
     this.dropdownVisible = false;
     this.searchService.setSearchEntity({term: this.searchValue, typeTerm, type});
+  }
+
+  onInputFocus(input: HTMLInputElement) {
+    this.dropdownVisible = !!this.searchValue;
+    input.classList.add('_gray');
+  }
+
+  onInputBlur(input: HTMLInputElement) {
+    input.classList.remove('_gray');
   }
 }

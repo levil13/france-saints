@@ -1,9 +1,8 @@
-<!--  стиль для открытия на мобилке _mobile-opened-->
-<div class='search _mobile-opened' [class._focused]='dropdownVisible'>
+<div class='search' [class._mobile-opened]='mobileSearchOpened' [class._focused]='dropdownVisible'>
   <div class='search__input'>
     <input #input
-           (focus)='dropdownVisible = !!searchValue; input.classList.add("_gray")'
-           (blur)='input.classList.remove("_gray")'
+           (focus)='onInputFocus(input)'
+           (blur)='onInputBlur(input)'
            [(ngModel)]='searchValue'
            (ngModelChange)='searchValueChange($event)'
            class='icon-search'
@@ -19,17 +18,20 @@
   <div class='search__result divide-line-top'>
     <ul class='search__result-list'>
       <li class='search__result-list-item'>
-        <button #button (click)='searchEntitySelect(button.innerText, "global")' class='icon-search _gray'>
+        <button #dropDownButton class='search__result-button icon-search _gray'
+                (click)='searchEntitySelect(searchValue, "global")'>
           {{ searchValue }} <span class='color-gray' i18n='@@global_search'>— поиск по всему сайту</span>
         </button>
       </li>
     </ul>
 
-    <ul *ngIf='filteredCitiesNames.length' class='search__result-list'>
+    <ul *ngIf='filteredCities.length' class='search__result-list'>
       <h3 i18n='@@cities_search' class='search__result-list-heading'>Поиск в городах</h3>
-      <li *ngFor='let cityName of filteredCitiesNames' class='search__result-list-item'>
-        <button #button (click)='searchEntitySelect(button.innerText, "city")' class='icon-search _gray'
-                [innerHTML]='cityName'>
+      <li *ngFor='let city of filteredCities' class='search__result-list-item'>
+        <button #dropDownButton class='search__result-button _flex icon-search _gray'
+                (click)='searchEntitySelect(cityName.innerText, "city")'>
+          <span #cityName [innerHTML]='city.name'></span>
+          <span [innerHTML]='city.postalCodes.join(", ")' class='search__result-button-caption'></span>
         </button>
       </li>
     </ul>
@@ -38,7 +40,8 @@
     <ul *ngIf='categoriesNames.length' class='search__result-list'>
       <h3 i18n='@@categories_search' class='search__result-list-heading'>Поиск в категориях</h3>
       <li *ngFor='let categoryName of categoriesNames' class='search__result-list-item'>
-        <button (click)='searchEntitySelect(categoryName, "category")' class='icon-search _gray'>
+        <button #dropDownButton class='search__result-button icon-search _gray'
+                (click)='searchEntitySelect(categoryName, "category")'>
           {{ searchValue }} <span class='color-gray' i18n='@@in_category'>в категории {{ categoryName }}</span>
         </button>
       </li>

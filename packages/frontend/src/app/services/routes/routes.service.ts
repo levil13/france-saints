@@ -7,7 +7,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   providedIn: 'root',
 })
 export class RoutesService {
-  routes$ = new BehaviorSubject<{prevRoute: string; curRoute: string} | null>(null);
+  routes$ = new BehaviorSubject<{prevRoute: string; curRoute: string}>({prevRoute: '', curRoute: ''});
 
   constructor(private router: Router, private destroyRef: DestroyRef) {}
 

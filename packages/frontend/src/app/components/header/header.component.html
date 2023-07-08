@@ -1,18 +1,19 @@
 <nav class='header__nav'>
-  <div class="header__logo">
+  <div class='header__logo'>
     <button (click)='homeClick()' class='header__logo-button'>
       <img class='header__logo-button_image'
            [src]='"assets/icons/logo-" + languageService.selectedLanguage + ".svg"'
-           alt='logo'/>
+           alt='logo' />
     </button>
   </div>
 
+  <app-search @fade *ngIf='media === MEDIA.DESKTOP || media === MEDIA.DESKTOP_SM || mobileSearchOpened'
+              [mobileSearchOpened]='mobileSearchOpened'>
+  </app-search>
 
-  <app-search></app-search>
-
-
-<!--  стиль для открытия на мобилке _mobile-opened-->
-  <ul class='header__menu'>
+  <ul @fade *ngIf='media === MEDIA.DESKTOP || mobileMenuOpened'
+      [class._mobile-opened]='mobileMenuOpened'
+      class='header__menu'>
     <li class='header__menu-item'>
       <a routerLink='about' i18n='@@about_us'>О нас</a>
     </li>
@@ -26,20 +27,21 @@
     <app-language-selector></app-language-selector>
   </ul>
 
-
-  <div class="header__mobile">
-
-    <!--  стиль для открытия на мобилке _mobile-opened-->
-    <div class="header__mobile-search _mobile-opened">
+  <div *ngIf='media !== MEDIA.DESKTOP' class='header__mobile'>
+    <div *ngIf='media !== MEDIA.DESKTOP_SM'
+         (click)='mobileSearchOpened = !mobileSearchOpened'
+         [class._mobile-opened]='mobileSearchOpened'
+         class='header__mobile-search'>
       <span class='icon-hover-style-circle search__mobile-icon'>
         <button class='icon-hover-style-circle__button'><span></span></button>
       </span>
     </div>
-    <div class="header__mobile-menu">
-      <div class="header__mobile-menu_bar top-bar"></div>
-      <div class="header__mobile-menu_bar center-bar"></div>
-      <div class="header__mobile-menu_bar bottom-bar"></div>
+    <div (click)='mobileMenuOpened = !mobileMenuOpened'
+         [class._selected]='mobileMenuOpened'
+         class='header__mobile-menu'>
+      <div class='header__mobile-menu_bar top-bar'></div>
+      <div class='header__mobile-menu_bar center-bar'></div>
+      <div class='header__mobile-menu_bar bottom-bar'></div>
     </div>
-
   </div>
 </nav>

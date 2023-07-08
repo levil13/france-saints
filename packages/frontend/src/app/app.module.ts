@@ -6,12 +6,20 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {RoutesService} from './services/routes/routes.service';
 import {marked} from 'marked';
 import Token = marked.Token;
+import {MediaService} from './services/media/media.service';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserAnimationsModule, HttpClientModule, AppRoutingModule],
   bootstrap: [AppComponent],
   providers: [
+    MediaService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (windowService: MediaService) => () => windowService.init(),
+      deps: [MediaService],
+      multi: true,
+    },
     RoutesService,
     {
       provide: APP_INITIALIZER,

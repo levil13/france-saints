@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {NgFor, NgIf} from '@angular/common';
+import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {HeaderComponent} from '../../components/header/header.component';
 import {SearchComponent} from '../../components/search/search.component';
 import {LanguageSelectorComponent} from '../../components/language-selector/language-selector.component';
@@ -8,7 +8,7 @@ import {RouterLink} from '@angular/router';
 
 @NgModule({
   declarations: [HeaderComponent, SearchComponent, LanguageSelectorComponent],
-  imports: [NgIf, NgFor, FormsModule, RouterLink],
+  imports: [NgIf, NgFor, FormsModule, RouterLink, AsyncPipe],
   exports: [HeaderComponent],
 })
 export class HeaderModule {}

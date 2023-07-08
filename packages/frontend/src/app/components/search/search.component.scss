@@ -38,19 +38,32 @@
 
       &-item {
         @apply w-full select-none;
-
-        button {
-          @apply w-full text-left px-[45px] py-[8px];
-          transition: background-color 200ms;
-
-          &:hover {
-            background-color: var(--border-color);
-          }
-        }
       }
 
       &:last-child .search__result-list-item:last-child button {
         @apply rounded-bl-[15px] rounded-br-[15px];
+      }
+    }
+
+    &-button {
+      @apply w-full text-left px-[45px] py-[8px];
+      transition: background-color 250ms;
+
+      &._flex {
+        @apply flex flex-col;
+      }
+
+      &:hover, &:focus {
+        background-color: var(--border-color);
+      }
+
+      &-caption {
+        @apply text-[11px];
+        color: var(--text-primary-color);
+
+        b {
+          color: #333;
+        }
       }
     }
   }

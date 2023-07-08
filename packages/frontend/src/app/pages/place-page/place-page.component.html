@@ -9,14 +9,18 @@
                [alt]='selectedPlace.category.icon?.alternativeText' />
         </div>
       </div>
-      <span>{{selectedPlace.category.name}}</span>
+      <span [title]='selectedPlace.category.name'>
+        {{selectedPlace.category.name}}
+      </span>
     </div>
     <div class='place-page__properties-element'>
       <img
         class='icon-25px'
         src='assets/icons/icon-location.svg'
         alt='icon-location' />
-      <span>{{selectedPlace.city.name}}</span>
+      <span [title]='selectedPlace.city.name'>
+        {{selectedPlace.city.name}}
+      </span>
     </div>
   </div>
   <h1 class='place-page__heading'>{{selectedPlace.name}}</h1>

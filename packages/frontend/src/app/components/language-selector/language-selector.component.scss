@@ -3,14 +3,14 @@
 
   button {
     @apply flex items-center gap-[10px] select-none;
-    transition: color 200ms;
+    transition: color 250ms;
 
     &:hover {
       color: var(--text-color);
     }
 
     .icon-arrow {
-      transition: transform 200ms;
+      transition: transform 250ms;
     }
   }
 
@@ -29,7 +29,7 @@
 
       a {
         @apply block py-[15px];
-        transition: color 200ms;
+        transition: color 250ms;
 
         &:hover {
           color: var(--text-color);

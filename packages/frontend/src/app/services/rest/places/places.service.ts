@@ -5,6 +5,8 @@ import {map, Observable, shareReplay} from 'rxjs';
 import {Coordinates, Place, PlaceResponse} from '../../../models/rest/places/places.model';
 import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 import {LanguagesService} from '../languages/languages.service';
+import {CityResponse} from '../../../models/rest/cities/cities.model';
+import {Image} from '../../../models/rest/strapi-components.model';
 
 @Injectable()
 export class PlacesService {
@@ -56,8 +58,8 @@ export class PlacesService {
     const placeAttrs = placeResponse.attributes;
     const placeCategory = placeAttrs.category.data.attributes;
     const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data?.attributes;
-    const placeCity = placeAttrs.city.data.attributes;
-    const placeImages = placeAttrs.images?.data?.map(image => ({...image.attributes, id: image.id}));
+    const placeCity = this.processCity(placeAttrs.city.data.attributes);
+    const placeImages = placeAttrs.images && this.processImages(placeAttrs.images);
     const placeCoordinates = this.processPlaceCoordinates(placeResponse.attributes.coordinates);
 
     return {
@@ -73,5 +75,13 @@ export class PlacesService {
   private processPlaceCoordinates(coordinates: string): Coordinates {
     const coordinatesSplit = coordinates.split(', ');
     return {latitude: +coordinatesSplit[0], longitude: +coordinatesSplit[1]};
+  }
+
+  private processCity(cityResponse: CityResponse) {
+    return {...cityResponse, postalCodes: cityResponse.postalCodes.split(', ')};
+  }
+
+  private processImages(imagesResponse: StrapiResponseMulti<Image>) {
+    return imagesResponse.data.map(image => ({...image.attributes, id: image.id}));
   }
 }

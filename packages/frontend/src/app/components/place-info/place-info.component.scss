@@ -6,7 +6,7 @@
   .place-info__read-more {
     @apply inline-block px-[32px] py-[10px] mt-[15px] text-white rounded-full select-none whitespace-nowrap float-right;
     background-color: var(--text-color);
-    transition: background-color 200ms;
+    transition: background-color 250ms;
 
     &:hover {
       @apply cursor-pointer;
