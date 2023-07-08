@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  ElementRef,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import {LanguagesService} from '../../services/rest/languages/languages.service';
 import {Language} from '../../models/rest/languages/languages.model';
 import {animate, style, transition, trigger} from '@angular/animations';
@@ -50,10 +58,16 @@ export class LanguageSelectorComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
+  @HostListener('document:click', ['$event'])
+  clickHandler(event: Event) {
+    this.checkAndHandleOutsideClick(event);
+  }
+
   constructor(
     private cdr: ChangeDetectorRef,
     private languagesService: LanguagesService,
-    private destroyRef: DestroyRef
+    private destroyRef: DestroyRef,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -64,5 +78,11 @@ export class LanguageSelectorComponent implements OnInit {
         this.selectedLanguage = languages.find(lang => lang.code === this.languagesService.selectedLanguage);
         this.nonSelectedLanguages = languages.filter(lang => lang !== this.selectedLanguage);
       });
+  }
+
+  private checkAndHandleOutsideClick(event: Event) {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.dropdownVisible = false;
+    }
   }
 }
