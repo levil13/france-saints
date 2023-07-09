@@ -1,7 +1,5 @@
 .header {
-  &__nav {
-    @apply px-[32px] h-[80px] flex justify-between items-center gap-[15px];
-  }
+  @apply px-[32px] h-[80px] flex justify-between items-center gap-[15px];
 
   &__logo {
     @apply max-w-[350px];
@@ -68,6 +66,7 @@
       @apply hidden;
     }
   }
+}
 
   /** ------------ **/
   /** MEDIA STYLES **/
@@ -141,9 +140,6 @@
 
   @media (max-width: 767px) {
     .header {
-      &__nav {
-        @apply flex-col h-auto items-stretch p-[15px];
-      }
+      @apply flex-col h-auto items-stretch p-[15px];
     }
   }
-}

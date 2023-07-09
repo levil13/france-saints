@@ -267,6 +267,10 @@ $sizes: 11px, 15px, 20px, 25px, 30px, 50px;
       @apply ml-[-2px];
     }
   }
+
+  &.leaflet-disabled {
+    background-color: var(--border-color);
+  }
 }
 
 .leaflet-control-zoom {

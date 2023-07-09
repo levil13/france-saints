@@ -2,7 +2,7 @@
   @apply relative rounded-full z-[402];
   box-shadow: 0 0 15px -5px var(--shadow-color);
 
-  .search__input {
+  &__input {
     @apply relative w-[500px] rounded-full z-[11];
 
     input {
@@ -24,7 +24,7 @@
     }
   }
 
-  .search__result {
+  &__result {
     @apply hidden absolute left-0 w-full bg-white z-10;
     box-shadow: 0 0 15px -5px var(--shadow-color);
 
@@ -89,7 +89,7 @@
 
 @media (max-width: 1279px) {
   .search {
-    .search__input {
+    &__input {
       @apply w-[450px];
     }
   }
