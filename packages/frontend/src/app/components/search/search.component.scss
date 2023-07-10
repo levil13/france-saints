@@ -105,4 +105,42 @@
   }
 }
 
+@media (max-width: 767px) {
+  .search {
+    &__input {
+      @apply w-full;
+
+      input {
+        @apply rounded-none;
+      }
+    }
+
+    &._mobile-opened {
+      @apply absolute left-0 top-[135px] w-full rounded-none z-[404];
+      border-top: 1px solid var(--border-color);
+      box-shadow: none;
+
+      .search__result {
+        &-list {
+          &:last-child .search__result-list-item:last-child button {
+            @apply rounded-none;
+          }
+        }
+      }
+
+      &._focused {
+        .search__input {
+          input {
+            @apply rounded-none;
+          }
+        }
+
+        .search__result {
+          @apply rounded-none;
+        }
+      }
+    }
+  }
+}
+
 

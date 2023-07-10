@@ -8,13 +8,16 @@
     @apply leading-[41px];
     font-size: revert;
     font-weight: revert;
-    margin: revert;
+    margin: 18px 21px 9px;
   }
 
   ol, ul {
-    @apply pl-[20px];
+    @apply pl-[20px] m-[21px];
     list-style: revert;
-    margin: revert;
+  }
+
+  pre {
+    @apply m-[21px];
   }
 
   a {
@@ -23,5 +26,14 @@
     &:hover {
       @apply underline;
     }
+  }
+
+  p {
+    margin: 0 21px 12px;
+    white-space: pre-wrap;
+  }
+
+  img {
+    @apply max-h-[690px];
   }
 }

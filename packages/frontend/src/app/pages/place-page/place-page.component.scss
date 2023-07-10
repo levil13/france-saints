@@ -7,7 +7,7 @@
   }
 
   &__properties {
-    @apply flex items-center gap-[15px];
+    @apply flex items-center gap-[15px] mx-[21px];
 
     &-element {
       @apply flex items-center gap-[5px];
@@ -25,7 +25,7 @@
   }
 
   &__heading {
-    @apply mt-[10px] text-[38px] font-[700] leading-[41px];
+    @apply mt-[10px] text-[38px] font-[700] leading-[41px] mx-[21px];
     color: var(--text-color);
   }
 

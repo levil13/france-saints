@@ -8,7 +8,7 @@
       @apply align-middle;
 
       &_image {
-        @apply select-none pointer-events-none;
+        @apply select-none pointer-events-none max-h-[50px];
       }
     }
   }
@@ -140,6 +140,27 @@
 
   @media (max-width: 767px) {
     .header {
-      @apply flex-col h-auto items-stretch p-[15px];
+      @apply block h-auto p-[15px];
+
+      &__mobile {
+        @apply mt-[15px];
+      }
+
+      &__menu {
+        &._mobile-opened {
+          @apply top-[135px] right-0 w-full m-0 p-0 rounded-none z-[403];
+          box-shadow: none;
+
+          &:before {
+            @apply hidden;
+          }
+
+          .header__menu-item {
+            &:first-child {
+              border-top: 1px solid var(--border-color);
+            }
+          }
+        }
+      }
     }
   }

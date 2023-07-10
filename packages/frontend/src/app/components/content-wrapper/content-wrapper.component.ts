@@ -11,10 +11,10 @@ export class ContentWrapperComponent implements OnDestroy {
   bodyEl = document.querySelector('body');
 
   constructor(public router: Router, private renderer: Renderer2) {
-    this.renderer.setStyle(this.bodyEl, 'overflow', 'auto');
+    this.renderer.setStyle(this.bodyEl, 'overflow-y', 'auto');
   }
 
   ngOnDestroy() {
-    this.renderer.removeStyle(this.bodyEl, 'overflow');
+    this.renderer.removeStyle(this.bodyEl, 'overflow-y');
   }
 }

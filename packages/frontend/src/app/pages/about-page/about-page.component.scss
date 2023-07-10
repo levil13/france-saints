@@ -1,6 +1,7 @@
 .about-page {
   &__heading {
-    @apply mt-[10px] text-[38px] font-[700] leading-[41px];
+    @apply text-[38px] font-[700] leading-[41px];
+    margin: 10px 21px 0;
     color: var(--text-color);
   }
 

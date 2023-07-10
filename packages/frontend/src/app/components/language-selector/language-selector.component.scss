@@ -53,3 +53,24 @@
     }
   }
 }
+
+@media (max-width: 767px) {
+  .language-selector {
+    @apply w-[768px];
+
+    button {
+      @apply w-full justify-center py-[15px];
+    }
+
+    &__dropdown {
+      @apply w-full rounded-none m-0;
+      box-shadow: none;
+
+      &-item {
+        &:first-child {
+          border-top: 1px solid var(--border-color);
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 .content-wrapper {
-  @apply w-[800px] my-[30px] mx-auto;
+  @apply max-w-[800px] w-full my-[30px] mx-auto;
 
   &__container {
     @apply relative;

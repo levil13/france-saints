@@ -40,3 +40,9 @@
     @apply leading-[21px] pt-[15px];
   }
 }
+
+@media (max-width: 767px) {
+  .place-info {
+    height: calc(100vh - 135px);
+  }
+}
