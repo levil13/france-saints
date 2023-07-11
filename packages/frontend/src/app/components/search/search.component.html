@@ -1,4 +1,7 @@
-<div class='search' [class._mobile-opened]='mobileSearchOpened' [class._focused]='dropdownVisible'>
+<div appClickOutside (clickOutside)='dropdownVisible = false'
+     class='search'
+     [class._mobile-opened]='mobileSearchOpened'
+     [class._focused]='dropdownVisible'>
   <div class='search__input'>
     <input #input
            (focus)='onInputFocus(input)'

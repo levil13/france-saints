@@ -1,5 +1,5 @@
 <ng-container *ngIf='nonSelectedLanguages.length'>
-  <li class='language-selector'>
+  <div appClickOutside (clickOutside)='dropdownVisible = false' class='language-selector'>
     <button (click)='dropdownVisible = !dropdownVisible'>
       <span>{{selectedLanguage?.name?.substring(0, 3)}}</span>
       <img class='icon-arrow icon-25px'
@@ -13,5 +13,5 @@
         <a [href]='"/" + language.code + "/"'>{{language.name}}</a>
       </li>
     </ul>
-  </li>
+  </div>
 </ng-container>

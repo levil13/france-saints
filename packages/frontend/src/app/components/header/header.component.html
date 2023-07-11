@@ -2,45 +2,54 @@
   <div class='header__logo'>
     <button (click)='homeClick()' class='header__logo-button'>
       <img class='header__logo-button_image'
-           [src]='"assets/icons/logo-" + languageService.selectedLanguage + ".svg"'
+           [ngSrc]='"assets/icons/logo-" + languageService.selectedLanguage + ".svg"'
+           width='765'
+           height='101'
+           priority
            alt='logo' />
     </button>
   </div>
 
-  <app-search @fade *ngIf='media === MEDIA.DESKTOP || media === MEDIA.DESKTOP_SM || mobileSearchOpened'
-              [mobileSearchOpened]='mobileSearchOpened'>
-  </app-search>
-
-  <ul @fade *ngIf='media === MEDIA.DESKTOP || mobileMenuOpened'
-      [class._mobile-opened]='mobileMenuOpened'
-      class='header__menu'>
-    <li class='header__menu-item'>
-      <a routerLink='about' i18n='@@about_us'>О нас</a>
-    </li>
-    <li class='header__menu-item'>
-      <a href='#' i18n='@@blog'>Блог</a>
-    </li>
-    <li class='header__menu-item'>
-      <a routerLink='contacts' i18n='@@contacts'>Контакты</a>
-    </li>
-    <app-language-selector></app-language-selector>
-  </ul>
-
-  <div *ngIf='media !== MEDIA.DESKTOP' class='header__mobile'>
+  <div appClickOutside (clickOutside)='mobileSearchOpened = false'>
+    <app-search @fade *ngIf='media === MEDIA.DESKTOP || media === MEDIA.DESKTOP_SM || mobileSearchOpened'
+                [mobileSearchOpened]='mobileSearchOpened'>
+    </app-search>
     <div *ngIf='media !== MEDIA.DESKTOP_SM'
          (click)='mobileSearchOpened = !mobileSearchOpened'
          [class._mobile-opened]='mobileSearchOpened'
          class='header__mobile-search'>
-      <span class='icon-hover-style-circle search__mobile-icon'>
-        <button class='icon-hover-style-circle__button'><span></span></button>
-      </span>
+        <span class='icon-hover-style-circle search__mobile-icon'>
+          <button class='icon-hover-style-circle__button'><span></span></button>
+        </span>
     </div>
-    <div (click)='mobileMenuOpened = !mobileMenuOpened'
-         [class._selected]='mobileMenuOpened'
-         class='header__mobile-menu'>
-      <div class='header__mobile-menu_bar top-bar'></div>
-      <div class='header__mobile-menu_bar center-bar'></div>
-      <div class='header__mobile-menu_bar bottom-bar'></div>
+  </div>
+
+  <div appClickOutside (clickOutside)='mobileMenuOpened = false'>
+    <ul @fade *ngIf='media === MEDIA.DESKTOP || mobileMenuOpened'
+        [class._mobile-opened]='mobileMenuOpened'
+        class='header__menu'>
+      <li class='header__menu-item'>
+        <a routerLink='about' i18n='@@about_us'>О нас</a>
+      </li>
+      <li class='header__menu-item'>
+        <a href='#' i18n='@@blog'>Блог</a>
+      </li>
+      <li class='header__menu-item'>
+        <a routerLink='contacts' i18n='@@contacts'>Контакты</a>
+      </li>
+      <li class='header__menu-item'>
+        <app-language-selector></app-language-selector>
+      </li>
+    </ul>
+
+    <div *ngIf='media !== MEDIA.DESKTOP' class='header__mobile'>
+      <div (click)='mobileMenuOpened = !mobileMenuOpened'
+           [class._selected]='mobileMenuOpened'
+           class='header__mobile-menu'>
+        <div class='header__mobile-menu_bar top-bar'></div>
+        <div class='header__mobile-menu_bar center-bar'></div>
+        <div class='header__mobile-menu_bar bottom-bar'></div>
+      </div>
     </div>
   </div>
 </nav>

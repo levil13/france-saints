@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
+  Inject,
   Renderer2,
 } from '@angular/core';
 import {CategoriesService} from '../../services/rest/categories/categories.service';
@@ -14,6 +15,7 @@ import {PlaceService} from '../../services/place/place.service';
 import {LanguagesService} from '../../services/rest/languages/languages.service';
 import {MapService} from '../../services/map/map.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
   selector: 'app-main-page',
@@ -75,7 +77,8 @@ export class MainPageComponent implements AfterViewInit {
     private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
     private mapService: MapService,
-    private destroyRef: DestroyRef
+    private destroyRef: DestroyRef,
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngAfterViewInit() {
@@ -102,5 +105,13 @@ export class MainPageComponent implements AfterViewInit {
     searchResultsVisible
       ? this.renderer.addClass(controlElement, '!ml-[360px]')
       : this.renderer.removeClass(controlElement, '!ml-[360px]');
+  }
+
+  animationStart() {
+    this.renderer.setStyle(this.document.body, 'overflow', 'hidden');
+  }
+
+  animationDone() {
+    this.renderer.setStyle(this.document.body, 'overflow', 'auto');
   }
 }

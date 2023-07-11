@@ -8,7 +8,7 @@
       @apply align-middle;
 
       &_image {
-        @apply select-none pointer-events-none max-h-[50px];
+        @apply select-none pointer-events-none max-h-[50px] w-auto h-auto;
       }
     }
   }
@@ -28,10 +28,10 @@
   }
 
   &__mobile {
-    @apply hidden justify-between gap-[32px] align-middle;
+    @apply justify-between gap-[32px] align-middle;
 
     &-menu {
-      @apply hidden flex-col justify-between align-middle cursor-pointer p-[10px] rounded-full w-[40px] h-[40px];
+      @apply flex-col justify-between align-middle cursor-pointer p-[10px] rounded-full w-[40px] h-[40px];
 
       &:hover {
         background-color: var(--border-color);

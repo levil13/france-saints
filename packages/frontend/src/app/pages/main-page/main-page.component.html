@@ -2,12 +2,19 @@
   <app-header></app-header>
 </header>
 
-<aside @slideInOutLeft *ngIf='searchResultsVisible' class='main-page__sidebar _left'>
+<aside *ngIf='searchResultsVisible'
+       @slideInOutLeft
+       (@slideInOutLeft.start)='animationStart()'
+       (@slideInOutLeft.done)='animationDone()'
+       class='main-page__sidebar _left'>
   <app-search-results></app-search-results>
 </aside>
 
 <main class='main-page__main'>
-  <span @slideInOutLeft *ngIf='searchResultsButtonVisible'
+  <span *ngIf='searchResultsButtonVisible'
+        @slideInOutLeft
+        (@slideInOutLeft.start)='animationStart()'
+        (@slideInOutLeft.done)='animationDone()'
         class='icon-hover-style-circle main-page__icon'
         [class._closed]='!searchResultsVisible'>
     <button (click)='searchResultsVisible = !searchResultsVisible' class='icon-hover-style-circle__button'>
@@ -17,6 +24,10 @@
   <app-map></app-map>
 </main>
 
-<aside @slideInOutRight *ngIf='placeInfoModalVisible' class='main-page__sidebar _right'>
+<aside *ngIf='placeInfoModalVisible'
+       @slideInOutRight
+       (@slideInOutRight.start)='animationStart()'
+       (@slideInOutRight.done)='animationDone()'
+       class='main-page__sidebar _right'>
   <app-place-info></app-place-info>
 </aside>

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnDestroy, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {Router} from '@angular/router';
 
 @Component({
@@ -7,14 +7,6 @@ import {Router} from '@angular/router';
   styleUrls: ['./content-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContentWrapperComponent implements OnDestroy {
-  bodyEl = document.querySelector('body');
-
-  constructor(public router: Router, private renderer: Renderer2) {
-    this.renderer.setStyle(this.bodyEl, 'overflow-y', 'auto');
-  }
-
-  ngOnDestroy() {
-    this.renderer.removeStyle(this.bodyEl, 'overflow-y');
-  }
+export class ContentWrapperComponent {
+  constructor(public router: Router) {}
 }

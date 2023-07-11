@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -26,7 +27,7 @@ import {Place} from '../../models/rest/places/places.model';
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, AfterViewInit {
   placeholder = translations.searchPlaceholder;
 
   private _dropdownVisible = false;
@@ -51,11 +52,6 @@ export class SearchComponent implements OnInit {
   cities: City[] = [];
 
   filteredCities: City[] = [];
-
-  @HostListener('document:click', ['$event'])
-  clickHandler(event: Event) {
-    this.checkAndHandleOutsideClick(event);
-  }
 
   @HostListener('window:keyup', ['$event'])
   keyHandler(event: KeyboardEvent) {
@@ -89,6 +85,11 @@ export class SearchComponent implements OnInit {
       .subscribe(places => (this.cities = this.getCities(places)));
 
     this.initSearchValueChangeHandler();
+  }
+
+  ngAfterViewInit() {
+    this.searchValue = this.searchService.searchEntity$.value?.term || '';
+    this.searchValueChange$.next(this.searchValue);
   }
 
   private getCities(places: Place[]) {
@@ -131,12 +132,6 @@ export class SearchComponent implements OnInit {
 
         return {...filteredCity, name, postalCodes};
       });
-  }
-
-  private checkAndHandleOutsideClick(event: Event) {
-    if (!this.elementRef.nativeElement.contains(event.target)) {
-      this.dropdownVisible = false;
-    }
   }
 
   private checkAndHandleDownClick(event: KeyboardEvent) {

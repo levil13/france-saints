@@ -15,7 +15,7 @@ export interface SearchEntity {
 
 @Injectable()
 export class SearchService {
-  private searchEntity$ = new BehaviorSubject<SearchEntity | null>(null);
+  searchEntity$ = new BehaviorSubject<SearchEntity | null>(null);
 
   setSearchEntity(entity: SearchEntity) {
     this.searchEntity$.next(entity);
