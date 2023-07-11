@@ -46,7 +46,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   mobileSearchOpened = false;
 
   searchValue = '';
-  searchValueChange$ = new Subject<string>();
+  searchValueChange$ = new Subject<{value: string; initial?: boolean}>();
 
   categoriesNames: string[] = [];
   cities: City[] = [];
@@ -88,8 +88,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.searchValue = this.searchService.searchEntity$.value?.term || '';
-    this.searchValueChange$.next(this.searchValue);
+    this.searchValue = this.searchService.searchEntity$.value?.term ?? '';
+    this.searchValueChange$.next({value: this.searchValue, initial: true});
   }
 
   private getCities(places: Place[]) {
@@ -107,8 +107,8 @@ export class SearchComponent implements OnInit, AfterViewInit {
     this.searchValueChange$
       .pipe(
         debounceTime(300),
-        map(value => value.trim()),
-        tap(value => (this.dropdownVisible = !!value.length)),
+        tap(valueChange => (this.dropdownVisible = !!valueChange.value.length && !valueChange.initial)),
+        map(valueChange => valueChange.value.trim()),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(searchValue => this.filterCities(searchValue));
@@ -174,7 +174,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   }
 
   searchValueChange(value: string) {
-    this.searchValueChange$.next(value);
+    this.searchValueChange$.next({value});
   }
 
   searchEntitySelect(typeTerm: string, type: SEARCH_TYPE) {
