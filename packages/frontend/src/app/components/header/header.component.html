@@ -6,11 +6,11 @@
            width='765'
            height='101'
            priority
-           alt='logo' />
+           alt='logo'/>
     </button>
   </div>
 
-  <div appClickOutside (clickOutside)='mobileSearchOpened = false'>
+  <div appClickOutside (clickOutside)='mobileSearchOpened = false' class="header__search-wrapper">
     <app-search @fade *ngIf='media === MEDIA.DESKTOP || media === MEDIA.DESKTOP_SM || mobileSearchOpened'
                 [mobileSearchOpened]='mobileSearchOpened'>
     </app-search>
@@ -24,7 +24,16 @@
     </div>
   </div>
 
-  <div appClickOutside (clickOutside)='mobileMenuOpened = false'>
+  <div appClickOutside (clickOutside)='mobileMenuOpened = false' class="header__menu-wrapper">
+    <div *ngIf='media !== MEDIA.DESKTOP'
+         (click)='mobileMenuOpened = !mobileMenuOpened'
+         [class._selected]='mobileMenuOpened'
+         class='header__mobile-menu'>
+        <span class='icon-hover-style-circle menu__mobile-icon'>
+          <button class='icon-hover-style-circle__button'><span></span></button>
+        </span>
+    </div>
+
     <ul @fade *ngIf='media === MEDIA.DESKTOP || mobileMenuOpened'
         [class._mobile-opened]='mobileMenuOpened'
         class='header__menu'>
@@ -32,7 +41,7 @@
         <a routerLink='about' i18n='@@about_us'>О нас</a>
       </li>
       <li class='header__menu-item'>
-        <a href='#' i18n='@@blog'>Блог</a>
+        <a href='https://palomnikfr.com/' i18n='@@blog'>Паломничества</a>
       </li>
       <li class='header__menu-item'>
         <a routerLink='contacts' i18n='@@contacts'>Контакты</a>
@@ -41,15 +50,5 @@
         <app-language-selector></app-language-selector>
       </li>
     </ul>
-
-    <div *ngIf='media !== MEDIA.DESKTOP' class='header__mobile'>
-      <div (click)='mobileMenuOpened = !mobileMenuOpened'
-           [class._selected]='mobileMenuOpened'
-           class='header__mobile-menu'>
-        <div class='header__mobile-menu_bar top-bar'></div>
-        <div class='header__mobile-menu_bar center-bar'></div>
-        <div class='header__mobile-menu_bar bottom-bar'></div>
-      </div>
-    </div>
   </div>
 </nav>

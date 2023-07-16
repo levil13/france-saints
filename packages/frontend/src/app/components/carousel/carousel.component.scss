@@ -50,3 +50,15 @@
     }
   }
 }
+
+@media (max-width: 450px) {
+  .carousel {
+    &__images {
+      &-item {
+        img {
+          @apply h-[140px];
+        }
+      }
+    }
+  }
+}

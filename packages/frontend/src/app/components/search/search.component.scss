@@ -111,7 +111,7 @@
       @apply w-full;
 
       input {
-        @apply rounded-none;
+        @apply rounded-none py-[15px];
       }
     }
 
@@ -125,6 +125,10 @@
           &:last-child .search__result-list-item:last-child button {
             @apply rounded-none;
           }
+        }
+
+        &-button {
+          @apply py-[15px];
         }
       }
 

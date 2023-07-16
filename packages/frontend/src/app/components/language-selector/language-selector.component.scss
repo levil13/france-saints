@@ -56,11 +56,11 @@
 @media (max-width: 767px) {
   .language-selector {
     button {
-      @apply w-full justify-center py-[15px];
+      @apply w-full justify-center py-[15px] ;
     }
 
     &__dropdown {
-      @apply w-full rounded-none m-0;
+      @apply w-full rounded-none m-0 px-0;
       box-shadow: none;
 
       &-item {

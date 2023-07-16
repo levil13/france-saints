@@ -51,3 +51,19 @@
     height: calc(100vh - 135px);
   }
 }
+
+@media (max-width: 450px) {
+  .search-results {
+    @apply w-[320px];
+
+    .search-results__list {
+      &-item {
+        &_link {
+          &-properties {
+            @apply gap-[5px];
+          }
+        }
+      }
+    }
+  }
+}

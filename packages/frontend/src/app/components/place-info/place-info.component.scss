@@ -3,7 +3,7 @@
   height: calc(100vh - 80px);
   background-color: #fff;
 
-  .place-info__read-more {
+  &__read-more {
     @apply inline-block px-[32px] py-[10px] mt-[15px] text-white rounded-full select-none whitespace-nowrap float-right;
     background-color: var(--text-color);
     transition: background-color 250ms;
@@ -14,7 +14,7 @@
     }
   }
 
-  .place-info__properties {
+  &__properties {
     @apply flex items-center gap-[15px];
 
     &-element {
@@ -31,12 +31,12 @@
     }
   }
 
-  .place-info__heading {
+  &__heading {
     @apply mt-[5px] text-[21px] font-bold leading-[28px];
     color: var(--text-color);
   }
 
-  .place-info__description {
+  &__description {
     @apply leading-[21px] pt-[15px];
   }
 }
@@ -44,5 +44,19 @@
 @media (max-width: 767px) {
   .place-info {
     height: calc(100vh - 135px);
+  }
+}
+
+@media (max-width: 450px) {
+  .place-info {
+    @apply w-[320px];
+
+    &__read-more {
+      @apply w-full text-center;
+    }
+
+    &__properties {
+      @apply gap-[5px];
+    }
   }
 }

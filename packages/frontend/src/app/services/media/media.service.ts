@@ -27,8 +27,6 @@ export class MediaService {
       shareReplay(),
       takeUntilDestroyed(this.destroyRef)
     );
-
-    this.media$.subscribe(media => console.log(media));
   }
 
   private calculateMedia(innerWidth: number) {

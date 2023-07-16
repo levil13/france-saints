@@ -14,7 +14,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="blog" datatype="html">
-        <source>Блог</source>
+        <source>Паломничества</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/header/header.component.html</context>
           <context context-type="linenumber">13</context>
