@@ -10,9 +10,7 @@ export enum MEDIA {
   MOBILE = 'MOBILE',
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class MediaService {
   media$!: Observable<MEDIA>;
 

@@ -3,11 +3,13 @@ import {Event, Router, RoutesRecognized} from '@angular/router';
 import {BehaviorSubject, filter, map, pairwise} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class RoutesService {
-  routes$ = new BehaviorSubject<{prevRoute: string; curRoute: string}>({prevRoute: '', curRoute: ''});
+  private routes$ = new BehaviorSubject<{prevRoute: string; curRoute: string}>({prevRoute: '', curRoute: ''});
+
+  getRoutesSync() {
+    return this.routes$.value;
+  }
 
   constructor(private router: Router, private destroyRef: DestroyRef) {}
 

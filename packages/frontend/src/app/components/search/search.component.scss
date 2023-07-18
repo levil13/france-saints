@@ -3,10 +3,11 @@
   box-shadow: 0 0 15px -5px var(--shadow-color);
 
   &__input {
-    @apply relative w-[500px] rounded-full z-[11];
+    @apply relative w-[500px] rounded-[15px] z-[11];
 
     input {
-      @apply w-full rounded-full px-[45px] py-[8px];
+      @apply w-full rounded-[15px] px-[45px] py-[8px];
+      transition: border-radius 250ms;
 
       ::-webkit-input-placeholder {
         /* Edge */
@@ -25,7 +26,7 @@
   }
 
   &__result {
-    @apply hidden absolute left-0 w-full bg-white z-10;
+    @apply absolute left-0 w-full bg-white z-10;
     box-shadow: 0 0 15px -5px var(--shadow-color);
 
     &-list {
@@ -78,7 +79,7 @@
     }
 
     .search__result {
-      @apply block rounded-tl-none rounded-tr-none rounded-bl-[15px] rounded-br-[15px];
+      @apply rounded-tl-none rounded-tr-none rounded-bl-[15px] rounded-br-[15px];
     }
   }
 }

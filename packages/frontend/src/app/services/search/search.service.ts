@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, filter} from 'rxjs';
 import {Place} from '../../models/rest/places/places.model';
 import {PlacesService} from '../rest/places/places.service';
-import {MapService} from '../map/map.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 export type SEARCH_TYPE = 'city' | 'category' | 'global';
@@ -13,12 +12,20 @@ export interface SearchEntity {
   typeTerm: string;
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SearchService {
-  searchEntity$ = new BehaviorSubject<SearchEntity | null>(null);
+  private searchEntity$ = new BehaviorSubject<SearchEntity | null>(null);
 
   setSearchEntity(entity: SearchEntity) {
     this.searchEntity$.next(entity);
+  }
+
+  getSearchEntity() {
+    return this.searchEntity$.asObservable();
+  }
+
+  getSearchEntitySync() {
+    return this.searchEntity$.value;
   }
 
   private searchResults$ = new BehaviorSubject<Place[] | null>(null);
@@ -33,33 +40,27 @@ export class SearchService {
 
   private places: Place[] = [];
 
-  constructor(private placesService: PlacesService, private mapService: MapService) {
+  constructor(private placesService: PlacesService) {
     this.placesService
       .getPlaces()
       .pipe(takeUntilDestroyed())
       .subscribe(places => (this.places = places));
 
     this.searchEntity$
-      .pipe(filter(entity => !!entity))
-      .pipe(takeUntilDestroyed())
-      .subscribe(entity => {
-        const filteredPlaces = this.searchPlaces(entity as SearchEntity);
-
-        this.setSearchResults(filteredPlaces);
-
-        if (entity?.type === 'city') {
-          this.flyToCity(filteredPlaces);
-        }
-      });
+      .pipe(
+        filter(entity => !!entity),
+        takeUntilDestroyed()
+      )
+      .subscribe(entity => this.setSearchResults(this.searchPlaces(entity as SearchEntity)));
   }
 
   private searchPlaces(searchEntity: SearchEntity) {
     switch (searchEntity.type) {
       case 'city':
-        return this.places.filter(place => place.city.name === searchEntity.typeTerm);
+        return this.places.filter(place => place.city?.name === searchEntity.typeTerm);
       case 'category':
         return this.places.filter(place => {
-          const typeFilter = place.category.name === searchEntity.typeTerm;
+          const typeFilter = place.category?.name === searchEntity.typeTerm;
           const nameFilter = place.name.toLowerCase().includes(searchEntity.term.toLowerCase());
 
           return typeFilter && nameFilter;
@@ -69,10 +70,5 @@ export class SearchService {
       default:
         return [];
     }
-  }
-
-  private flyToCity(cityPlaces: Place[]) {
-    const cityBoundsCoords = cityPlaces.map(place => [place.coordinates.latitude, place.coordinates.longitude]);
-    this.mapService.flyToBounds(cityBoundsCoords as [number, number][]);
   }
 }

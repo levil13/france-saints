@@ -1,87 +1,154 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {stringify} from 'qs';
-import {map, Observable, shareReplay} from 'rxjs';
-import {Coordinates, Place, PlaceResponse} from '../../../models/rest/places/places.model';
+import {map, Observable, shareReplay, switchMap, tap, zip} from 'rxjs';
+import {
+  Place,
+  PlaceDescription,
+  PlaceInfo,
+  PlaceInfoResponse,
+  PlaceResponse,
+  PlaceWithoutPopulation,
+} from '../../../models/rest/places/places.model';
 import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 import {LanguagesService} from '../languages/languages.service';
-import {CityResponse} from '../../../models/rest/cities/cities.model';
-import {Image} from '../../../models/rest/strapi-components.model';
+import {CategoriesService} from '../categories/categories.service';
+import {CitiesService} from '../cities/cities.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PlacesService {
   private apiUrl = 'http://localhost:1337/api';
 
   private places$: Observable<Place[]> | undefined;
 
-  private populateQuery = {populate: ['images', 'category', 'category.icon', 'city']};
+  private populateQuery = {populate: {category: {fields: ['id']}, city: {fields: ['id']}}};
+
+  private fieldsQuery = {fields: ['coordinates', 'name']};
 
   private placesApiUrlPrefix = `${this.apiUrl}/places`;
 
-  constructor(private http: HttpClient, private languagesService: LanguagesService) {}
+  constructor(
+    private http: HttpClient,
+    private categoriesService: CategoriesService,
+    private citiesService: CitiesService,
+    private languagesService: LanguagesService
+  ) {}
 
   getPlaces() {
-    const query = stringify(this.populateQuery, {encodeValuesOnly: true});
+    const query = stringify({...this.fieldsQuery, ...this.populateQuery}, {encodeValuesOnly: true});
 
     if (!this.places$) {
-      this.places$ = this.http.get<StrapiResponseMulti<PlaceResponse>>(this.buildPlacesApiUrl(query)).pipe(
-        map(response => response.data.map(placeResponse => this.processPlace(placeResponse))),
-        shareReplay(1)
-      );
+      this.places$ = this.http
+        .get<StrapiResponseMulti<PlaceResponse>>(
+          `${this.placesApiUrlPrefix}?locale=${this.languagesService.selectedLanguage}&${query}`
+        )
+        .pipe(this.populateFields.bind(this), shareReplay(1));
     }
 
     return this.places$;
   }
 
-  findPlace(coordinates: string): Observable<Place | null> {
+  getPlace(coordinates: string): Observable<Place | null> {
     const query = stringify(
-      {...this.populateQuery, filters: {coordinates: {$eq: coordinates}}},
+      {...this.fieldsQuery, ...this.populateQuery, filters: {coordinates: {$eq: coordinates}}},
       {encodeValuesOnly: true}
     );
 
-    return this.http.get<StrapiResponseMulti<PlaceResponse>>(this.buildPlacesApiUrl(query)).pipe(
-      map(response => {
-        if (!response.data.length) {
-          return null;
-        }
-        return this.processPlace(response.data[0]);
-      })
+    return this.http
+      .get<StrapiResponseMulti<PlaceResponse>>(
+        `${this.placesApiUrlPrefix}?locale=${this.languagesService.selectedLanguage}&${query}`
+      )
+      .pipe(
+        this.populateFields.bind(this),
+        map(places => places[0])
+      );
+  }
+
+  private populateFields(source$: Observable<StrapiResponseMulti<PlaceResponse>>): Observable<Place[]> {
+    return source$.pipe(
+      map(responses => responses.data.map(response => this.processPlace(response))),
+      switchMap(places =>
+        zip([this.populateCategories(places), this.populateCities(places)]).pipe(map(() => places as Place[]))
+      )
     );
   }
 
-  private buildPlacesApiUrl(query: string) {
-    return `${this.placesApiUrlPrefix}?locale=${this.languagesService.selectedLanguage}&${query}`;
-  }
-
-  private processPlace(placeResponse: {attributes: PlaceResponse; id: number}): Place {
-    const placeId = placeResponse.id;
+  private processPlace(placeResponse: {attributes: PlaceResponse; id: number}): PlaceWithoutPopulation {
     const placeAttrs = placeResponse.attributes;
-    const placeCategory = placeAttrs.category.data.attributes;
-    const placeCategoryIcon = placeAttrs.category.data.attributes.icon.data?.attributes;
-    const placeCity = this.processCity(placeAttrs.city.data.attributes);
-    const placeImages = placeAttrs.images && this.processImages(placeAttrs.images);
-    const placeCoordinates = this.processPlaceCoordinates(placeResponse.attributes.coordinates);
+    const placeId = placeResponse.id;
+    const placeCategoryId = placeAttrs.category.data.id;
+    const placeCityId = placeAttrs.city.data.id;
+
+    const [latitude, longitude] = placeResponse.attributes.coordinates.split(', ').map(coordinate => +coordinate);
 
     return {
       ...placeAttrs,
       id: placeId,
-      category: {...placeCategory, icon: placeCategoryIcon},
-      city: placeCity,
-      images: placeImages,
-      coordinates: placeCoordinates,
+      category: {id: placeCategoryId},
+      city: {id: placeCityId},
+      coordinates: {latitude, longitude},
     };
   }
 
-  private processPlaceCoordinates(coordinates: string): Coordinates {
-    const coordinatesSplit = coordinates.split(', ');
-    return {latitude: +coordinatesSplit[0], longitude: +coordinatesSplit[1]};
+  private populateCategories(places: PlaceWithoutPopulation[]) {
+    return this.categoriesService.getCategories().pipe(
+      tap(categories => {
+        (<Place[]>places).forEach(place => {
+          place.category = categories.find(category => category.id === place.category?.id);
+          return place;
+        });
+      })
+    );
   }
 
-  private processCity(cityResponse: CityResponse) {
-    return {...cityResponse, postalCodes: cityResponse.postalCodes.split(', ')};
+  private populateCities(places: PlaceWithoutPopulation[]) {
+    return this.citiesService.getCities().pipe(
+      tap(cities => {
+        (<Place[]>places).map(place => {
+          place.city = cities.find(city => city.id === place.city?.id);
+          return place;
+        });
+      })
+    );
   }
 
-  private processImages(imagesResponse: StrapiResponseMulti<Image>) {
-    return imagesResponse.data.map(image => ({...image.attributes, id: image.id}));
+  getPlaceInfo(placeId: number): Observable<PlaceInfo> {
+    const query = stringify(
+      {
+        fields: ['shortDescription'],
+        populate: {images: {fields: ['name', 'url', 'alternativeText']}},
+        filters: {id: {$eq: placeId}},
+      },
+      {encodeValuesOnly: true}
+    );
+
+    return this.http
+      .get<StrapiResponseMulti<PlaceInfoResponse>>(
+        `${this.placesApiUrlPrefix}?locale=${this.languagesService.selectedLanguage}&${query}`
+      )
+      .pipe(
+        map(responses => responses.data.map(response => this.processPlaceInfo(response))),
+        map(placesInfos => placesInfos[0])
+      );
+  }
+
+  private processPlaceInfo(placeInfoResponse: {attributes: PlaceInfoResponse; id: number}) {
+    return {
+      ...placeInfoResponse.attributes,
+      images: placeInfoResponse.attributes.images?.data.map(image => ({...image.attributes, id: image.id})),
+    };
+  }
+
+  getPlaceDescription(placeId: number): Observable<PlaceDescription> {
+    const query = stringify({fields: ['longDescription'], filters: {id: {$eq: placeId}}}, {encodeValuesOnly: true});
+
+    return this.http
+      .get<StrapiResponseMulti<PlaceDescription>>(
+        `${this.placesApiUrlPrefix}?locale=${this.languagesService.selectedLanguage}&${query}`
+      )
+      .pipe(
+        map(responses => responses.data.map(response => response.attributes)),
+        map(placesInfos => placesInfos[0])
+      );
   }
 }

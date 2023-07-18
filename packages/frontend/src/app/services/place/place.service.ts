@@ -15,4 +15,8 @@ export class PlaceService {
   getSelectedPlace() {
     return this.selectedPlace$.asObservable();
   }
+
+  getSelectedPlaceSync() {
+    return this.selectedPlace$.value;
+  }
 }

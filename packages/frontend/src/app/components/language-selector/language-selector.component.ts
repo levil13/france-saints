@@ -1,22 +1,21 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {LanguagesService} from '../../services/rest/languages/languages.service';
 import {Language} from '../../models/rest/languages/languages.model';
-import {animate, style, transition, trigger} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {NgFor, NgIf} from '@angular/common';
+import {ClickOutsideDirective} from '../../directives/click-outside/click-outside.directive';
+import {fade} from '../../../assets/animations/animations';
 
 @Component({
   selector: 'app-language-selector',
   templateUrl: './language-selector.component.html',
   styleUrls: ['./language-selector.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('fade', [
-      transition(':enter', [style({opacity: 0}), animate(250, style({opacity: 1}))]),
-      transition(':leave', [animate(250, style({opacity: 0}))]),
-    ]),
-  ],
+  animations: [fade],
+  standalone: true,
+  imports: [NgIf, NgFor, ClickOutsideDirective],
 })
-export class LanguageSelectorComponent implements OnInit {
+export class LanguageSelectorComponent {
   private _dropdownVisible = false;
 
   get dropdownVisible(): boolean {
@@ -50,16 +49,10 @@ export class LanguageSelectorComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private languagesService: LanguagesService,
-    private destroyRef: DestroyRef
-  ) {}
-
-  ngOnInit(): void {
+  constructor(private cdr: ChangeDetectorRef, private languagesService: LanguagesService) {
     this.languagesService
       .getLanguages()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(languages => {
         this.selectedLanguage = languages.find(lang => lang.code === this.languagesService.selectedLanguage);
         this.nonSelectedLanguages = languages.filter(lang => lang !== this.selectedLanguage);

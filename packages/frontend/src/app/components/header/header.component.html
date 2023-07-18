@@ -14,6 +14,7 @@
     <app-search @fade *ngIf='media === MEDIA.DESKTOP || media === MEDIA.DESKTOP_SM || mobileSearchOpened'
                 [mobileSearchOpened]='mobileSearchOpened'>
     </app-search>
+
     <div *ngIf='media !== MEDIA.DESKTOP_SM'
          (click)='mobileSearchOpened = !mobileSearchOpened'
          [class._mobile-opened]='mobileSearchOpened'

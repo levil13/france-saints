@@ -5,12 +5,12 @@
         <div class='icon-with-bg-circle article__category-icon'>
           <!-- TODO move to env -->
           <img class='icon-with-bg-circle__image'
-               [src]='"http://localhost:1337" + selectedPlace.category.icon?.url'
-               [alt]='selectedPlace.category.icon?.alternativeText' />
+               [src]='"http://localhost:1337" + selectedPlace.category?.icon?.url'
+               [alt]='selectedPlace.category?.icon?.alternativeText' />
         </div>
       </div>
-      <span [title]='selectedPlace.category.name'>
-        {{selectedPlace.category.name}}
+      <span [title]='selectedPlace.category?.name'>
+        {{selectedPlace.category?.name}}
       </span>
     </div>
     <div class='place-page__properties-element'>
@@ -18,14 +18,14 @@
         class='icon-25px'
         src='assets/icons/icon-location.svg'
         alt='icon-location' />
-      <span [title]='selectedPlace.city.name'>
-        {{selectedPlace.city.name}}
+      <span [title]='selectedPlace.city?.name'>
+        {{selectedPlace.city?.name}}
       </span>
     </div>
   </div>
   <h1 class='place-page__heading'>{{selectedPlace.name}}</h1>
-  <div *ngIf='selectedPlace.longDescription'
-       [innerHTML]='selectedPlace.longDescription | markdown'
+  <div *ngIf='selectedPlaceDescription'
+       [innerHTML]='selectedPlaceDescription.longDescription | markdown'
        class='place-page__article divide-line-top'>
   </div>
 </app-content-wrapper>

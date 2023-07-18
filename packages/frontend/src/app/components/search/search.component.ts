@@ -5,27 +5,32 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  HostListener,
   Input,
   OnInit,
-  QueryList,
-  ViewChildren,
 } from '@angular/core';
-import {debounceTime, map, Subject, tap} from 'rxjs';
+import {map, Observable, Subject, tap} from 'rxjs';
 import {CategoriesService} from '../../services/rest/categories/categories.service';
-import {PlacesService} from '../../services/rest/places/places.service';
 import {SEARCH_TYPE, SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {translations} from '../../../locale/translations';
 import {City} from '../../models/rest/cities/cities.model';
-import {Place} from '../../models/rest/places/places.model';
+import {AsyncPipe, NgFor, NgIf} from '@angular/common';
+import {ClickOutsideDirective} from '../../directives/click-outside/click-outside.directive';
+import {FormsModule} from '@angular/forms';
+import {Category} from '../../models/rest/categories/categories.model';
+import {CitiesService} from '../../services/rest/cities/cities.service';
+import {fade} from '../../../assets/animations/animations';
+import {DropdownNavigationDirective} from '../../directives/dropdown-navigation/dropdown-navigation.directive';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  animations: [fade],
+  imports: [NgIf, NgFor, ClickOutsideDirective, DropdownNavigationDirective, FormsModule, AsyncPipe],
 })
 export class SearchComponent implements OnInit, AfterViewInit {
   placeholder = translations.searchPlaceholder;
@@ -48,65 +53,44 @@ export class SearchComponent implements OnInit, AfterViewInit {
   searchValue = '';
   searchValueChange$ = new Subject<{value: string; initial?: boolean}>();
 
-  categoriesNames: string[] = [];
+  categories$: Observable<Category[]> = this.categoriesService.getCategories();
+
   cities: City[] = [];
 
   filteredCities: City[] = [];
-
-  @HostListener('window:keyup', ['$event'])
-  keyHandler(event: KeyboardEvent) {
-    this.checkAndHandleDownClick(event);
-  }
-
-  @ViewChildren('dropDownButton', {read: ElementRef})
-  private dropDownButtons: QueryList<ElementRef> | undefined;
 
   private selectedButton: ElementRef | undefined;
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private placesService: PlacesService,
     private categoriesService: CategoriesService,
     private searchService: SearchService,
     private placeService: PlaceService,
-    private elementRef: ElementRef,
+    private citiesService: CitiesService,
     private destroyRef: DestroyRef
   ) {}
 
   ngOnInit(): void {
-    this.categoriesService
-      .getCategories()
+    this.citiesService
+      .getCities()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(categories => (this.categoriesNames = categories.map(category => category.name)));
-
-    this.placesService
-      .getPlaces()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(places => (this.cities = this.getCities(places)));
+      .subscribe(cities => (this.cities = cities));
 
     this.initSearchValueChangeHandler();
   }
 
   ngAfterViewInit() {
-    this.searchValue = this.searchService.searchEntity$.value?.term ?? '';
-    this.searchValueChange$.next({value: this.searchValue, initial: true});
+    this.updateSearchValue(this.searchService.getSearchEntitySync()?.term ?? '');
   }
 
-  private getCities(places: Place[]) {
-    const citiesMap: Map<string, City> = new Map();
-
-    places.forEach(place => {
-      if (citiesMap.has(place.city.name)) return;
-      citiesMap.set(place.city.name, place.city);
-    });
-
-    return Array.from(citiesMap.values());
+  updateSearchValue(value: string) {
+    this.searchValue = value;
+    this.searchValueChange$.next({value: this.searchValue, initial: true});
   }
 
   private initSearchValueChangeHandler() {
     this.searchValueChange$
       .pipe(
-        debounceTime(300),
         tap(valueChange => (this.dropdownVisible = !!valueChange.value.length && !valueChange.initial)),
         map(valueChange => valueChange.value.trim()),
         takeUntilDestroyed(this.destroyRef)
@@ -132,45 +116,6 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
         return {...filteredCity, name, postalCodes};
       });
-  }
-
-  private checkAndHandleDownClick(event: KeyboardEvent) {
-    if (!this.dropdownVisible || !this.dropDownButtons) return;
-
-    if (!this.selectedButton) {
-      if (event.key === 'ArrowDown') {
-        this.selectedButton = this.dropDownButtons.first;
-      }
-
-      if (event.key === 'ArrowUp') {
-        this.selectedButton = this.dropDownButtons.last;
-      }
-    } else {
-      const selectedButtonIndex = Array.from(this.dropDownButtons).indexOf(this.selectedButton);
-      let newSelectedButton;
-
-      if (event.key === 'ArrowDown') {
-        if (selectedButtonIndex === this.dropDownButtons.length - 1) {
-          newSelectedButton = this.dropDownButtons.first;
-        } else {
-          newSelectedButton = this.dropDownButtons.get(selectedButtonIndex + 1);
-        }
-      }
-
-      if (event.key === 'ArrowUp') {
-        if (selectedButtonIndex === 0) {
-          newSelectedButton = this.dropDownButtons.last;
-        } else {
-          newSelectedButton = this.dropDownButtons.get(selectedButtonIndex - 1);
-        }
-      }
-
-      if (newSelectedButton) {
-        this.selectedButton = newSelectedButton;
-      }
-    }
-
-    this.selectedButton?.nativeElement.focus();
   }
 
   searchValueChange(value: string) {

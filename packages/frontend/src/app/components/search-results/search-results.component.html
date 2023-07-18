@@ -12,18 +12,18 @@
               <div class='icon-with-bg-circle'>
                 <!-- TODO move to env -->
                 <img class='icon-with-bg-circle__image'
-                     [src]='"http://localhost:1337" + place.category.icon?.url'
-                     [alt]='place.category.icon?.alternativeText' />
+                     [src]='"http://localhost:1337" + place.category?.icon?.url'
+                     [alt]='place.category?.icon?.alternativeText' />
               </div>
             </div>
-            <span [title]='place.category.name'>
-              {{place.category.name}}
+            <span [title]='place.category?.name'>
+              {{place.category?.name}}
             </span>
           </div>
           <div class='search-results__list-item_link-properties_element'>
             <img class='icon-20px' src='assets/icons/icon-location.svg' alt='icon-location' />
-            <span [title]='place.city.name'>
-              {{place.city.name}}
+            <span [title]='place.city?.name'>
+              {{place.city?.name}}
             </span>
           </div>
         </div>

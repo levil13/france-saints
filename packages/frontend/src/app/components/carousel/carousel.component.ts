@@ -1,11 +1,14 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
 import {Image} from '../../models/rest/strapi-components.model';
+import {NgFor, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-carousel',
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, NgFor],
 })
 export class CarouselComponent {
   private _selectedIndex = 0;

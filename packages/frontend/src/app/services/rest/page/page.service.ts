@@ -5,9 +5,7 @@ import {StrapiResponseSingle} from '../../../models/rest/strapi-response.model';
 import {PageModel} from '../../../models/rest/page/page.model';
 import {map} from 'rxjs';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PageService {
   private apiUrl = 'http://localhost:1337/api';
 

@@ -1,21 +1,23 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
 import {LanguagesService} from '../../services/rest/languages/languages.service';
 import {MEDIA, MediaService} from '../../services/media/media.service';
-import {animate, style, transition, trigger} from '@angular/animations';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {SearchComponent} from '../search/search.component';
+import {NgIf, NgOptimizedImage} from '@angular/common';
+import {RouterLink} from '@angular/router';
+import {ClickOutsideDirective} from '../../directives/click-outside/click-outside.directive';
+import {LanguageSelectorComponent} from '../language-selector/language-selector.component';
+import {fade} from '../../../assets/animations/animations';
+import {SearchService} from '../../services/search/search.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('fade', [
-      transition(':enter', [style({opacity: 0}), animate(250, style({opacity: 1}))]),
-      transition(':leave', [animate(250, style({opacity: 0}))]),
-    ]),
-  ],
+  animations: [fade],
+  standalone: true,
+  imports: [NgIf, RouterLink, ClickOutsideDirective, NgOptimizedImage, SearchComponent, LanguageSelectorComponent],
 })
 export class HeaderComponent {
   readonly MEDIA = MEDIA;
@@ -58,6 +60,7 @@ export class HeaderComponent {
 
   constructor(
     public languageService: LanguagesService,
+    private searchService: SearchService,
     private cdr: ChangeDetectorRef,
     private mediaService: MediaService
   ) {
@@ -72,6 +75,11 @@ export class HeaderComponent {
         this.mobileSearchOpened = false;
       }
     });
+
+    searchService
+      .getSearchEntity()
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => (this.mobileSearchOpened = false));
   }
 
   homeClick() {

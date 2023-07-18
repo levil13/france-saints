@@ -5,16 +5,19 @@ import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import {MapService} from '../../services/map/map.service';
 import {PlacesService} from '../../services/rest/places/places.service';
-import {combineLatest, filter, switchMap, tap} from 'rxjs';
+import {combineLatest, shareReplay, switchMap, zip} from 'rxjs';
 import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {RoutesService} from '../../services/routes/routes.service';
+import {SearchService} from '../../services/search/search.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  providers: [MapService],
 })
 export class MapComponent implements AfterViewInit {
   @ViewChild('map', {read: ElementRef, static: true})
@@ -35,50 +38,66 @@ export class MapComponent implements AfterViewInit {
     private placesService: PlacesService,
     private placeService: PlaceService,
     private destroyRef: DestroyRef,
-    private routesService: RoutesService
+    private routesService: RoutesService,
+    private searchService: SearchService
   ) {
     this.disableZoomAnim = this.fromOtherPage();
   }
 
   ngAfterViewInit() {
-    this.mapService
+    const initMap$ = this.mapService
       .initMap(this.mapEl.nativeElement, this.tileLayer)
+      .pipe(shareReplay(), takeUntilDestroyed(this.destroyRef));
+
+    initMap$
       .pipe(
-        switchMap(() => combineLatest([this.initPlacesWatcher(), this.placeService.getSelectedPlace()])),
+        switchMap(() => this.placesService.getPlaces()),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(places => this.initMarkers(places));
+
+    initMap$
+      .pipe(
+        switchMap(() => combineLatest([this.placesService.getPlaces(), this.placeService.getSelectedPlace()])),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(([places, place]) => {
-        if (places.length) {
-          this.selectMarker(place);
+        if (!places.length) return;
 
-          if (place) {
-            this.mapService.flyTo(place.coordinates, this.disableZoomAnim);
-          }
+        this.selectMarker(place);
 
-          if (this.disableZoomAnim) {
-            this.disableZoomAnim = false;
-          }
+        if (place) {
+          this.mapService.flyTo(place.coordinates, this.disableZoomAnim);
+        }
+
+        if (this.disableZoomAnim) {
+          this.disableZoomAnim = false;
+        }
+      });
+
+    initMap$
+      .pipe(
+        switchMap(() => zip([this.searchService.getSearchEntity(), this.searchService.getSearchResults()])),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(([searchEntity, searchResults]) => {
+        if (!!searchResults && searchEntity?.type === 'city' && !this.placeService.getSelectedPlaceSync()) {
+          const cityBoundsCoords = searchResults.map(place => [
+            place.coordinates.latitude,
+            place.coordinates.longitude,
+          ]);
+          this.mapService.flyToBounds(cityBoundsCoords as [number, number][]);
         }
       });
   }
 
-  private initPlacesWatcher() {
-    return this.placesService.getPlaces().pipe(
-      filter(places => !!places.length),
-      tap(places => {
-        this.initMarkers(places);
-        this.mapService.addMarkers(this.markersLayer);
-      })
-    );
-  }
-
   private fromOtherPage() {
-    const routes = this.routesService.routes$.value;
+    const routes = this.routesService.getRoutesSync();
     if (!routes) return false;
     return routes.prevRoute !== '/' && routes.curRoute === '/';
   }
 
-  private refreshMarkers() {
+  private refreshMarkersLayer() {
     this.markersLayer.clearLayers();
     this.markersLayer.addLayers(this.markers);
   }
@@ -90,17 +109,19 @@ export class MapComponent implements AfterViewInit {
         title: place.name,
       }).on('click', () => this.selectPlace(place));
     });
-    this.refreshMarkers();
+
+    this.refreshMarkersLayer();
+    this.mapService.addMarkers(this.markersLayer);
   }
 
   private createMarkerIcon(place: Place) {
     //TODO move to env
-    const srcUrl = `http://localhost:1337${place.category.icon?.url}`;
+    const srcUrl = `http://localhost:1337${place.category?.icon?.url}`;
     return L.divIcon({
       className: 'icon-marker-map',
       html:
         '<div class="icon-marker-map__pin">' +
-        `   <img class="icon-marker-map__pin-image" src=${srcUrl} alt=${place.category.icon?.alternativeText}>` +
+        `   <img class="icon-marker-map__pin-image" src=${srcUrl} alt=${place.category?.icon?.alternativeText}>` +
         '</div>',
       iconSize: [40, 40],
       iconAnchor: [20, 56],
@@ -126,6 +147,7 @@ export class MapComponent implements AfterViewInit {
         }
       }
     });
-    this.refreshMarkers();
+
+    this.refreshMarkersLayer();
   }
 }

@@ -7,11 +7,22 @@ import {StrapiResponseMulti, StrapiResponseSingle} from '../strapi-response.mode
 export interface Place extends StrapiBaseEntityLocalized {
   name: string;
   coordinates: Coordinates;
-  shortDescription: string;
-  longDescription: string;
-  category: Category;
-  city: City;
+  city?: City;
+  category?: Category;
+}
+
+export interface PlaceWithoutPopulation extends Omit<Place, 'category' | 'city'> {
+  category: {id: number};
+  city: {id: number};
+}
+
+export interface PlaceInfo {
   images?: Image[];
+  shortDescription?: string;
+}
+
+export interface PlaceDescription {
+  longDescription: string;
 }
 
 export interface Coordinates {
@@ -21,7 +32,10 @@ export interface Coordinates {
 
 export interface PlaceResponse extends Omit<Place, 'category' | 'city' | 'images' | 'coordinates'> {
   category: StrapiResponseSingle<CategoryResponse>;
-  city: StrapiResponseSingle<CityResponse>;
-  images?: StrapiResponseMulti<Image>;
+  city: StrapiResponseSingle<Omit<CityResponse, 'postalCodes'>>;
   coordinates: string;
+}
+
+export interface PlaceInfoResponse extends Omit<PlaceInfo, 'images'> {
+  images?: StrapiResponseMulti<Image>;
 }
