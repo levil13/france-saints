@@ -13,9 +13,10 @@ import {AsyncPipe, NgFor, NgIf} from '@angular/common';
   standalone: true,
 })
 export class SearchResultsComponent {
-  constructor(private searchService: SearchService, private placeService: PlaceService) {}
-
+  selectedPlace$ = this.placeService.getSelectedPlace();
   filteredPlaces$ = this.searchService.getSearchResults();
+
+  constructor(private searchService: SearchService, private placeService: PlaceService) {}
 
   selectPlace(place: Place) {
     this.placeService.setSelectedPlace(place);

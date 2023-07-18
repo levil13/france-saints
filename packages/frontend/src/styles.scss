@@ -151,9 +151,7 @@ $sizes: 11px, 15px, 20px, 25px, 30px, 50px;
       @apply p-[10px];
 
       span {
-        display: block;
-        width: 20px;
-        height: 20px;
+        @apply block w-[20px] h-[20px];
         background-image: url('assets/icons/icon-mobile.svg');
         background-repeat: no-repeat;
         background-size: 20px 20px;
@@ -171,9 +169,7 @@ $sizes: 11px, 15px, 20px, 25px, 30px, 50px;
       @apply p-[10px];
 
       span {
-        display: block;
-        width: 20px;
-        height: 20px;
+        @apply block w-[20px] h-[20px];
         background-image: url('assets/icons/icon-search.svg');
         background-repeat: no-repeat;
         background-size: 20px 20px;
@@ -291,6 +287,10 @@ $sizes: 11px, 15px, 20px, 25px, 30px, 50px;
   &.leaflet-disabled {
     background-color: var(--border-color);
   }
+}
+
+.leaflet-bottom, .leaflet-top {
+  @apply z-[401];
 }
 
 .leaflet-control-zoom {

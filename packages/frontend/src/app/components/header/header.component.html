@@ -15,7 +15,7 @@
                 [mobileSearchOpened]='mobileSearchOpened'>
     </app-search>
 
-    <div *ngIf='media !== MEDIA.DESKTOP_SM'
+    <div *ngIf='media === MEDIA.TABLET || media === MEDIA.MOBILE'
          (click)='mobileSearchOpened = !mobileSearchOpened'
          [class._mobile-opened]='mobileSearchOpened'
          class='header__mobile-search'>

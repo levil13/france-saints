@@ -37,7 +37,7 @@
   }
 
   &__description {
-    @apply leading-[21px] pt-[15px];
+    @apply leading-[21px] pt-[15px] break-words;
   }
 }
 

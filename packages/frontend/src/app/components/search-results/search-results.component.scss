@@ -42,6 +42,12 @@
       &:last-child {
         @apply mb-[50px];
       }
+
+      &._selected {
+        .search-results__list-item_link-heading {
+          color: var(--text-color);
+        }
+      }
     }
   }
 }

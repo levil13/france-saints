@@ -3,10 +3,10 @@
   box-shadow: 0 0 15px -5px var(--shadow-color);
 
   &__input {
-    @apply relative w-[500px] rounded-[15px] z-[11];
+    @apply relative w-[500px] z-[11];
 
     input {
-      @apply w-full rounded-[15px] px-[45px] py-[8px];
+      @apply w-full rounded-[50px] px-[45px] py-[8px];
       transition: border-radius 250ms;
 
       ::-webkit-input-placeholder {
@@ -96,17 +96,11 @@
   }
 }
 
-@media (max-width: 1023px) {
-  .search {
-    @apply hidden;
-
-    &._mobile-opened {
-      @apply block;
-    }
-  }
-}
-
 @media (max-width: 767px) {
+  :host {
+    @apply absolute left-0 top-[135px] w-full rounded-none z-[404];
+  }
+
   .search {
     &__input {
       @apply w-full;
@@ -117,7 +111,6 @@
     }
 
     &._mobile-opened {
-      @apply absolute left-0 top-[135px] w-full rounded-none z-[404];
       border-top: 1px solid var(--border-color);
       box-shadow: none;
 
