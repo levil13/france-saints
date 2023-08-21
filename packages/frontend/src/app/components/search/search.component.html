@@ -1,7 +1,9 @@
-<div appClickOutside (clickOutside)='dropdownVisible = false'
+<div *ngIf='{dropdownVisible: dropdownVisible$ | async} as values'
+     appClickOutside
+     (clickOutside)='dropdownVisible$.next(false)'
      class='search'
      [class._mobile-opened]='mobileSearchOpened'
-     [class._focused]='dropdownVisible'>
+     [class._focused]='values.dropdownVisible'>
   <div class='search__input'>
     <input #input
            (focus)='onInputFocus(input)'
@@ -18,10 +20,10 @@
     </span>
   </div>
 
-  <div *ngIf='dropdownVisible' @fade appDropdownNavigation class='search__result divide-line-top'>
+  <div *ngIf='values.dropdownVisible' @fade appDropdownNavigation class='search__result divide-line-top'>
     <ul class='search__result-list'>
       <li class='search__result-list-item'>
-        <button  class='search__result-button icon-search _gray' (click)='searchEntitySelect(searchValue, "global")'>
+        <button class='search__result-button icon-search _gray' (click)='searchEntitySelect(searchValue, "global")'>
           {{ searchValue }} <span class='color-gray' i18n='@@global_search'>— поиск по всему сайту</span>
         </button>
       </li>

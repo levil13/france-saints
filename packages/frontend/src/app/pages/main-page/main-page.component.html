@@ -2,32 +2,35 @@
   <app-header></app-header>
 </header>
 
-<aside *ngIf='searchResultsVisible'
-       @slideInOutLeft
-       (@slideInOutLeft.start)='animationStart()'
-       (@slideInOutLeft.done)='animationDone()'
-       class='main-page__sidebar _left'>
-  <app-search-results></app-search-results>
-</aside>
+<ng-container
+  *ngIf='{searchResultsVisible: searchResultsVisible$ | async, searchResultsButtonVisible: searchResultsButtonVisible$ | async, placeInfoModalVisible: placeInfoModalVisible$ | async} as values'>
+  <aside *ngIf='values.searchResultsVisible'
+         @slideInOutLeft
+         (@slideInOutLeft.start)='animationStart()'
+         (@slideInOutLeft.done)='animationDone()'
+         class='main-page__sidebar _left'>
+    <app-search-results></app-search-results>
+  </aside>
 
-<main class='main-page__main'>
-  <span *ngIf='searchResultsButtonVisible'
-        @slideInOutLeft
-        (@slideInOutLeft.start)='animationStart()'
-        (@slideInOutLeft.done)='animationDone()'
-        class='icon-hover-style-circle main-page__icon'
-        [class._closed]='!searchResultsVisible'>
-    <button (click)='searchResultsVisible = !searchResultsVisible' class='icon-hover-style-circle__button'>
-      <img class='icon-arrow icon-30px' src='assets/icons/icon-arrow.svg' alt='icon-arrow' />
-    </button>
-  </span>
-  <app-map></app-map>
-</main>
+  <main class='main-page__main'>
+    <span *ngIf='values.searchResultsButtonVisible'
+          @slideInOutLeft
+          (@slideInOutLeft.start)='animationStart()'
+          (@slideInOutLeft.done)='animationDone()'
+          class='icon-hover-style-circle main-page__icon'
+          [class._closed]='!values.searchResultsVisible'>
+      <button (click)='searchResultsVisible$.next(!values.searchResultsVisible)' class='icon-hover-style-circle__button'>
+        <img class='icon-arrow icon-30px' src='assets/icons/icon-arrow.svg' alt='icon-arrow' />
+      </button>
+    </span>
+    <app-map></app-map>
+  </main>
 
-<aside *ngIf='placeInfoModalVisible'
-       @slideInOutRight
-       (@slideInOutRight.start)='animationStart()'
-       (@slideInOutRight.done)='animationDone()'
-       class='main-page__sidebar _right'>
-  <app-place-info></app-place-info>
-</aside>
+  <aside *ngIf='values.placeInfoModalVisible'
+         @slideInOutRight
+         (@slideInOutRight.start)='animationStart()'
+         (@slideInOutRight.done)='animationDone()'
+         class='main-page__sidebar _right'>
+    <app-place-info></app-place-info>
+  </aside>
+</ng-container>

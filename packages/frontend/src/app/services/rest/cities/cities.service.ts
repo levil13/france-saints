@@ -5,14 +5,15 @@ import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 import {LanguagesService} from '../languages/languages.service';
 import {City, CityResponse} from '../../../models/rest/cities/cities.model';
 import {stringify} from 'qs';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class CitiesService {
-  private apiUrl = 'http://localhost:1337/api';
+  private apiUrl = environment.API_URL;
+
+  private citiesApiUrlPrefix = `${this.apiUrl}cities`;
 
   private cities$: Observable<City[]> | undefined;
-
-  private citiesApiUrlPrefix = `${this.apiUrl}/cities`;
 
   constructor(private http: HttpClient, private languagesService: LanguagesService) {}
 

@@ -5,10 +5,13 @@ import {Category, CategoryResponse} from '../../../models/rest/categories/catego
 import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 import {LanguagesService} from '../languages/languages.service';
 import {stringify} from 'qs';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class CategoriesService {
-  private apiUrl = 'http://localhost:1337/api';
+  private apiUrl = environment.API_URL;
+
+  private categoriesApiUrl = `${this.apiUrl}categories`;
 
   private categories$: Observable<Category[]> | undefined;
 
@@ -24,7 +27,7 @@ export class CategoriesService {
     if (!this.categories$) {
       this.categories$ = this.http
         .get<StrapiResponseMulti<CategoryResponse>>(
-          `${this.apiUrl}/categories?locale=${this.languagesService.selectedLanguage}&${query}`
+          `${this.categoriesApiUrl}?locale=${this.languagesService.selectedLanguage}&${query}`
         )
         .pipe(
           map(response => this.processResponse(response)),

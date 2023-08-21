@@ -10,6 +10,7 @@ import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {RoutesService} from '../../services/routes/routes.service';
 import {SearchService} from '../../services/search/search.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-map',
@@ -115,8 +116,7 @@ export class MapComponent implements AfterViewInit {
   }
 
   private createMarkerIcon(place: Place) {
-    //TODO move to env
-    const srcUrl = `http://localhost:1337${place.category?.icon?.url}`;
+    const srcUrl = `${environment.CMS_URL}${place.category?.icon?.url}`;
     return L.divIcon({
       className: 'icon-marker-map',
       html:

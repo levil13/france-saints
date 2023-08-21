@@ -6,7 +6,7 @@
         <source>О нас</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/header/header.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/pages/about-page/about-page.component.html</context>
@@ -17,14 +17,14 @@
         <source>Паломничества</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/header/header.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="contacts" datatype="html">
         <source>Контакты</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/header/header.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/pages/contacts-page/contacts-page.component.html</context>
@@ -35,7 +35,7 @@
         <source>Читать дальше</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/place-info/place-info.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="search_results" datatype="html">
@@ -56,28 +56,28 @@
         <source>— поиск по всему сайту</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cities_search" datatype="html">
         <source>Поиск в городах</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
       <trans-unit id="categories_search" datatype="html">
         <source>Поиск в категориях</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="in_category" datatype="html">
         <source>в категории <x id="INTERPOLATION" equiv-text="{{ category.name }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/app/components/search/search.component.html</context>
-          <context context-type="linenumber">44,45</context>
+          <context context-type="linenumber">46,47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="title" datatype="html">

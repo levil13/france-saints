@@ -7,6 +7,7 @@ import {CarouselComponent} from '../carousel/carousel.component';
 import {filter, Observable, switchMap} from 'rxjs';
 import {PlacesService} from '../../services/rest/places/places.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-place-info',
@@ -17,6 +18,8 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
   standalone: true,
 })
 export class PlaceInfoComponent {
+  CMS_URL = environment.CMS_URL;
+
   selectedPlace$: Observable<Place | null> = this.placeService.getSelectedPlace();
   selectedPlaceInfo$: Observable<PlaceInfo>;
 

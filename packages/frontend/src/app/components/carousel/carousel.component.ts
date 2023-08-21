@@ -1,6 +1,8 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 import {Image} from '../../models/rest/strapi-components.model';
-import {NgFor, NgIf} from '@angular/common';
+import {AsyncPipe, NgFor, NgIf} from '@angular/common';
+import {BehaviorSubject} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-carousel',
@@ -8,38 +10,33 @@ import {NgFor, NgIf} from '@angular/common';
   styleUrls: ['./carousel.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, AsyncPipe],
 })
 export class CarouselComponent {
-  private _selectedIndex = 0;
+  CMS_URL = environment.CMS_URL;
 
-  get selectedIndex(): number {
-    return this._selectedIndex;
-  }
+  selectedIndex$ = new BehaviorSubject<number>(0);
 
-  set selectedIndex(value: number) {
-    this._selectedIndex = value;
-    this.cdr.markForCheck();
+  get selectedIndexValue() {
+    return this.selectedIndex$.getValue();
   }
 
   @Input()
   images: Image[] = [];
 
-  constructor(private cdr: ChangeDetectorRef) {}
-
   prevClick() {
-    if (this.selectedIndex === 0) {
-      this.selectedIndex = this.images.length - 1;
+    if (this.selectedIndexValue === 0) {
+      this.selectedIndex$.next(this.images.length - 1);
     } else {
-      this.selectedIndex = this.selectedIndex - 1;
+      this.selectedIndex$.next(this.selectedIndexValue - 1);
     }
   }
 
   nextClick() {
-    if (this.selectedIndex === this.images.length - 1) {
-      this.selectedIndex = 0;
+    if (this.selectedIndexValue === this.images.length - 1) {
+      this.selectedIndex$.next(0);
     } else {
-      this.selectedIndex = this.selectedIndex + 1;
+      this.selectedIndex$.next(this.selectedIndexValue + 1);
     }
   }
 }

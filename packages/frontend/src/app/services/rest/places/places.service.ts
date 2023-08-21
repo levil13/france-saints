@@ -14,18 +14,19 @@ import {StrapiResponseMulti} from '../../../models/rest/strapi-response.model';
 import {LanguagesService} from '../languages/languages.service';
 import {CategoriesService} from '../categories/categories.service';
 import {CitiesService} from '../cities/cities.service';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class PlacesService {
-  private apiUrl = 'http://localhost:1337/api';
+  private apiUrl = environment.API_URL;
+
+  private placesApiUrlPrefix = `${this.apiUrl}places`;
 
   private places$: Observable<Place[]> | undefined;
 
   private populateQuery = {populate: {category: {fields: ['id']}, city: {fields: ['id']}}};
 
   private fieldsQuery = {fields: ['coordinates', 'name']};
-
-  private placesApiUrlPrefix = `${this.apiUrl}/places`;
 
   constructor(
     private http: HttpClient,

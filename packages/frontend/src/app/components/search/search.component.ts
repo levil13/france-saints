@@ -1,14 +1,5 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DestroyRef,
-  ElementRef,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {map, Observable, Subject, tap} from 'rxjs';
+import {AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, Input, OnInit} from '@angular/core';
+import {BehaviorSubject, map, Observable, Subject, tap} from 'rxjs';
 import {CategoriesService} from '../../services/rest/categories/categories.service';
 import {SEARCH_TYPE, SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
@@ -35,17 +26,7 @@ import {DropdownNavigationDirective} from '../../directives/dropdown-navigation/
 export class SearchComponent implements OnInit, AfterViewInit {
   placeholder = translations.searchPlaceholder;
 
-  private _dropdownVisible = false;
-
-  public get dropdownVisible() {
-    return this._dropdownVisible;
-  }
-
-  public set dropdownVisible(value) {
-    this._dropdownVisible = value;
-    this.selectedButton = undefined;
-    this.cdr.markForCheck();
-  }
+  dropdownVisible$ = new BehaviorSubject<boolean>(false);
 
   @Input()
   mobileSearchOpened = false;
@@ -59,10 +40,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   filteredCities: City[] = [];
 
-  private selectedButton: ElementRef | undefined;
-
   constructor(
-    private cdr: ChangeDetectorRef,
     private categoriesService: CategoriesService,
     private searchService: SearchService,
     private placeService: PlaceService,
@@ -91,7 +69,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   private initSearchValueChangeHandler() {
     this.searchValueChange$
       .pipe(
-        tap(valueChange => (this.dropdownVisible = !!valueChange.value.length && !valueChange.initial)),
+        tap(valueChange => this.dropdownVisible$.next(!!valueChange.value.length && !valueChange.initial)),
         map(valueChange => valueChange.value.trim()),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -129,12 +107,12 @@ export class SearchComponent implements OnInit, AfterViewInit {
       this.placeService.setSelectedPlace(null);
     }
 
-    this.dropdownVisible = false;
+    this.dropdownVisible$.next(false);
     this.searchService.setSearchEntity({term: this.searchValue, typeTerm, type});
   }
 
   onInputFocus(input: HTMLInputElement) {
-    this.dropdownVisible = !!this.searchValue;
+    this.dropdownVisible$.next(!!this.searchValue);
     input.classList.add('_gray');
   }
 

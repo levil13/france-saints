@@ -3,6 +3,7 @@ import {SearchService} from '../../services/search/search.service';
 import {Place} from '../../models/rest/places/places.model';
 import {PlaceService} from '../../services/place/place.service';
 import {AsyncPipe, NgFor, NgIf} from '@angular/common';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-search-results',
@@ -13,6 +14,8 @@ import {AsyncPipe, NgFor, NgIf} from '@angular/common';
   standalone: true,
 })
 export class SearchResultsComponent {
+  CMS_URL = environment.CMS_URL;
+
   selectedPlace$ = this.placeService.getSelectedPlace();
   filteredPlaces$ = this.searchService.getSearchResults();
 

@@ -6,50 +6,54 @@
            width='765'
            height='101'
            priority
-           alt='logo'/>
+           alt='logo' />
     </button>
   </div>
 
-  <div appClickOutside (clickOutside)='mobileSearchOpened = false' class="header__search-wrapper">
-    <app-search @fade *ngIf='media === MEDIA.DESKTOP || media === MEDIA.DESKTOP_SM || mobileSearchOpened'
-                [mobileSearchOpened]='mobileSearchOpened'>
-    </app-search>
+  <ng-container
+    *ngIf='{mobileMenuOpened: mobileMenuOpened$ | async, mobileSearchOpened: mobileSearchOpened$ | async, media: media$ | async} as values'>
+    <div appClickOutside (clickOutside)='mobileSearchOpened$.next(false)' class='header__search-wrapper'>
+      <app-search @fade
+                  *ngIf='values.media === MEDIA.DESKTOP || values.media === MEDIA.DESKTOP_SM || values.mobileSearchOpened'
+                  [mobileSearchOpened]='values.mobileSearchOpened!'>
+      </app-search>
 
-    <div *ngIf='media === MEDIA.TABLET || media === MEDIA.MOBILE'
-         (click)='mobileSearchOpened = !mobileSearchOpened'
-         [class._mobile-opened]='mobileSearchOpened'
+    <div *ngIf='values.media === MEDIA.TABLET || values.media === MEDIA.MOBILE'
+         (click)='mobileSearchOpened$.next(!values.mobileSearchOpened)'
+         [class._mobile-opened]='values.mobileSearchOpened'
          class='header__mobile-search'>
         <span class='icon-hover-style-circle search__mobile-icon'>
           <button class='icon-hover-style-circle__button'><span></span></button>
         </span>
+      </div>
     </div>
-  </div>
 
-  <div appClickOutside (clickOutside)='mobileMenuOpened = false' class="header__menu-wrapper">
-    <div *ngIf='media !== MEDIA.DESKTOP'
-         (click)='mobileMenuOpened = !mobileMenuOpened'
-         [class._selected]='mobileMenuOpened'
-         class='header__mobile-menu'>
+    <div appClickOutside (clickOutside)='mobileMenuOpened$.next(false)' class='header__menu-wrapper'>
+      <div *ngIf='values.media !== MEDIA.DESKTOP'
+           (click)='mobileMenuOpened$.next(!values.mobileMenuOpened)'
+           [class._selected]='values.mobileMenuOpened'
+           class='header__mobile-menu'>
         <span class='icon-hover-style-circle menu__mobile-icon'>
           <button class='icon-hover-style-circle__button'><span></span></button>
         </span>
-    </div>
+      </div>
 
-    <ul @fade *ngIf='media === MEDIA.DESKTOP || mobileMenuOpened'
-        [class._mobile-opened]='mobileMenuOpened'
-        class='header__menu'>
-      <li class='header__menu-item'>
-        <a routerLink='about' i18n='@@about_us'>О нас</a>
-      </li>
-      <li class='header__menu-item'>
-        <a href='https://palomnikfr.com/' i18n='@@blog'>Паломничества</a>
-      </li>
-      <li class='header__menu-item'>
-        <a routerLink='contacts' i18n='@@contacts'>Контакты</a>
-      </li>
-      <li class='header__menu-item'>
-        <app-language-selector></app-language-selector>
-      </li>
-    </ul>
-  </div>
+      <ul @fade *ngIf='values.media === MEDIA.DESKTOP || values.mobileMenuOpened'
+          [class._mobile-opened]='values.mobileMenuOpened'
+          class='header__menu'>
+        <li class='header__menu-item'>
+          <a routerLink='about' i18n='@@about_us'>О нас</a>
+        </li>
+        <li class='header__menu-item'>
+          <a href='https://palomnikfr.com/' i18n='@@blog'>Паломничества</a>
+        </li>
+        <li class='header__menu-item'>
+          <a routerLink='contacts' i18n='@@contacts'>Контакты</a>
+        </li>
+        <li class='header__menu-item'>
+          <app-language-selector></app-language-selector>
+        </li>
+      </ul>
+    </div>
+  </ng-container>
 </nav>

@@ -8,6 +8,7 @@ import {Place, PlaceDescription} from '../../models/rest/places/places.model';
 import {ContentWrapperComponent} from '../../components/content-wrapper/content-wrapper.component';
 import {NgIf} from '@angular/common';
 import {MarkdownPipe} from '../../pipes/markdown/markdown.pipe';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-place-page',
@@ -18,6 +19,8 @@ import {MarkdownPipe} from '../../pipes/markdown/markdown.pipe';
   imports: [NgIf, ContentWrapperComponent, MarkdownPipe],
 })
 export class PlacePageComponent {
+  CMS_URL = environment.CMS_URL;
+
   selectedPlace: Place | null = null;
   selectedPlaceDescription: PlaceDescription | null = null;
 

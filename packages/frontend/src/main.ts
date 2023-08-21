@@ -10,6 +10,7 @@ import {provideRouter, Route} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import Token = marked.Token;
+import {environment} from './environments/environment';
 
 const mediaServiceInitializer = () => ({
   provide: APP_INITIALIZER,
@@ -30,18 +31,18 @@ const markdownPipeInitializer = () => ({
   useFactory: () => () => {
     const walkTokens = (token: Token) => {
       if (token.type === 'image') {
-        token.href = 'http://localhost:1337' + token.href;
+        token.href = environment.CMS_URL + token.href;
       }
     };
 
-    marked.use({ walkTokens });
-    marked.options({ mangle: false, headerIds: false });
+    marked.use({walkTokens});
+    marked.options({mangle: false, headerIds: false});
   },
   multi: true,
 });
 
 const routes: Route[] = [
-  { path: '', loadComponent: () => import('./app/pages/main-page/main-page.component').then(m => m.MainPageComponent) },
+  {path: '', loadComponent: () => import('./app/pages/main-page/main-page.component').then(m => m.MainPageComponent)},
   {
     path: 'places/:place',
     loadComponent: () => import('./app/pages/place-page/place-page.component').then(m => m.PlacePageComponent),
@@ -54,7 +55,7 @@ const routes: Route[] = [
     path: 'contacts',
     loadComponent: () => import('./app/pages/contacts-page/contacts-page.component').then(m => m.ContactsPageComponent),
   },
-  { path: '**', redirectTo: '/', pathMatch: 'full' },
+  {path: '**', redirectTo: '/', pathMatch: 'full'},
 ];
 
 bootstrapApplication(AppComponent, {

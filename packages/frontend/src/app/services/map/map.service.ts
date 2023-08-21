@@ -42,7 +42,7 @@ export class MapService {
   flyTo(coords: Coordinates, disableAnim = false) {
     const latLngExpression = {lat: coords.latitude, lng: coords.longitude};
     if (this.map.getZoom() === 18) {
-      this.map.panTo(latLngExpression);
+      this.map.panTo(latLngExpression, {animate: !disableAnim, duration: 0.5});
     } else {
       this.map.flyTo(latLngExpression, 18, {animate: !disableAnim, duration: 0.5});
     }

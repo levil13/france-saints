@@ -12,9 +12,8 @@
           <div class='search-results__list-item_link-properties_element'>
             <div class='icon-20px'>
               <div class='icon-with-bg-circle'>
-                <!-- TODO move to env -->
                 <img class='icon-with-bg-circle__image'
-                     [src]='"http://localhost:1337" + place.category?.icon?.url'
+                     [src]='CMS_URL + place.category?.icon?.url'
                      [alt]='place.category?.icon?.alternativeText' />
               </div>
             </div>

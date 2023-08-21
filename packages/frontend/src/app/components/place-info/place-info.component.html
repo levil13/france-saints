@@ -3,9 +3,8 @@
     <div class='place-info__properties-element'>
       <div class='icon-20px'>
         <div class='icon-with-bg-circle'>
-          <!-- TODO move to env -->
           <img class='icon-with-bg-circle__image'
-               [src]='"http://localhost:1337" + selectedPlace.category?.icon?.url'
+               [src]='CMS_URL + selectedPlace.category?.icon?.url'
                [alt]='selectedPlace.category?.icon?.alternativeText' />
         </div>
       </div>

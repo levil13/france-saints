@@ -1,10 +1,11 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {LanguagesService} from '../../services/rest/languages/languages.service';
 import {Language} from '../../models/rest/languages/languages.model';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {NgFor, NgIf} from '@angular/common';
+import {AsyncPipe, NgFor, NgIf} from '@angular/common';
 import {ClickOutsideDirective} from '../../directives/click-outside/click-outside.directive';
 import {fade} from '../../../assets/animations/animations';
+import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-language-selector',
@@ -13,49 +14,23 @@ import {fade} from '../../../assets/animations/animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fade],
   standalone: true,
-  imports: [NgIf, NgFor, ClickOutsideDirective],
+  imports: [NgIf, NgFor, ClickOutsideDirective, AsyncPipe],
 })
 export class LanguageSelectorComponent {
-  private _dropdownVisible = false;
+  dropdownVisible$ = new BehaviorSubject<boolean>(false);
+  selectedLanguage$ = new BehaviorSubject<Language | undefined>(undefined);
+  nonSelectedLanguages$ = new BehaviorSubject<Language[]>([]);
 
-  get dropdownVisible(): boolean {
-    return this._dropdownVisible;
-  }
-
-  set dropdownVisible(value: boolean) {
-    this._dropdownVisible = value;
-    this.cdr.markForCheck();
-  }
-
-  private _nonSelectedLanguages: Language[] = [];
-
-  get nonSelectedLanguages(): Language[] {
-    return this._nonSelectedLanguages;
-  }
-
-  set nonSelectedLanguages(value: Language[]) {
-    this._nonSelectedLanguages = value;
-    this.cdr.markForCheck();
-  }
-
-  private _selectedLanguage?: Language;
-
-  get selectedLanguage(): Language | undefined {
-    return this._selectedLanguage;
-  }
-
-  set selectedLanguage(value: Language | undefined) {
-    this._selectedLanguage = value;
-    this.cdr.markForCheck();
-  }
-
-  constructor(private cdr: ChangeDetectorRef, private languagesService: LanguagesService) {
+  constructor(private languagesService: LanguagesService) {
     this.languagesService
       .getLanguages()
       .pipe(takeUntilDestroyed())
       .subscribe(languages => {
-        this.selectedLanguage = languages.find(lang => lang.code === this.languagesService.selectedLanguage);
-        this.nonSelectedLanguages = languages.filter(lang => lang !== this.selectedLanguage);
+        const selectedLanguage = languages.find(lang => lang.code === this.languagesService.selectedLanguage);
+        this.selectedLanguage$.next(selectedLanguage);
+
+        const nonSelectedLanguages = languages.filter(lang => lang !== selectedLanguage);
+        this.nonSelectedLanguages$.next(nonSelectedLanguages);
       });
   }
 }
