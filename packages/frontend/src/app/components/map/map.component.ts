@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, ElementRef, ViewChild} from '@angular/core';
 import {Place} from '../../models/rest/places/places.model';
 
 import * as L from 'leaflet';
@@ -30,7 +30,7 @@ export class MapComponent implements AfterViewInit {
 
   private markersLayer = L.markerClusterGroup({zoomToBoundsOnClick: false, showCoverageOnHover: false});
 
-  private markers: L.Marker[] = [];
+  markers: L.Marker[] = [];
 
   private disableZoomAnim = false;
 
@@ -40,7 +40,8 @@ export class MapComponent implements AfterViewInit {
     private placeService: PlaceService,
     private destroyRef: DestroyRef,
     private routesService: RoutesService,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private cdr: ChangeDetectorRef
   ) {
     this.disableZoomAnim = this.fromOtherPage();
   }
@@ -110,6 +111,8 @@ export class MapComponent implements AfterViewInit {
         title: place.name,
       }).on('click', () => this.selectPlace(place));
     });
+
+    this.cdr.markForCheck();
 
     this.refreshMarkersLayer();
     this.mapService.addMarkers(this.markersLayer);
