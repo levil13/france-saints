@@ -1,5 +1,5 @@
 export const environment = {
-  CMS_URL: 'http://154.56.56.227:1337',
-  API_URL: 'http://154.56.56.227:1337/api/',
+  CMS_URL: 'https://promenades-nice.fr:1338',
+  API_URL: 'https://promenades-nice.fr:1338/api/',
   DEFAULT_LANGUAGE: 'ru'
 };
