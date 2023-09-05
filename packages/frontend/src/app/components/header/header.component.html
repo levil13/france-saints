@@ -1,6 +1,6 @@
 <nav class='header'>
   <div class='header__logo'>
-    <button (click)='homeClick()' class='header__logo-button'>
+    <button (click)='homeClick()' class='header__logo-button' aria-label="logo-button">
       <img class='header__logo-button_image'
            [ngSrc]='"assets/icons/logo-" + languageService.selectedLanguage + ".svg"'
            width='765'
@@ -23,7 +23,7 @@
          [class._mobile-opened]='values.mobileSearchOpened'
          class='header__mobile-search'>
         <span class='icon-hover-style-circle search__mobile-icon'>
-          <button class='icon-hover-style-circle__button'><span></span></button>
+          <button class='icon-hover-style-circle__button' aria-label="icon-button"><span></span></button>
         </span>
       </div>
     </div>
@@ -34,7 +34,7 @@
            [class._selected]='values.mobileMenuOpened'
            class='header__mobile-menu'>
         <span class='icon-hover-style-circle menu__mobile-icon'>
-          <button class='icon-hover-style-circle__button'><span></span></button>
+          <button class='icon-hover-style-circle__button' aria-label="icon-button"><span></span></button>
         </span>
       </div>
 

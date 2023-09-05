@@ -1,9 +1,10 @@
 .map {
-  height: calc(100vh - 80px);
+  height: 100vh;
+  height: calc((var(--vh, 1vh) * 100) - 80px);
 }
 
 @media (max-width: 767px) {
   .map {
-    height: calc(100vh - 135px);
+    height: calc((var(--vh, 1vh) * 100) - 135px);
   }
 }

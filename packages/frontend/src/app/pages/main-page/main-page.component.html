@@ -19,7 +19,7 @@
           (@slideInOutLeft.done)='animationDone()'
           class='icon-hover-style-circle main-page__icon'
           [class._closed]='!values.searchResultsVisible'>
-      <button (click)='searchResultsVisible$.next(!values.searchResultsVisible)' class='icon-hover-style-circle__button'>
+      <button (click)='searchResultsVisible$.next(!values.searchResultsVisible)' class='icon-hover-style-circle__button' aria-label="icon-button">
         <img class='icon-arrow icon-30px' src='assets/icons/icon-arrow.svg' alt='icon-arrow' />
       </button>
     </span>

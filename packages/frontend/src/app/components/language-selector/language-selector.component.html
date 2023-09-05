@@ -1,7 +1,7 @@
 <ng-container *ngIf='{dropdownVisible: dropdownVisible$ | async, selectedLanguage: selectedLanguage$ | async, nonSelectedLanguages: nonSelectedLanguages$ | async} as values'>
   <ng-container *ngIf='values.nonSelectedLanguages?.length'>
     <div appClickOutside (clickOutside)='dropdownVisible$.next(false)' class='language-selector'>
-      <button (click)='dropdownVisible$.next(!values.dropdownVisible)'>
+      <button (click)='dropdownVisible$.next(!values.dropdownVisible)' aria-label="language-selector-button">
         <span>{{values.selectedLanguage?.name?.substring(0, 3)}}</span>
         <img class='icon-arrow icon-25px'
              [class.top-arrow]='!values.dropdownVisible'

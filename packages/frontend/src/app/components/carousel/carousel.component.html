@@ -12,13 +12,13 @@
 
     <ng-container *ngIf='images.length > 1'>
     <span class='carousel__navigation _left icon-hover-style-circle'>
-      <button (click)='prevClick()' class='icon-hover-style-circle__button'>
+      <button (click)='prevClick()' class='icon-hover-style-circle__button' aria-label="carousel-button">
         <img class='icon-arrow icon-30px' src='assets/icons/icon-arrow.svg'
              alt='icon-arrow-left' />
       </button>
     </span>
       <span class='carousel__navigation _right icon-hover-style-circle'>
-      <button (click)='nextClick()' class='icon-hover-style-circle__button'>
+      <button (click)='nextClick()' class='icon-hover-style-circle__button' aria-label="carousel-button">
         <img class='icon-arrow right-arrow icon-30px' src='assets/icons/icon-arrow.svg'
              alt='icon-arrow-right' />
       </button>

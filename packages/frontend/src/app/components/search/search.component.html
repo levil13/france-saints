@@ -14,7 +14,7 @@
            type='text'
            [placeholder]='placeholder' />
     <span [hidden]='!searchValue' class='icon-hover-style-circle search__icon'>
-      <button (click)='updateSearchValue("")' class='icon-hover-style-circle__button'>
+      <button (click)='updateSearchValue("")' class='icon-hover-style-circle__button' aria-label="icon-button">
         <img class='icon-11px' src='assets/icons/icon-close.svg' alt='icon-close' />
       </button>
     </span>
@@ -23,7 +23,7 @@
   <div *ngIf='values.dropdownVisible' @fade appDropdownNavigation class='search__result divide-line-top'>
     <ul class='search__result-list'>
       <li class='search__result-list-item'>
-        <button class='search__result-button icon-search _gray' (click)='searchEntitySelect(searchValue, "global")'>
+        <button class='search__result-button icon-search _gray' (click)='searchEntitySelect(searchValue, "global")' aria-label="search-result-button">
           {{ searchValue }} <span class='color-gray' i18n='@@global_search'>— поиск по всему сайту</span>
         </button>
       </li>
@@ -32,7 +32,7 @@
     <ul *ngIf='filteredCities.length' class='search__result-list'>
       <h3 i18n='@@cities_search' class='search__result-list-heading'>Поиск в городах</h3>
       <li *ngFor='let city of filteredCities' class='search__result-list-item'>
-        <button class='search__result-button _flex icon-search _gray' (click)='searchEntitySelect(cityName.innerText, "city")'>
+        <button class='search__result-button _flex icon-search _gray' (click)='searchEntitySelect(cityName.innerText, "city")' aria-label="search-result-button">
           <span #cityName [innerHTML]='city.name'></span>
           <span [innerHTML]='city.postalCodes.join(", ")' class='search__result-button-caption'></span>
         </button>
@@ -42,7 +42,7 @@
     <ul *ngIf='(categories$ | async ) as categories' class='search__result-list'>
       <h3 i18n='@@categories_search' class='search__result-list-heading'>Поиск в категориях</h3>
       <li *ngFor='let category of categories' class='search__result-list-item'>
-        <button class='search__result-button icon-search _gray' (click)='searchEntitySelect(category.name, "category")'>
+        <button class='search__result-button icon-search _gray' (click)='searchEntitySelect(category.name, "category")' aria-label="search-result-button">
           {{ searchValue }} <span class='color-gray' i18n='@@in_category'>в категории {{ category.name }}</span>
         </button>
       </li>

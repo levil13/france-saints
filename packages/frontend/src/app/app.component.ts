@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject, Renderer2} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {translations} from '../locale/translations';
 import {RouterOutlet} from '@angular/router';
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ import {RouterOutlet} from '@angular/router';
   imports: [RouterOutlet],
 })
 export class AppComponent {
-  constructor(private titleService: Title) {
+  constructor(private titleService: Title,
+              @Inject(DOCUMENT) private document: Document) {
     this.titleService.setTitle(translations.title);
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
   }
 }

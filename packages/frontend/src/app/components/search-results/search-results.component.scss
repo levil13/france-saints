@@ -1,6 +1,7 @@
 .search-results {
   @apply relative w-[350px] px-[32px] py-[15px] overflow-y-scroll overflow-x-hidden;
-  height: calc(100vh - 80px);
+  height: 100vh;
+  height: calc((var(--vh, 1vh) * 100) - 80px);
   background-color: #fff;
 
   .search-results__list {
@@ -54,7 +55,8 @@
 
 @media (max-width: 767px) {
   .search-results {
-    height: calc(100vh - 135px);
+    height: 100vh;
+    height: calc((var(--vh, 1vh) * 100) - 135px);
   }
 }
 
