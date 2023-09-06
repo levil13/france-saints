@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject, Renderer2} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {translations} from '../locale/translations';
 import {RouterOutlet} from '@angular/router';
@@ -6,7 +6,7 @@ import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-root',
-  template: ` <router-outlet></router-outlet>`,
+  template: `<router-outlet></router-outlet>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [RouterOutlet],
