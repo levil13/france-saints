@@ -81,7 +81,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="title" datatype="html">
-        <source>Православные Святыни Юга Франции</source>
+        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
           <context context-type="linenumber">2</context>
