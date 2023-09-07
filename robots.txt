@@ -1,0 +1,4 @@
+User-agent: *
+
+Host: https://promenades-nice.fr
+Sitemap: https://promenades-nice.fr/sitemap.xml

@@ -100,6 +100,7 @@
       </trans-unit>
       <trans-unit id="default_description" datatype="html">
         <source>Добро пожаловать на виртуальное путешествие по духовным сокровищам Юга Франции! Исследуйте православные святыни, храмы, монастыри через интерактивную карту.</source>
+        <target>Bienvenue pour un voyage virtuel à travers les trésors spirituels du Sud de la France ! Explorez les sanctuaires orthodoxes, les églises et les monastères grâce à une carte interactive.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
           <context context-type="linenumber">3</context>
@@ -107,51 +108,42 @@
       </trans-unit>
       <trans-unit id="default_keywords" datatype="html">
         <source>православные святыни, храмы франции, монастыри юга франции, русские кладбища во франции, православная вера, духовное наследие юга франции, религиозный туризм, православная культура, древние православные места, история православия во франции</source>
+        <target>sanctuaires orthodoxes, églises en france, monastères du sud de la france, cimetières russes en france, foi orthodoxe, patrimoine spirituel du sud de la france, tourisme religieux, culture orthodoxe, anciens lieux orthodoxes, histoire de l'Orthodoxie en france</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">4,7,10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="about_title" datatype="html">
-        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <source>О нас - Православные Святыни Юга Франции</source>
+        <target>À propos de nous - Lieux des pèlerinages chrétiens orthodoxes en Provence</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="about_description" datatype="html">
-        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <source>Наш сайт создан, чтобы подарить вам возможность погрузиться в мир духовных сокровищ этого удивительного региона через виртуальное путешествие на карте.</source>
+        <target>Notre site Internet a été créé pour vous donner l'opportunité de vous immerger dans le monde des trésors spirituels de cette étonnante région à travers un voyage virtuel sur une carte.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="about_keywords" datatype="html">
-        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="contacts_title" datatype="html">
-        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <source>Контакты - Православные Святыни Юга Франции</source>
+        <target>Contacts - Lieux des pèlerinages chrétiens orthodoxes en Provence</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
           <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
       <trans-unit id="contacts_description" datatype="html">
-        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <source>Мы - команда энтузиастов, преданная исследованию и сохранению богатого православного наследия на Юге Франции. Мы стремимся сделать ваше путешествие незабываемым.</source>
+        <target>Nous sommes une équipe de passionnés dédiée à l'exploration et à la préservation du riche patrimoine orthodoxe du sud de la France. Nous nous efforçons de rendre votre voyage inoubliable.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
           <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="contacts_keywords" datatype="html">
-        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
-          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="search_placeholder" datatype="html">
