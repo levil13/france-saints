@@ -4,7 +4,7 @@ import {stringify} from 'qs';
 import {map, Observable, shareReplay, switchMap, tap, zip} from 'rxjs';
 import {
   Place,
-  PlaceDescription,
+  PlacePageInfo,
   PlaceInfo,
   PlaceInfoResponse,
   PlaceResponse,
@@ -140,11 +140,14 @@ export class PlacesService {
     };
   }
 
-  getPlaceDescription(placeId: number): Observable<PlaceDescription> {
-    const query = stringify({fields: ['longDescription'], filters: {id: {$eq: placeId}}}, {encodeValuesOnly: true});
+  getPlacePageInfo(placeId: number): Observable<PlacePageInfo> {
+    const query = stringify(
+      {fields: ['shortDescription', 'longDescription', 'keywords'], filters: {id: {$eq: placeId}}},
+      {encodeValuesOnly: true}
+    );
 
     return this.http
-      .get<StrapiResponseMulti<PlaceDescription>>(
+      .get<StrapiResponseMulti<PlacePageInfo>>(
         `${this.placesApiUrlPrefix}?locale=${this.languagesService.selectedLanguage}&${query}`
       )
       .pipe(

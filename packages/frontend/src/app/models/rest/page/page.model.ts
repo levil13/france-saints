@@ -1,5 +1,5 @@
-import {StrapiBaseEntity} from '../strapi-base.model';
+import {StrapiBaseMetaDataEntity} from '../strapi-base.model';
 
-export interface PageModel extends StrapiBaseEntity {
+export interface PageModel extends StrapiBaseMetaDataEntity {
   content: string;
 }

@@ -52,7 +52,9 @@ export class MainPageComponent implements AfterViewInit {
 
     this.searchResultsVisible$
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(visible => this.adjustZoomControlPosition(visible));
+      .subscribe(visible => {
+        this.adjustZoomControlPosition(visible);
+      });
   }
 
   private adjustZoomControlPosition(searchResultsVisible: boolean) {

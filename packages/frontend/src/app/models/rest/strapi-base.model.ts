@@ -1,3 +1,7 @@
+import {MetaData} from '../meta/meta.model';
+
+export type StrapiBaseMetaDataEntity = StrapiBaseEntity & MetaData;
+
 export interface StrapiBaseEntity {
   id: number;
 }

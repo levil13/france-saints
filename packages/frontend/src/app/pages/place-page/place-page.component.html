@@ -24,7 +24,7 @@
   </div>
   <h1 class='place-page__heading'>{{selectedPlace.name}}</h1>
   <div *ngIf='selectedPlaceDescription'
-       [innerHTML]='selectedPlaceDescription.longDescription | markdown'
+       [innerHTML]='selectedPlaceDescription | markdown'
        class='place-page__article divide-line-top'>
   </div>
 </app-content-wrapper>

@@ -21,8 +21,10 @@ export interface PlaceInfo {
   shortDescription?: string;
 }
 
-export interface PlaceDescription {
+export interface PlacePageInfo {
+  shortDescription: string;
   longDescription: string;
+  keywords: string;
 }
 
 export interface Coordinates {

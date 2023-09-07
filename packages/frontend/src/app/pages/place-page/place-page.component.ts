@@ -1,14 +1,17 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component} from '@angular/core';
 import {PlaceService} from '../../services/place/place.service';
 import {PlacesService} from '../../services/rest/places/places.service';
-import {of, switchMap, tap} from 'rxjs';
+import {forkJoin, of, switchMap, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {Place, PlaceDescription} from '../../models/rest/places/places.model';
+import {Place} from '../../models/rest/places/places.model';
 import {ContentWrapperComponent} from '../../components/content-wrapper/content-wrapper.component';
 import {NgIf} from '@angular/common';
 import {MarkdownPipe} from '../../pipes/markdown/markdown.pipe';
 import {environment} from '../../../environments/environment';
+import {MetaService} from '../../services/meta/meta.service';
+import {MetaData} from '../../models/meta/meta.model';
+import {translations} from '../../../locale/translations';
 
 @Component({
   selector: 'app-place-page',
@@ -22,12 +25,13 @@ export class PlacePageComponent {
   CMS_URL = environment.CMS_URL;
 
   selectedPlace: Place | null = null;
-  selectedPlaceDescription: PlaceDescription | null = null;
+  selectedPlaceDescription: string | null = null;
 
   constructor(
     private placeService: PlaceService,
     private placesService: PlacesService,
     private activatedRoute: ActivatedRoute,
+    private metaService: MetaService,
     private router: Router,
     private cdr: ChangeDetectorRef
   ) {
@@ -42,11 +46,24 @@ export class PlacePageComponent {
     selectedPlaceObs$
       .pipe(
         tap(selectedPlace => this.processSelectedPlace(selectedPlace)),
-        switchMap(selectedPlace => this.placesService.getPlaceDescription((selectedPlace as Place).id)),
-        tap(selectedPlaceDescription => (this.selectedPlaceDescription = selectedPlaceDescription)),
+        switchMap(selectedPlace =>
+          forkJoin([of(selectedPlace as Place), this.placesService.getPlacePageInfo((selectedPlace as Place).id)])
+        ),
         takeUntilDestroyed()
       )
-      .subscribe(() => this.cdr.markForCheck());
+      .subscribe(([selectedPlace, selectedPlacePageInfo]) => {
+        this.selectedPlaceDescription = selectedPlacePageInfo.longDescription;
+
+        const metaData: MetaData = {
+          title: `${selectedPlace.name} - ${translations.defaultTitle}`,
+          description: selectedPlacePageInfo.shortDescription,
+          keywords: selectedPlacePageInfo.keywords,
+        };
+
+        this.metaService.updateMetaData(metaData);
+
+        this.cdr.markForCheck();
+      });
   }
 
   private processSelectedPlace(selectedPlace: Place | null) {

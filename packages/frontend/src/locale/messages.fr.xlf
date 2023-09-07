@@ -90,7 +90,7 @@
           <context context-type="linenumber">46,47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="title" datatype="html">
+      <trans-unit id="default_title" datatype="html">
         <source>Православные Святыни Юга Франции</source>
         <target>Lieux des pèlerinages chrétiens orthodoxes en Provence</target>
         <context-group purpose="location">
@@ -98,12 +98,68 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="default_description" datatype="html">
+        <source>Добро пожаловать на виртуальное путешествие по духовным сокровищам Юга Франции! Исследуйте православные святыни, храмы, монастыри через интерактивную карту.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="default_keywords" datatype="html">
+        <source>православные святыни, храмы франции, монастыри юга франции, русские кладбища во франции, православная вера, духовное наследие юга франции, религиозный туризм, православная культура, древние православные места, история православия во франции</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="about_title" datatype="html">
+        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="about_description" datatype="html">
+        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="about_keywords" datatype="html">
+        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contacts_title" datatype="html">
+        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contacts_description" datatype="html">
+        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contacts_keywords" datatype="html">
+        <source>Православные Святыни Юга Франции: Откройте Духовное Наследие</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="search_placeholder" datatype="html">
         <source>Имя, город, почтовый индекс...</source>
         <target>Nom, ville, code postal...</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
     </body>

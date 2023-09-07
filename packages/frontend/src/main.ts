@@ -3,14 +3,15 @@
 import {bootstrapApplication} from '@angular/platform-browser';
 import {AppComponent} from './app/app.component';
 import {MediaService} from './app/services/media/media.service';
-import {APP_INITIALIZER, importProvidersFrom} from '@angular/core';
+import {APP_INITIALIZER} from '@angular/core';
 import {RoutesService} from './app/services/routes/routes.service';
 import {marked} from 'marked';
 import {provideRouter, Route} from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import Token = marked.Token;
+import {provideHttpClient} from '@angular/common/http';
+import {provideAnimations} from '@angular/platform-browser/animations';
 import {environment} from './environments/environment';
+import {PATHS} from './constants/constants';
+import Token = marked.Token;
 
 const mediaServiceInitializer = () => ({
   provide: APP_INITIALIZER,
@@ -42,17 +43,20 @@ const markdownPipeInitializer = () => ({
 });
 
 const routes: Route[] = [
-  {path: '', loadComponent: () => import('./app/pages/main-page/main-page.component').then(m => m.MainPageComponent)},
+  {
+    path: '',
+    loadComponent: () => import('./app/pages/main-page/main-page.component').then(m => m.MainPageComponent),
+  },
   {
     path: 'places/:place',
     loadComponent: () => import('./app/pages/place-page/place-page.component').then(m => m.PlacePageComponent),
   },
   {
-    path: 'about',
+    path: PATHS['ABOUT'].url,
     loadComponent: () => import('./app/pages/about-page/about-page.component').then(m => m.AboutPageComponent),
   },
   {
-    path: 'contacts',
+    path: PATHS['CONTACTS'].url,
     loadComponent: () => import('./app/pages/contacts-page/contacts-page.component').then(m => m.ContactsPageComponent),
   },
   {path: '**', redirectTo: '/', pathMatch: 'full'},
@@ -60,7 +64,8 @@ const routes: Route[] = [
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom(HttpClientModule, BrowserAnimationsModule),
+    provideHttpClient(),
+    provideAnimations(),
     MediaService,
     mediaServiceInitializer(),
     RoutesService,

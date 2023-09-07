@@ -1,7 +1,9 @@
 import {DestroyRef, Injectable} from '@angular/core';
-import {Event, Router, RoutesRecognized} from '@angular/router';
+import {Event, NavigationEnd, Router, RoutesRecognized} from '@angular/router';
 import {BehaviorSubject, filter, map, pairwise} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {PATHS} from '../../../constants/constants';
+import {MetaService} from '../meta/meta.service';
 
 @Injectable({providedIn: 'root'})
 export class RoutesService {
@@ -11,7 +13,7 @@ export class RoutesService {
     return this.routes$.value;
   }
 
-  constructor(private router: Router, private destroyRef: DestroyRef) {}
+  constructor(private router: Router, private destroyRef: DestroyRef, private metaService: MetaService) {}
 
   init() {
     this.router.events
@@ -24,6 +26,19 @@ export class RoutesService {
         })),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(routes => this.routes$.next(routes));
+      .subscribe(routes => {
+        this.routes$.next(routes);
+      });
+
+    this.router.events
+      .pipe(
+        filter((event: Event) => event instanceof NavigationEnd),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(route => {
+        const predefinedPath = PATHS[(route as NavigationEnd).urlAfterRedirects.slice(1).toUpperCase()];
+
+        this.metaService.updateMetaData(predefinedPath?.metaData);
+      });
   }
 }
