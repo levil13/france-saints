@@ -2,7 +2,12 @@
   "name": "@france-saints/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "build-cms": "cd packages/cms && npm run build",
+    "build-frontend-dev": "nx build frontend --configuration development",
+    "build-frontend": "nx build frontend --skip-nx-cache && npm run copy-files",
+    "copy-files": "cp robots.txt dist/packages/frontend && cp sitemap.xml dist/packages/frontend"
+  },
   "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "~16.0.0",
