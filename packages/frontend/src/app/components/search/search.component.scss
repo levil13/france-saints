@@ -112,6 +112,7 @@
 
     &._mobile-opened {
       border-top: 1px solid var(--border-color);
+      border-radius: 0;
       box-shadow: none;
 
       .search__result {
