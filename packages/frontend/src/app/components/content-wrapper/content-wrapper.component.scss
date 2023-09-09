@@ -1,7 +1,16 @@
 .content-wrapper {
   @apply max-w-[800px] w-full my-[30px] mx-auto;
+  min-height: calc(100vh - 145px);
 
   &__container {
     @apply relative;
+  }
+}
+
+.footer {
+  @apply w-full text-center py-[30px];
+
+  &__text {
+    @apply opacity-30 text-[13px];
   }
 }

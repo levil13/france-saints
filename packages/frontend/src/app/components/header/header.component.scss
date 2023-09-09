@@ -40,7 +40,7 @@
   .header {
     &__menu {
       &._mobile-opened {
-        @apply absolute right-[32px] top-[80px] z-[401] flex flex-col bg-white mt-[15px] px-[15px] gap-0 rounded-[15px] w-[200px];
+        @apply absolute right-[32px] top-[80px] z-[402] flex flex-col bg-white mt-[15px] px-[15px] gap-0 rounded-[15px] w-[200px];
         box-shadow: 0 0 15px -5px var(--shadow-color);
 
         &:before {
