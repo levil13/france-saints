@@ -30,13 +30,6 @@ const routesServiceInitializer = () => ({
 const markdownPipeInitializer = () => ({
   provide: APP_INITIALIZER,
   useFactory: () => () => {
-    const walkTokens = (token: Token) => {
-      if (token.type === 'image') {
-        token.href = environment.CMS_URL + token.href;
-      }
-    };
-
-    marked.use({walkTokens});
     marked.options({mangle: false, headerIds: false});
   },
   multi: true,
