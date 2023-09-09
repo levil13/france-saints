@@ -12,6 +12,7 @@ import {environment} from '../../../environments/environment';
 import {MetaService} from '../../services/meta/meta.service';
 import {MetaData} from '../../models/meta/meta.model';
 import {translations} from '../../../locale/translations';
+import {META_TAGS} from '../../../constants/constants';
 
 @Component({
   selector: 'app-place-page',
@@ -58,6 +59,11 @@ export class PlacePageComponent {
           title: `${selectedPlace.name} - ${translations.defaultTitle}`,
           description: selectedPlacePageInfo.shortDescription,
           keywords: selectedPlacePageInfo.keywords,
+          images: selectedPlacePageInfo.images,
+          customTags: new Map([
+            [META_TAGS['og:type'], 'place'],
+            [META_TAGS['og:site_name'], translations.defaultTitle],
+          ]),
         };
 
         this.metaService.updateMetaData(metaData);

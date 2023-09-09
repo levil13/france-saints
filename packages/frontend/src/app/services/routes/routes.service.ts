@@ -2,7 +2,7 @@ import {DestroyRef, Injectable} from '@angular/core';
 import {Event, NavigationEnd, Router, RoutesRecognized} from '@angular/router';
 import {BehaviorSubject, filter, map, pairwise} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {PATHS} from '../../../constants/constants';
+import {META_TAGS, PATHS} from '../../../constants/constants';
 import {MetaService} from '../meta/meta.service';
 
 @Injectable({providedIn: 'root'})
@@ -37,6 +37,17 @@ export class RoutesService {
       )
       .subscribe(route => {
         const predefinedPath = PATHS[(route as NavigationEnd).urlAfterRedirects.slice(1).toUpperCase()];
+
+        if (predefinedPath) {
+          const nonMandatoryMetaTags = new Map();
+          nonMandatoryMetaTags.set(META_TAGS['og:type'], 'website');
+
+          if (predefinedPath.metaData.customTags) {
+            predefinedPath.metaData.customTags = new Map([...predefinedPath.metaData.customTags, ...nonMandatoryMetaTags]);
+          } else {
+            predefinedPath.metaData.customTags = nonMandatoryMetaTags;
+          }
+        }
 
         this.metaService.updateMetaData(predefinedPath?.metaData);
       });

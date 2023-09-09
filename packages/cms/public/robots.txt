@@ -1,3 +1,6 @@
-# To prevent search engines from seeing the site altogether, uncomment the next two lines:
-# User-Agent: *
-# Disallow: /
+User-Agent: *
+Disallow: /
+Disallow: /admin
+Disallow: /api
+
+Host: https://promenades-nice.fr:1338

@@ -44,7 +44,7 @@ const markdownPipeInitializer = () => ({
 
 const routes: Route[] = [
   {
-    path: '',
+    path: PATHS[''].url,
     loadComponent: () => import('./app/pages/main-page/main-page.component').then(m => m.MainPageComponent),
   },
   {

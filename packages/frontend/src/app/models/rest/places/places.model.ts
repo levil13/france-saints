@@ -9,6 +9,7 @@ export interface Place extends StrapiBaseEntityLocalized {
   coordinates: Coordinates;
   city?: City;
   category?: Category;
+  images?: Image[];
 }
 
 export interface PlaceWithoutPopulation extends Omit<Place, 'category' | 'city'> {
@@ -25,6 +26,7 @@ export interface PlacePageInfo {
   shortDescription: string;
   longDescription: string;
   keywords: string;
+  images: Image[];
 }
 
 export interface Coordinates {
@@ -39,5 +41,9 @@ export interface PlaceResponse extends Omit<Place, 'category' | 'city' | 'images
 }
 
 export interface PlaceInfoResponse extends Omit<PlaceInfo, 'images'> {
+  images?: StrapiResponseMulti<Image>;
+}
+
+export interface PlacePageInfoResponse extends Omit<PlacePageInfo, 'images'> {
   images?: StrapiResponseMulti<Image>;
 }

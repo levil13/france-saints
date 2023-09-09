@@ -111,7 +111,7 @@
         <target>sanctuaires orthodoxes, églises en france, monastères du sud de la france, cimetières russes en france, foi orthodoxe, patrimoine spirituel du sud de la france, tourisme religieux, culture orthodoxe, anciens lieux orthodoxes, histoire de l'Orthodoxie en france</target>
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
-          <context context-type="linenumber">4,7,10</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="about_title" datatype="html">
@@ -130,6 +130,14 @@
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="about_keywords" datatype="html">
+        <source>православные святыни, храмы франции, монастыри юга франции, русские кладбища во франции, православная вера, духовное наследие юга франции, религиозный туризм, православная культура, древние православные места, история православия во франции</source>
+        <target>sanctuaires orthodoxes, églises en france, monastères du sud de la france, cimetières russes en france, foi orthodoxe, patrimoine spirituel du sud de la france, tourisme religieux, culture orthodoxe, anciens lieux orthodoxes, histoire de l'Orthodoxie en france</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="contacts_title" datatype="html">
         <source>Контакты - Православные Святыни Юга Франции</source>
         <target>Contacts - Lieux des pèlerinages chrétiens orthodoxes en Provence</target>
@@ -144,6 +152,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
           <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="contacts_keywords" datatype="html">
+        <source>православные святыни, храмы франции, монастыри юга франции, русские кладбища во франции, православная вера, духовное наследие юга франции, религиозный туризм, православная культура, древние православные места, история православия во франции</source>
+        <target>sanctuaires orthodoxes, églises en france, monastères du sud de la france, cimetières russes en france, foi orthodoxe, patrimoine spirituel du sud de la france, tourisme religieux, culture orthodoxe, anciens lieux orthodoxes, histoire de l'Orthodoxie en france</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">packages/frontend/src/locale/translations.ts</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="search_placeholder" datatype="html">

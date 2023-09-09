@@ -4,9 +4,10 @@ import {stringify} from 'qs';
 import {map, Observable, shareReplay, switchMap, tap, zip} from 'rxjs';
 import {
   Place,
-  PlacePageInfo,
   PlaceInfo,
   PlaceInfoResponse,
+  PlacePageInfo,
+  PlacePageInfoResponse,
   PlaceResponse,
   PlaceWithoutPopulation,
 } from '../../../models/rest/places/places.model';
@@ -128,31 +129,32 @@ export class PlacesService {
         `${this.placesApiUrlPrefix}?locale=${this.languagesService.selectedLanguage}&${query}`
       )
       .pipe(
-        map(responses => responses.data.map(response => this.processPlaceInfo(response))),
+        map(responses => responses.data.map(response => this.processPlaceInfo(response.attributes))),
         map(placesInfos => placesInfos[0])
       );
   }
 
-  private processPlaceInfo(placeInfoResponse: {attributes: PlaceInfoResponse; id: number}) {
+  private processPlaceInfo(attributes: PlacePageInfoResponse | PlaceInfoResponse) {
     return {
-      ...placeInfoResponse.attributes,
-      images: placeInfoResponse.attributes.images?.data.map(image => ({...image.attributes, id: image.id})),
+      ...attributes,
+      images: attributes.images?.data.map(image => ({...image.attributes, id: image.id})),
     };
   }
 
   getPlacePageInfo(placeId: number): Observable<PlacePageInfo> {
     const query = stringify(
-      {fields: ['shortDescription', 'longDescription', 'keywords'], filters: {id: {$eq: placeId}}},
+      {
+        fields: ['shortDescription', 'longDescription', 'keywords'],
+        populate: {images: {fields: ['url', 'alternativeText']}},
+        filters: {id: {$eq: placeId}},
+      },
       {encodeValuesOnly: true}
     );
 
     return this.http
-      .get<StrapiResponseMulti<PlacePageInfo>>(
+      .get<StrapiResponseMulti<PlacePageInfoResponse>>(
         `${this.placesApiUrlPrefix}?locale=${this.languagesService.selectedLanguage}&${query}`
       )
-      .pipe(
-        map(responses => responses.data.map(response => response.attributes)),
-        map(placesInfos => placesInfos[0])
-      );
+      .pipe(map(responses => this.processPlaceInfo(responses.data[0].attributes) as PlacePageInfo));
   }
 }
