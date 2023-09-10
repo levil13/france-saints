@@ -142,6 +142,18 @@ $sizes: 11px, 15px, 20px, 25px, 30px, 50px;
     .icon-hover-style-circle__button {
       @apply p-[15px];
     }
+
+    @media (max-width: 767px) {
+      @apply right-[20px] top-[20px];
+
+      .icon-hover-style-circle__button {
+        @apply p-[10px];
+
+        .icon-style-circle__img {
+          @apply h-[25px] w-[25px] text-[25px];
+        }
+      }
+    }
   }
 
   &.menu__mobile-icon {

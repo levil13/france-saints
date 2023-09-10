@@ -116,6 +116,10 @@
 
     &__logo {
       @apply max-w-full;
+
+      &-button {
+        @apply align-baseline;
+      }
     }
 
     &__search-wrapper {
