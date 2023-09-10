@@ -1,4 +1,12 @@
-import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, Inject, Renderer2} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  Inject,
+  Renderer2,
+} from '@angular/core';
 import {SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -8,7 +16,9 @@ import {SearchResultsComponent} from '../../components/search-results/search-res
 import {MapComponent} from '../../components/map/map.component';
 import {PlaceInfoComponent} from '../../components/place-info/place-info.component';
 import {slideInOutLeft, slideInOutRight} from '../../../assets/animations/animations';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, filter, map, withLatestFrom} from 'rxjs';
+import {ResizeObserveDirective} from '../../directives/resize-observe/resize-observe.directive';
+import {MEDIA, MediaService} from '../../services/media/media.service';
 
 @Component({
   selector: 'app-main-page',
@@ -17,7 +27,15 @@ import {BehaviorSubject} from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [slideInOutLeft, slideInOutRight],
   standalone: true,
-  imports: [NgIf, HeaderComponent, SearchResultsComponent, MapComponent, PlaceInfoComponent, AsyncPipe],
+  imports: [
+    NgIf,
+    HeaderComponent,
+    SearchResultsComponent,
+    MapComponent,
+    PlaceInfoComponent,
+    AsyncPipe,
+    ResizeObserveDirective,
+  ],
 })
 export class MainPageComponent implements AfterViewInit {
   searchResultsVisible$ = new BehaviorSubject<boolean>(false);
@@ -30,6 +48,7 @@ export class MainPageComponent implements AfterViewInit {
     private renderer: Renderer2,
     private destroyRef: DestroyRef,
     private cdr: ChangeDetectorRef,
+    private mediaService: MediaService,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -54,14 +73,19 @@ export class MainPageComponent implements AfterViewInit {
       });
 
     this.searchResultsVisible$
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        withLatestFrom(this.mediaService.media$),
+        filter(([, media]) => media !== MEDIA.MOBILE),
+        map(([visible]) => visible),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(visible => {
         this.adjustZoomControlPosition(visible);
       });
   }
 
   private adjustZoomControlPosition(searchResultsVisible: boolean) {
-    const controlElement = document.querySelector('.leaflet-control-zoom');
+    const controlElement = this.document.querySelector('.leaflet-control-zoom');
     searchResultsVisible
       ? this.renderer.addClass(controlElement, '!ml-[360px]')
       : this.renderer.removeClass(controlElement, '!ml-[360px]');
@@ -73,5 +97,9 @@ export class MainPageComponent implements AfterViewInit {
 
   animationDone() {
     this.renderer.setStyle(this.document.body, 'overflow', 'auto');
+  }
+
+  asideResize(asideElement: HTMLElement, size: {height: number; width: number}) {
+    this.renderer.setStyle(asideElement, 'top', `calc(100dvh - ${size.height}px`);
   }
 }

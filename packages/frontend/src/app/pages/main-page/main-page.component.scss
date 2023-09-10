@@ -1,6 +1,6 @@
 .main-page {
   &__sidebar {
-    @apply absolute bottom-0 z-[401];
+    @apply absolute z-[401];
 
     &._left {
       @apply left-0;

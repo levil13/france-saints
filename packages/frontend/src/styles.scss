@@ -290,7 +290,7 @@ $sizes: 11px, 15px, 20px, 25px, 30px, 50px;
 }
 
 .leaflet-bottom, .leaflet-top {
-  @apply z-[401];
+  @apply z-[400];
 }
 
 .leaflet-control-zoom {
@@ -344,10 +344,6 @@ $sizes: 11px, 15px, 20px, 25px, 30px, 50px;
 }
 
 @media screen and (max-width: 450px) {
-  .leaflet-control-zoom {
-    @apply hidden;
-  }
-
   .icon-hover-style-circle {
     &.main-page__icon {
       @apply left-[270px];

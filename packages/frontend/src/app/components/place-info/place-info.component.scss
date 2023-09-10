@@ -1,7 +1,6 @@
 .place-info {
   @apply relative w-[450px] p-[32px] overflow-y-scroll overflow-x-hidden;
-  height: 100vh;
-  height: calc((var(--vh, 1vh) * 100) - 80px);
+  height: calc(100dvh - 80px);
   background-color: #fff;
 
   &__read-more {
@@ -44,8 +43,7 @@
 
 @media (max-width: 767px) {
   .place-info {
-    height: 100vh;
-    height: calc((var(--vh, 1vh) * 100) - 135px);
+    height: calc(100dvh - 135px);
   }
 }
 

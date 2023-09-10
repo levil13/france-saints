@@ -4,10 +4,12 @@
 
 <ng-container
   *ngIf='{searchResultsVisible: searchResultsVisible$ | async, searchResultsButtonVisible: searchResultsButtonVisible$ | async, placeInfoModalVisible: placeInfoModalVisible$ | async} as values'>
-  <aside *ngIf='values.searchResultsVisible'
+  <aside #searchResultsElement *ngIf='values.searchResultsVisible'
          @slideInOutLeft
          (@slideInOutLeft.start)='animationStart()'
          (@slideInOutLeft.done)='animationDone()'
+         appResizeObserve
+         (resizeEvent)='asideResize(searchResultsElement, $event)'
          class='main-page__sidebar _left'>
     <app-search-results></app-search-results>
   </aside>
@@ -26,10 +28,12 @@
     <app-map></app-map>
   </main>
 
-  <aside *ngIf='values.placeInfoModalVisible'
+  <aside #placeInfoElement *ngIf='values.placeInfoModalVisible'
          @slideInOutRight
          (@slideInOutRight.start)='animationStart()'
          (@slideInOutRight.done)='animationDone()'
+         appResizeObserve
+         (resizeEvent)='asideResize(placeInfoElement, $event)'
          class='main-page__sidebar _right'>
     <app-place-info></app-place-info>
   </aside>
