@@ -1,7 +1,7 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
-import {fromEvent} from 'rxjs';
+import { debounceTime, fromEvent } from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {fadeRoute} from '../assets/animations/animations';
 
@@ -17,9 +17,9 @@ import {fadeRoute} from '../assets/animations/animations';
   animations: [fadeRoute],
 })
 export class AppComponent implements AfterViewInit {
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document, private cdr: ChangeDetectorRef) {
     fromEvent(window, 'resize')
-      .pipe(takeUntilDestroyed())
+      .pipe(debounceTime(100), takeUntilDestroyed())
       .subscribe(_ => this.updateVh());
   }
 
@@ -29,5 +29,6 @@ export class AppComponent implements AfterViewInit {
 
   private updateVh() {
     this.document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+    this.cdr.markForCheck();
   }
 }
