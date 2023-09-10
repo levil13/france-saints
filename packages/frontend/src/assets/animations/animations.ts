@@ -24,12 +24,12 @@ export const fadeRoute = trigger('fadeRoute', [
     ),
     query(
       ':leave',
-      [style({opacity: 1, position: 'absolute', height: '100%', width: '100%'}), animate('250ms', style({opacity: 0}))],
+      [style({opacity: 1, position: 'absolute', height: '100%', width: '100%'}), animate('100ms', style({opacity: 0}))],
       {optional: true}
     ),
     query(
       ':enter',
-      [style({opacity: 0, position: 'relative', height: '100%', width: '100%'}), animate('250ms', style({opacity: 1}))],
+      [style({opacity: 0, position: 'relative', height: '100%', width: '100%'}), animate('100ms', style({opacity: 1}))],
       {optional: true}
     ),
   ]),
