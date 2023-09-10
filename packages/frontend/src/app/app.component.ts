@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {fromEvent} from 'rxjs';
@@ -16,13 +16,15 @@ import {fadeRoute} from '../assets/animations/animations';
   imports: [RouterOutlet],
   animations: [fadeRoute],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   constructor(@Inject(DOCUMENT) private document: Document) {
-    this.updateVh();
-
     fromEvent(window, 'resize')
       .pipe(takeUntilDestroyed())
       .subscribe(_ => this.updateVh());
+  }
+
+  ngAfterViewInit() {
+    this.updateVh();
   }
 
   private updateVh() {
