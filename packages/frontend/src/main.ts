@@ -36,7 +36,14 @@ const markdownPipeInitializer = () => ({
       }
     };
 
-    marked.use({walkTokens});
+    const renderer = new marked.Renderer();
+    const linkRenderer = renderer.link;
+    renderer.link = (href, title, text) => {
+      const html = linkRenderer.call(renderer, href, title, text);
+      return html.replace(/^<a /, '<a target="_blank" rel="nofollow" ');
+    };
+
+    marked.use({walkTokens, renderer});
     marked.options({mangle: false, headerIds: false});
   },
   multi: true,

@@ -1,4 +1,4 @@
-import {animate, style, transition, trigger} from '@angular/animations';
+import {animate, query, style, transition, trigger} from '@angular/animations';
 
 export const fade = trigger('fade', [
   transition(':enter', [style({opacity: 0}), animate(250, style({opacity: 1}))]),
@@ -13,4 +13,24 @@ export const slideInOutLeft = trigger('slideInOutLeft', [
 export const slideInOutRight = trigger('slideInOutRight', [
   transition(':enter', [style({marginRight: '-482px'}), animate('500ms ease-in-out', style({marginRight: '0'}))]),
   transition(':leave', [animate('500ms ease-in-out', style({marginRight: '-482px'}))]),
+]);
+
+export const fadeRoute = trigger('fadeRoute', [
+  transition('* => *', [
+    query(
+      ':enter',
+      [style({opacity: 0, position: 'absolute', height: '100%', width: '100%'})],
+      {optional: true}
+    ),
+    query(
+      ':leave',
+      [style({opacity: 1, position: 'absolute', height: '100%', width: '100%'}), animate('250ms', style({opacity: 0}))],
+      {optional: true}
+    ),
+    query(
+      ':enter',
+      [style({opacity: 0, position: 'relative', height: '100%', width: '100%'}), animate('250ms', style({opacity: 1}))],
+      {optional: true}
+    ),
+  ]),
 ]);
