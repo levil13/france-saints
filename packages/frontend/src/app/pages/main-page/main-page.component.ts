@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectionStrategy, Component, DestroyRef, Inject, Renderer2} from '@angular/core';
+import {AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, Inject, Renderer2} from '@angular/core';
 import {SearchService} from '../../services/search/search.service';
 import {PlaceService} from '../../services/place/place.service';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
@@ -29,10 +29,13 @@ export class MainPageComponent implements AfterViewInit {
     private placeService: PlaceService,
     private renderer: Renderer2,
     private destroyRef: DestroyRef,
+    private cdr: ChangeDetectorRef,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
   ngAfterViewInit() {
+    requestAnimationFrame(() => this.cdr.markForCheck());
+
     this.searchService
       .getSearchResults()
       .pipe(takeUntilDestroyed(this.destroyRef))
