@@ -24,7 +24,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.updateVh();
+    requestAnimationFrame(() => this.updateVh())
   }
 
   private updateVh() {
