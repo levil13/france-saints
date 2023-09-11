@@ -13,8 +13,8 @@ export interface Place extends StrapiBaseEntityLocalized {
 }
 
 export interface PlaceWithoutPopulation extends Omit<Place, 'category' | 'city'> {
-  category: {id: number};
-  city: {id: number};
+  category?: {id: number};
+  city?: {id: number};
 }
 
 export interface PlaceInfo {
@@ -26,7 +26,7 @@ export interface PlacePageInfo {
   shortDescription: string;
   longDescription: string;
   keywords: string;
-  images: Image[];
+  images?: Image[];
 }
 
 export interface Coordinates {
@@ -35,8 +35,8 @@ export interface Coordinates {
 }
 
 export interface PlaceResponse extends Omit<Place, 'category' | 'city' | 'images' | 'coordinates'> {
-  category: StrapiResponseSingle<CategoryResponse>;
-  city: StrapiResponseSingle<Omit<CityResponse, 'postalCodes'>>;
+  category?: StrapiResponseSingle<CategoryResponse>;
+  city?: StrapiResponseSingle<Omit<CityResponse, 'postalCodes'>>;
   coordinates: string;
 }
 

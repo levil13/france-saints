@@ -78,16 +78,16 @@ export class PlacesService {
   private processPlace(placeResponse: {attributes: PlaceResponse; id: number}): PlaceWithoutPopulation {
     const placeAttrs = placeResponse.attributes;
     const placeId = placeResponse.id;
-    const placeCategoryId = placeAttrs.category.data.id;
-    const placeCityId = placeAttrs.city.data.id;
+    const placeCategoryId = placeAttrs.category?.data?.id;
+    const placeCityId = placeAttrs.city?.data?.id;
 
     const [latitude, longitude] = placeResponse.attributes.coordinates.split(', ').map(coordinate => +coordinate);
 
     return {
       ...placeAttrs,
       id: placeId,
-      category: {id: placeCategoryId},
-      city: {id: placeCityId},
+      category: placeCategoryId ? {id: placeCategoryId} : undefined,
+      city: placeCityId ? {id: placeCityId} : undefined,
       coordinates: {latitude, longitude},
     };
   }
@@ -137,7 +137,7 @@ export class PlacesService {
   private processPlaceInfo(attributes: PlacePageInfoResponse | PlaceInfoResponse) {
     return {
       ...attributes,
-      images: attributes.images?.data.map(image => ({...image.attributes, id: image.id})),
+      images: attributes.images?.data?.map(image => ({...image.attributes, id: image.id})),
     };
   }
 
